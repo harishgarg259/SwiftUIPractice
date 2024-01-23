@@ -17,14 +17,14 @@ struct ImageRow: View {
             AsyncImage(url: URL(string: filterData()?.href ?? "")) { image in
 				image
 					.resizable()
-					.scaledToFill()
+					.scaledToFit()
 			} placeholder: {
 				Color.gray.opacity(0.1)
 			}
-			.frame(width: 104)
-			.padding(-10)
-			.padding(.leading, -8)
-			.padding(.trailing, 12)
+			.frame(width: 94)
+            .padding(.top, 5)
+			.padding(.leading, 10)
+			.padding(.trailing, 10)
 
 			VStack(alignment: .leading, spacing: 5) {
 				Text("\(filterData()?.title ?? "")")
@@ -32,11 +32,6 @@ struct ImageRow: View {
 			.padding(.horizontal, 8)
 
 			Spacer()
-
-			Circle()
-				.frame(maxWidth: 15, maxHeight: 15)
-				.foregroundColor(Color(red: 0, green: 202/255, blue: 167/255))
-				.padding()
 		}
 		.frame(height: 104)
     }

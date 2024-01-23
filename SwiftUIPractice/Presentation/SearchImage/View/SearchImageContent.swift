@@ -11,42 +11,31 @@ struct SearchImageContent: View {
     
     @StateObject var viewModel: SearchServiceViewModel
     @State private var searchText: String = ""
-
+    
     var body: some View {
         NavigationStack {
             VStack {
                 SearchBar(text: $searchText, onTextChanged: searchImages)
                 if viewModel.records.isEmpty {
-                    VStack {
-                        Image(systemName: "exclamationmark.icloud.fill")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 64.0, height: 64.0)
-                            .foregroundColor(.accentColor)
-                        Text("Ooops, No users around!")
-                            .font(.title2)
-                            .foregroundColor(.red)
-                    }
+                    showEmptyView(title: "No Images to display!", reason: .ImageNotFound)
                 } else {
-                    List(viewModel.records, id: \.href) { user in
-                        ImageRow(imageDetail: user, mediaType: viewModel.mediaType)
+                    List(viewModel.records, id: \.href) { detail in
+                        ImageRow(imageDetail: detail, mediaType: viewModel.mediaType)
                     }
-                    .navigationTitle("Contacts")
-                    .toolbarColorScheme(.dark, for: .navigationBar)
-                    .toolbarBackground(.automatic, for: .navigationBar)
-                    .toolbarBackground(.visible, for: .navigationBar)
                 }
-            }.onAppear {
-                searchImages(for: "moon")
+                Spacer()
             }
+            .appBar(title: "Search Images") {
+                debugPrint("button action callback")
+            }
+            .environmentObject(viewModel)
         }
-        .environmentObject(viewModel)
     }
     
     func searchImages(for searchText: String) {
-            if !searchText.isEmpty {
-                viewModel.searchImages(searchString: searchText, page: 1)
-            }
+        if !searchText.isEmpty {
+            viewModel.searchImages(searchString: searchText, page: 1)
+        }
     }
 }
 
