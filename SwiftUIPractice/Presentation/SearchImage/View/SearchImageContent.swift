@@ -22,6 +22,9 @@ struct SearchImageContent: View {
                     List(viewModel.records, id: \.href) { detail in
                         ImageRow(imageDetail: detail, mediaType: viewModel.mediaType)
                     }
+                    .listStyle(PlainListStyle())
+                    .background(.white)
+                    .scrollContentBackground(.hidden)
                 }
                 Spacer()
             }

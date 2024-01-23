@@ -23,17 +23,19 @@ struct ImageRow: View {
 			}
 			.frame(width: 94)
             .padding(.top, 5)
-			.padding(.leading, 10)
-			.padding(.trailing, 10)
+			.padding(.leading, 5)
+			.padding(.trailing, 5)
 
 			VStack(alignment: .leading, spacing: 5) {
-				Text("\(filterData()?.title ?? "")")
+				Text("\(filterData()?.description ?? "")")
+                    .font(.footnote)
 			}
 			.padding(.horizontal, 8)
 
 			Spacer()
 		}
 		.frame(height: 104)
+        .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
     }
     
     //Check if links exist or not
