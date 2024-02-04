@@ -38,6 +38,11 @@
 		38BD15EF2B5CDF8300D66184 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BD15EE2B5CDF8300D66184 /* SearchBar.swift */; };
 		38BD15F12B5CE11100D66184 /* ImageRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BD15F02B5CE11100D66184 /* ImageRow.swift */; };
 		38BD15F32B5F4E9600D66184 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BD15F22B5F4E9500D66184 /* EmptyView.swift */; };
+		38BD15F62B5F614000D66184 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BD15F52B5F614000D66184 /* DetailView.swift */; };
+		38BD15F82B65C53D00D66184 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BD15F72B65C53D00D66184 /* Color.swift */; };
+		38F3BBE12B6EF88900BB8A52 /* ImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F3BBE02B6EF88900BB8A52 /* ImageViewExtension.swift */; };
+		38F3BBE42B6F098D00BB8A52 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F3BBE32B6F098D00BB8A52 /* BaseView.swift */; };
+		38F3BBE62B6F09F000BB8A52 /* SideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F3BBE52B6F09F000BB8A52 /* SideMenu.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +86,11 @@
 		38BD15EE2B5CDF8300D66184 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		38BD15F02B5CE11100D66184 /* ImageRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageRow.swift; sourceTree = "<group>"; };
 		38BD15F22B5F4E9500D66184 /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
+		38BD15F52B5F614000D66184 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
+		38BD15F72B65C53D00D66184 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		38F3BBE02B6EF88900BB8A52 /* ImageViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewExtension.swift; sourceTree = "<group>"; };
+		38F3BBE32B6F098D00BB8A52 /* BaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
+		38F3BBE52B6F09F000BB8A52 /* SideMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenu.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,7 +188,9 @@
 		387FFEEC2B5C7D5F003B1280 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				38F3BBE22B6F097E00BB8A52 /* SideBar */,
 				38BD15E22B5CD5D100D66184 /* SearchImage */,
+				38BD15F42B5F608200D66184 /* ImageDetail */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -210,6 +222,7 @@
 			children = (
 				38BD15E02B5C996200D66184 /* NavigationBar.swift */,
 				38BD15F22B5F4E9500D66184 /* EmptyView.swift */,
+				38F3BBE02B6EF88900BB8A52 /* ImageViewExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -253,6 +266,7 @@
 			isa = PBXGroup;
 			children = (
 				38BD15EB2B5CD71000D66184 /* AppConstant.swift */,
+				38BD15F72B65C53D00D66184 /* Color.swift */,
 			);
 			path = Constant;
 			sourceTree = "<group>";
@@ -263,6 +277,23 @@
 				38BD15EE2B5CDF8300D66184 /* SearchBar.swift */,
 			);
 			path = SearchBar;
+			sourceTree = "<group>";
+		};
+		38BD15F42B5F608200D66184 /* ImageDetail */ = {
+			isa = PBXGroup;
+			children = (
+				38BD15F52B5F614000D66184 /* DetailView.swift */,
+			);
+			path = ImageDetail;
+			sourceTree = "<group>";
+		};
+		38F3BBE22B6F097E00BB8A52 /* SideBar */ = {
+			isa = PBXGroup;
+			children = (
+				38F3BBE32B6F098D00BB8A52 /* BaseView.swift */,
+				38F3BBE52B6F09F000BB8A52 /* SideMenu.swift */,
+			);
+			path = SideBar;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -402,6 +433,7 @@
 				387FFEC42B505DFF003B1280 /* SearchImageContent.swift in Sources */,
 				387FFEC22B505DFF003B1280 /* SwiftUIPracticeApp.swift in Sources */,
 				38BD15E12B5C996200D66184 /* NavigationBar.swift in Sources */,
+				38BD15F82B65C53D00D66184 /* Color.swift in Sources */,
 				38BD15EF2B5CDF8300D66184 /* SearchBar.swift in Sources */,
 				387FFEFC2B5C7D79003B1280 /* RestManager.swift in Sources */,
 				387FFEF92B5C7D79003B1280 /* Reachability.swift in Sources */,
@@ -409,7 +441,11 @@
 				38BD15E92B5CD69300D66184 /* SearchNasaImageBase.swift in Sources */,
 				38BD15F12B5CE11100D66184 /* ImageRow.swift in Sources */,
 				387FFEF62B5C7D79003B1280 /* RequestUrl.swift in Sources */,
+				38F3BBE12B6EF88900BB8A52 /* ImageViewExtension.swift in Sources */,
 				38BD15F32B5F4E9600D66184 /* EmptyView.swift in Sources */,
+				38F3BBE62B6F09F000BB8A52 /* SideMenu.swift in Sources */,
+				38F3BBE42B6F098D00BB8A52 /* BaseView.swift in Sources */,
+				38BD15F62B5F614000D66184 /* DetailView.swift in Sources */,
 				38BD15E62B5CD60B00D66184 /* SearchServiceViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -584,6 +620,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftUIPractice/Preview Content\"";
+				DEVELOPMENT_TEAM = 4T95FHSKN7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SwiftUIPractice/Info.plist;
@@ -598,7 +635,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.allball.allball.SwiftUIPractice;
+				PRODUCT_BUNDLE_IDENTIFIER = com.allball.allball;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -614,6 +651,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftUIPractice/Preview Content\"";
+				DEVELOPMENT_TEAM = 4T95FHSKN7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SwiftUIPractice/Info.plist;
@@ -628,7 +666,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.allball.allball.SwiftUIPractice;
+				PRODUCT_BUNDLE_IDENTIFIER = com.allball.allball;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

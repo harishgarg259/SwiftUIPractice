@@ -31,7 +31,8 @@ enum Media: String{
     //MARK: Variables
     @Published var mediaType: Media = .Image
     @Published var records: [Items] = []
-    
+    @Published var selectedRecord: Items?
+
     
     // MARK: Apis Call
     func searchImages(searchString: String, page: Int) {
@@ -46,10 +47,8 @@ enum Media: String{
                     self.records.removeAll()
                 }
                 self.records.append(contentsOf: response.collection?.items ?? [])
-//                completion?(true,"")
             case .failure(let error):
                 debugPrint(error.localizedDescription)
-//                completion?(false,error.localizedDescription)
             }
         }
     }

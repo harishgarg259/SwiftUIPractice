@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SearchImageContent: View {
     
+    @Binding var showMenu: Bool
     @StateObject var viewModel: SearchServiceViewModel
     @State private var searchText: String = ""
     
@@ -25,6 +26,7 @@ struct SearchImageContent: View {
                     .listStyle(PlainListStyle())
                     .background(.white)
                     .scrollContentBackground(.hidden)
+                    .scrollDismissesKeyboard(.interactively)
                 }
                 Spacer()
             }
@@ -38,12 +40,14 @@ struct SearchImageContent: View {
     func searchImages(for searchText: String) {
         if !searchText.isEmpty {
             viewModel.searchImages(searchString: searchText, page: 1)
+        }else{
+            viewModel.records.removeAll()
         }
     }
 }
 
-struct SearchImageContent_Previews: PreviewProvider {
-    static var previews: some View {
-        SearchImageContent(viewModel: SearchServiceViewModel())
-    }
-}
+//struct SearchImageContent_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SearchImageContent(showMenu: false, viewModel: SearchServiceViewModel())
+//    }
+//}
