@@ -10,6 +10,7 @@ import SwiftUI
 struct BaseView: View {
     
     @State var showMenu: Bool = false
+    @State var currentTab = "Home"
     
     // Offset for Both Drag Gestures and showing Menu.
     @State var offset: CGFloat = 0
@@ -18,9 +19,11 @@ struct BaseView: View {
     @GestureState var gestureOffset: CGFloat = 0
     
     private let sideBarWidth = UIScreen.main.bounds.width - 90
-
-    init() {}
-
+    
+    init() {
+        UITabBar.appearance().isHidden = false
+    }
+    
     var body: some View {
         
         let sideBarWidth = getRect().width - 90
@@ -30,8 +33,32 @@ struct BaseView: View {
             HStack(spacing: 0) {
                 SideMenu(showMenu: $showMenu)
                 
-                // Main View
-                SearchImageContent(showMenu: $showMenu, viewModel: SearchServiceViewModel())
+                // Main Tab View
+                VStack(spacing: 0) {
+                    TabView(selection: $currentTab) {
+                        NavigationStack {
+                            SearchImageContent(showMenu: $showMenu, viewModel: SearchServiceViewModel())
+                        }
+                        .tabItem {
+                            Label("Home", systemImage: "gear")
+                        }
+                        .tag("Home")
+                        NavigationStack {
+                            CartView(showMenu: $showMenu)
+                        }
+                        .tabItem {
+                            Label("Cart", systemImage: "gear")
+                        }
+                        .tag("Cart")
+                        NavigationStack {
+                            ProfileView(showMenu: $showMenu)
+                        }
+                        .tabItem {
+                            Label("Profile", systemImage: "gear")
+                        }
+                        .tag("Cart")
+                    }
+                }
                 .frame(width: getRect().width)
                 .overlay(
                     Rectangle()
@@ -44,7 +71,7 @@ struct BaseView: View {
                         .onTapGesture {
                             showMenu.toggle()
                         }
-                        
+                    
                 )
             }
             // maxWidth : sideBarWidth + screenWidth
@@ -60,7 +87,7 @@ struct BaseView: View {
             )
             
             .navigationBarTitleDisplayMode(.inline)
-            .navigationBarHidden(true)
+            //            .navigationBarHidden(true)
         }
         .animation(.linear(duration: 0.15), value: offset == 0)
         .onChange(of: showMenu) { newValue in
@@ -75,9 +102,9 @@ struct BaseView: View {
             }
         }
         .onChange(of: gestureOffset) { newValue in
-         
+            
             if gestureOffset != 0 {
-                                
+                
                 // Dragging width SideBarWidth
                 if gestureOffset + lastStoredOffset < sideBarWidth && (gestureOffset + lastStoredOffset) > 0 {
                     
@@ -95,14 +122,14 @@ struct BaseView: View {
     }
     
     func onEnd(value: DragGesture.Value) {
-                
+        
         withAnimation(.spring(duration: 0.15)) {
             
             if value.translation.width > 0 {
                 // Dragging>>>
                 
                 if value.translation.width > sideBarWidth / 2 {
-
+                    
                     offset = sideBarWidth
                     lastStoredOffset = sideBarWidth
                     showMenu = true
@@ -145,12 +172,29 @@ struct BaseView: View {
                         offset = sideBarWidth
                         showMenu = true
                     }
-                                                   
+                    
                 }
             }
         }
         
         lastStoredOffset = offset
+    }
+    
+    @ViewBuilder
+    func TabButton(image: String) -> some View {
+        Button {
+            withAnimation {
+                currentTab = image
+            }
+        } label: {
+            Image(systemName: image)
+                .resizable()
+                .renderingMode(.template)
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 23, height: 23)
+                .foregroundColor(currentTab == image ? .primary : .gray)
+                .frame(maxWidth: .infinity)
+        }
     }
 }
 

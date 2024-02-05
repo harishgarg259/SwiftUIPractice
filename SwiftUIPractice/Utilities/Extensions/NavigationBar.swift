@@ -21,7 +21,7 @@ extension View {
                     Button(action: {
                         backButtonAction()
                     }) {
-                        Image(systemName: "logo")
+                        Image(systemName: "list.bullet")
                     }
                 }
             }

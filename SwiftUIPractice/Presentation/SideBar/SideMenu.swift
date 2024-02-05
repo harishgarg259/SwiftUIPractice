@@ -22,59 +22,24 @@ struct SideMenu: View {
                     .aspectRatio(contentMode: .fill)
                     .frame(width: 65, height: 65)
                     .clipShape(Circle())
-                
-                
                 Text("Harish")
                     .font(.title.bold())
-                Text("@harish")
+                Text("harishgarg259@gmail.com")
                     .font(.callout)
-                
-                HStack(spacing: 12) {
-                    
-                    Button {
-                        
-                    } label: {
-                        
-                        Label {
-                            Text("Followers")
-                                .font(.caption)
-                        } icon: {
-                            Text("1.5M")
-                                .fontWeight(.bold)
-                        }
-                    }
-                    
-                    Button {
-                        
-                    } label: {
-                        
-                        Label {
-                            Text("following")
-                                .font(.caption)
-                        } icon: {
-                            Text("1.2k")
-                                .fontWeight(.bold)
-                        }
-                    }
-                }
-                .foregroundColor(.primary)
-                
             }
             .padding(.horizontal)
             .padding(.leading)
             
             ScrollView(.vertical, showsIndicators: false) {
-                
                 VStack {
                     VStack(alignment: .leading, spacing: 40) {
                         
-                        TabButton(title: "Profile", image: "logo")
-                        
-                        TabButton(title: "Lists", image: "logo")
-                        
-                        TabButton(title: "Bookmarks", image: "logo")
-                        
-                        TabButton(title: "Moments", image: "logo")
+                        TabButton(title: "My Profile", image: "logo")
+                        TabButton(title: "Blog", image: "logo")
+                        TabButton(title: "About Us", image: "logo")
+                        TabButton(title: "Contact Us", image: "logo")
+                        TabButton(title: "Log Out", image: "logo")
+
                     }
                     .padding()
                     .padding(.leading)
@@ -83,10 +48,8 @@ struct SideMenu: View {
                     Spacer()
                     
                     Divider()
-                    
                 }
             }
-            
             
             // Footer
             VStack(spacing: 0) {
@@ -115,7 +78,6 @@ struct SideMenu: View {
         .frame(width: getRect().width - 90)
         .frame(maxHeight: .infinity)
         .background(
-            
             Color.primary
                 .opacity(0.08)
                 .ignoresSafeArea(.container, edges: .vertical)
@@ -130,6 +92,7 @@ struct SideMenu: View {
         NavigationLink {
             Text("\(title) View")
                 .navigationTitle(title)
+                .navigationBarTitleDisplayMode(.inline)
         } label: {
             HStack(spacing: 13) {
                 Image(image)

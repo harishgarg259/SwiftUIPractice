@@ -31,6 +31,9 @@
 		387FFF012B5C7D79003B1280 /* WebAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 387FFEF22B5C7D79003B1280 /* WebAPI.swift */; };
 		387FFF0D2B5C8E45003B1280 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 387FFF0B2B5C8E45003B1280 /* Info.plist */; };
 		387FFF0E2B5C8E45003B1280 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 387FFF0B2B5C8E45003B1280 /* Info.plist */; };
+		389EEA942B7047D20050591E /* SideMenuModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389EEA932B7047D20050591E /* SideMenuModel.swift */; };
+		389EEA972B704F8B0050591E /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389EEA962B704F8B0050591E /* FilterView.swift */; };
+		389EEA9A2B70697E0050591E /* FilterRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389EEA992B70697E0050591E /* FilterRow.swift */; };
 		38BD15E12B5C996200D66184 /* NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BD15E02B5C996200D66184 /* NavigationBar.swift */; };
 		38BD15E62B5CD60B00D66184 /* SearchServiceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BD15E52B5CD60B00D66184 /* SearchServiceViewModel.swift */; };
 		38BD15E92B5CD69300D66184 /* SearchNasaImageBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BD15E82B5CD69300D66184 /* SearchNasaImageBase.swift */; };
@@ -43,6 +46,8 @@
 		38F3BBE12B6EF88900BB8A52 /* ImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F3BBE02B6EF88900BB8A52 /* ImageViewExtension.swift */; };
 		38F3BBE42B6F098D00BB8A52 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F3BBE32B6F098D00BB8A52 /* BaseView.swift */; };
 		38F3BBE62B6F09F000BB8A52 /* SideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F3BBE52B6F09F000BB8A52 /* SideMenu.swift */; };
+		38F3BBEE2B6F292100BB8A52 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F3BBED2B6F292100BB8A52 /* ProfileView.swift */; };
+		38F3BBF12B6F295A00BB8A52 /* CartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F3BBF02B6F295A00BB8A52 /* CartView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +84,9 @@
 		387FFEF12B5C7D79003B1280 /* RestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestManager.swift; sourceTree = "<group>"; };
 		387FFEF22B5C7D79003B1280 /* WebAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebAPI.swift; sourceTree = "<group>"; };
 		387FFF0B2B5C8E45003B1280 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		389EEA932B7047D20050591E /* SideMenuModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuModel.swift; sourceTree = "<group>"; };
+		389EEA962B704F8B0050591E /* FilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
+		389EEA992B70697E0050591E /* FilterRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterRow.swift; sourceTree = "<group>"; };
 		38BD15E02B5C996200D66184 /* NavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBar.swift; sourceTree = "<group>"; };
 		38BD15E52B5CD60B00D66184 /* SearchServiceViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchServiceViewModel.swift; sourceTree = "<group>"; };
 		38BD15E82B5CD69300D66184 /* SearchNasaImageBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchNasaImageBase.swift; sourceTree = "<group>"; };
@@ -91,6 +99,8 @@
 		38F3BBE02B6EF88900BB8A52 /* ImageViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewExtension.swift; sourceTree = "<group>"; };
 		38F3BBE32B6F098D00BB8A52 /* BaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		38F3BBE52B6F09F000BB8A52 /* SideMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenu.swift; sourceTree = "<group>"; };
+		38F3BBED2B6F292100BB8A52 /* ProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		38F3BBF02B6F295A00BB8A52 /* CartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,6 +200,9 @@
 			children = (
 				38F3BBE22B6F097E00BB8A52 /* SideBar */,
 				38BD15E22B5CD5D100D66184 /* SearchImage */,
+				389EEA952B704F6C0050591E /* FilterView */,
+				38F3BBEF2B6F294500BB8A52 /* Cart */,
+				38F3BBE82B6F28B600BB8A52 /* Profile */,
 				38BD15F42B5F608200D66184 /* ImageDetail */,
 			);
 			path = Presentation;
@@ -215,6 +228,31 @@
 				38BD15DF2B5C994A00D66184 /* Extensions */,
 			);
 			path = Utilities;
+			sourceTree = "<group>";
+		};
+		389EEA922B7047D20050591E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				389EEA932B7047D20050591E /* SideMenuModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		389EEA952B704F6C0050591E /* FilterView */ = {
+			isa = PBXGroup;
+			children = (
+				389EEA982B7069670050591E /* Row */,
+				389EEA962B704F8B0050591E /* FilterView.swift */,
+			);
+			path = FilterView;
+			sourceTree = "<group>";
+		};
+		389EEA982B7069670050591E /* Row */ = {
+			isa = PBXGroup;
+			children = (
+				389EEA992B70697E0050591E /* FilterRow.swift */,
+			);
+			path = Row;
 			sourceTree = "<group>";
 		};
 		38BD15DF2B5C994A00D66184 /* Extensions */ = {
@@ -290,10 +328,27 @@
 		38F3BBE22B6F097E00BB8A52 /* SideBar */ = {
 			isa = PBXGroup;
 			children = (
+				389EEA922B7047D20050591E /* Model */,
 				38F3BBE32B6F098D00BB8A52 /* BaseView.swift */,
 				38F3BBE52B6F09F000BB8A52 /* SideMenu.swift */,
 			);
 			path = SideBar;
+			sourceTree = "<group>";
+		};
+		38F3BBE82B6F28B600BB8A52 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				38F3BBED2B6F292100BB8A52 /* ProfileView.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		38F3BBEF2B6F294500BB8A52 /* Cart */ = {
+			isa = PBXGroup;
+			children = (
+				38F3BBF02B6F295A00BB8A52 /* CartView.swift */,
+			);
+			path = Cart;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -434,19 +489,24 @@
 				387FFEC22B505DFF003B1280 /* SwiftUIPracticeApp.swift in Sources */,
 				38BD15E12B5C996200D66184 /* NavigationBar.swift in Sources */,
 				38BD15F82B65C53D00D66184 /* Color.swift in Sources */,
+				389EEA972B704F8B0050591E /* FilterView.swift in Sources */,
 				38BD15EF2B5CDF8300D66184 /* SearchBar.swift in Sources */,
 				387FFEFC2B5C7D79003B1280 /* RestManager.swift in Sources */,
 				387FFEF92B5C7D79003B1280 /* Reachability.swift in Sources */,
 				387FFEFF2B5C7D79003B1280 /* WebAPI.swift in Sources */,
 				38BD15E92B5CD69300D66184 /* SearchNasaImageBase.swift in Sources */,
+				389EEA942B7047D20050591E /* SideMenuModel.swift in Sources */,
 				38BD15F12B5CE11100D66184 /* ImageRow.swift in Sources */,
 				387FFEF62B5C7D79003B1280 /* RequestUrl.swift in Sources */,
 				38F3BBE12B6EF88900BB8A52 /* ImageViewExtension.swift in Sources */,
+				389EEA9A2B70697E0050591E /* FilterRow.swift in Sources */,
 				38BD15F32B5F4E9600D66184 /* EmptyView.swift in Sources */,
+				38F3BBF12B6F295A00BB8A52 /* CartView.swift in Sources */,
 				38F3BBE62B6F09F000BB8A52 /* SideMenu.swift in Sources */,
 				38F3BBE42B6F098D00BB8A52 /* BaseView.swift in Sources */,
 				38BD15F62B5F614000D66184 /* DetailView.swift in Sources */,
 				38BD15E62B5CD60B00D66184 /* SearchServiceViewModel.swift in Sources */,
+				38F3BBEE2B6F292100BB8A52 /* ProfileView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

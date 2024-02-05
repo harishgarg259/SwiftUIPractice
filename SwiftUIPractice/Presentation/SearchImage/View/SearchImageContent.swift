@@ -12,10 +12,18 @@ struct SearchImageContent: View {
     @Binding var showMenu: Bool
     @StateObject var viewModel: SearchServiceViewModel
     @State private var searchText: String = ""
-    
+    @State private var presented = false
+
     var body: some View {
         NavigationStack {
             VStack {
+                
+                Button("Filters") {
+                    self.presented = true
+                }.sheet(isPresented: $presented) {
+                    FilterView(showScreen: .constant(false), selectedIndex: .constant(0), filterModel: FilterViewModel())
+                }
+                
                 SearchBar(text: $searchText, onTextChanged: searchImages)
                 if viewModel.records.isEmpty {
                     showEmptyView(title: "No Images to display!", reason: .ImageNotFound)
@@ -31,7 +39,9 @@ struct SearchImageContent: View {
                 Spacer()
             }
             .appBar(title: "Search Images") {
-                debugPrint("button action callback")
+                withAnimation {
+                    showMenu.toggle()
+                }
             }
             .environmentObject(viewModel)
         }
