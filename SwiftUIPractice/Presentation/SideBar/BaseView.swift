@@ -37,7 +37,7 @@ struct BaseView: View {
                 VStack(spacing: 0) {
                     TabView(selection: $currentTab) {
                         NavigationStack {
-                            SearchImageContent(showMenu: $showMenu, viewModel: SearchServiceViewModel())
+                            HomeScreen(showMenu: $showMenu)
                         }
                         .tabItem {
                             Label("Home", systemImage: "gear")

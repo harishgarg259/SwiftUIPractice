@@ -7,22 +7,6 @@
 
 import SwiftUI
 
-public enum EmptyScreenEnum: String{
-    case ImageNotFound
-    case EmptyView
-    
-    var media: String {
-        get {
-            switch self {
-            case .ImageNotFound:
-                return "image"
-            case .EmptyView:
-                return "video"
-            }
-        }
-    }
-}
-
 extension View {
     /// CommonAppBar
     public func showEmptyView(title: String, reason: EmptyScreenEnum) -> some View {

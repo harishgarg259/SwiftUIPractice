@@ -9,8 +9,10 @@ import SwiftUI
 
 struct SideMenu: View {
     
+    @State private var isLoading = true
     @Binding var showMenu: Bool
-    
+    @State private var showAlert = false
+
     var body: some View {
         
         VStack(alignment: .leading, spacing: 0) {
@@ -34,12 +36,17 @@ struct SideMenu: View {
                 VStack {
                     VStack(alignment: .leading, spacing: 40) {
                         
-                        TabButton(title: "My Profile", image: "logo")
-                        TabButton(title: "Blog", image: "logo")
-                        TabButton(title: "About Us", image: "logo")
-                        TabButton(title: "Contact Us", image: "logo")
-                        TabButton(title: "Log Out", image: "logo")
-
+                        TabButton(title: "My Profile", image: "logo", type: .None)
+                        TabButton(title: "Blog", image: "logo", type: .Blog)
+                        TabButton(title: "About Us", image: "logo", type: .AboutUS)
+                        TabButton(title: "Contact Us", image: "logo", type: .ContactUS)
+                        TabButton(title: "Log Out", image: "logo", type: .None)
+                            .alert(Text("Are you sure you want to logout?"),isPresented: $showAlert) {
+                                    Button("Cancel", role: .cancel) {}
+                                    Button("OK") {
+                                            // Handle the acknowledgement.
+                                    }
+                            }
                     }
                     .padding()
                     .padding(.leading)
@@ -87,24 +94,32 @@ struct SideMenu: View {
     }
     
     @ViewBuilder
-    func TabButton(title: String, image: String) -> some View {
+    func TabButton(title: String, image: String, type: SafariURL) -> some View {
         
-        NavigationLink {
-            Text("\(title) View")
-                .navigationTitle(title)
-                .navigationBarTitleDisplayMode(.inline)
-        } label: {
-            HStack(spacing: 13) {
-                Image(image)
-                    .resizable()
-                    .renderingMode(.template)
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: 22, height: 22)
-                
-                Text(title)
+        if title == "Log Out"{
+            
+        }else{
+            NavigationLink {
+                WebView(isLoading: $isLoading, type: type)
+                    .ignoresSafeArea()
+                    .navigationTitle(title)
+                    .navigationBarTitleDisplayMode(.inline)
+                if isLoading{
+                    ProgressView()
+                }
+            } label: {
+                HStack(spacing: 13) {
+                    Image(image)
+                        .resizable()
+                        .renderingMode(.template)
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 22, height: 22)
+                    
+                    Text(title)
+                }
+                .foregroundColor(.primary)
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .foregroundColor(.primary)
-            .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
 }
