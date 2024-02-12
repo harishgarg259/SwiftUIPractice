@@ -1,6 +1,6 @@
 //
 //  Button.swift
-//  SwiftUIPractice
+//  Yappetizer
 //
 //  Created by Harish Garg on 08/02/24.
 //
@@ -11,7 +11,7 @@ struct CustomButtonModifier: ViewModifier {
   func body(content: Content) -> some View {
     content
       .font(.title)
-      .foregroundColor(Color.themeColor)
+      .foregroundColor(.themeColor)
       .padding()
       .background(Color.clear)
       .clipShape(RoundedRectangle(cornerRadius: 10))

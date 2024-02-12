@@ -1,6 +1,6 @@
 //
 //  SearchBar.swift
-//  SwiftUIPractice
+//  Yappetizer
 //
 //  Created by Harish Garg on 20/01/24.
 //

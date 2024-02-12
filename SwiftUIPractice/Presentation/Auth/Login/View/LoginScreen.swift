@@ -1,6 +1,6 @@
 //
 //  HomeScreen.swift
-//  SwiftUIPractice
+//  Yappetizer
 //
 //  Created by Harish Garg on 04/02/24.
 //
@@ -15,96 +15,115 @@ struct LoginScreen: View {
     @State var transition: Int? = 0
     
     @State var show = false
-    @State var showForget = false
+    @State private var showForget = false
+    @State private var loading = false
     
+    @EnvironmentObject var settings: UserStateViewModel
+
     var body: some View {
         NavigationStack{
             
-            VStack {
-                ScrollView(.vertical, showsIndicators: false, content: {
-                    VStack{
-                        
-                        Image("Logo-new", bundle: nil)
-                            .padding(.top, 80)
-                            .padding(.bottom, 40)
-                        
-                        HStack{
+            ZStack {
+                VStack {
+                    ScrollView(.vertical, showsIndicators: false, content: {
+                        VStack{
                             
-                            VStack(alignment: .leading, spacing: 10) {
+                            Image("Logo-new", bundle: nil)
+                                .padding(.top, 80)
+                                .padding(.bottom, 40)
+                            
+                            HStack{
                                 
-                                Text("Login")
-                                    .font(.system(size: 32, weight: .heavy))
-                                // for Dark Mode Adoption...
-                                    .foregroundColor(.primary)
+                                VStack(alignment: .leading, spacing: 10) {
+                                    
+                                    Text("Login")
+                                        .font(.system(size: 32, weight: .heavy))
+                                    // for Dark Mode Adoption...
+                                        .foregroundColor(.primary)
+                                    
+                                    Text("Please sign in to continue")
+                                        .fontWeight(.semibold)
+                                        .foregroundColor(.gray)
+                                }
                                 
-                                Text("Please sign in to continue")
-                                    .fontWeight(.semibold)
-                                    .foregroundColor(.gray)
+                                Spacer(minLength: 0)
                             }
+                            
+                            CustomTextField(image: "envelope", title: "EMAIL", value: $email,animation: animation)
+                                .padding(.top,10)
+                            
+                            CustomTextField(image: "lock", title: "PASSWORD", value: $password,animation: animation)
+                                .padding(.top,5)
+                                .padding(.bottom,20)
+                            
+                            Button {
+                                self.loading = true
+                                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3.0){
+                                    self.loading = false
+                                    settings.isLoggedIn = true
+                                }
+                            } label: {
+                                Text("Login")
+                                    .frame(maxWidth: .infinity)
+                                    .fontWeight(.bold)
+                            }
+                            .buttonStyle(.borderedProminent)
+                            .controlSize(.large)
+                            .shadow(color: .themeColor,radius: 2)
+                            .disabled((password.count < 8) || (email.textFieldValidatorEmail() == false))
+                            
+                            
+                            HStack(spacing: 8){
+                                
+                                Spacer()
+                                
+                                Button(action: {
+                                    self.showForget = true
+                                    
+                                }, label: {
+                                    Text("Forget Password?")
+                                        .fontWeight(.heavy)
+                                        .foregroundColor(.themeColor)
+                                })
+                                .navigationDestination(isPresented: $showForget) {
+                                    ForgetPasssword(show: $showForget)
+                                }
+                            }
+                            .padding(.top, 10)
                             
                             Spacer(minLength: 0)
                         }
-                        
-                        CustomTextField(image: "envelope", title: "EMAIL", value: $email,animation: animation)
-                            .padding(.top,10)
-                        
-                        CustomTextField(image: "lock", title: "PASSWORD", value: $password,animation: animation)
-                            .padding(.top,5)
-                            .padding(.bottom,20)
-                        
-                        Button {
-                        } label: {
-                            Text("Login")
-                                .frame(maxWidth: .infinity)
-                                .fontWeight(.bold)
-                        }
-                        .buttonStyle(.borderedProminent)
-                        .controlSize(.large)
-                        .shadow(color: .themeColor,radius: 2)
-                        
-                        
-                        HStack(spacing: 8){
-                            
-                            Spacer()
-                            
-                            Button(action: {
-                                self.showForget = true
-                            }, label: {
-                                Text("Forget Password?")
-                                    .fontWeight(.heavy)
-                                    .foregroundColor(Color.themeColor)
-                            })
-                            .navigationDestination(isPresented: $showForget) {
-                                ForgetPasssword(show: $showForget)
-                            }
-                        }
-                        .padding(.top, 10)
-                        
-                        Spacer(minLength: 0)
-                    }
-                    .padding(.leading, 20)
-                    .padding(.trailing, 20)
-                })
-                HStack(spacing: 8){
-                    
-                    Text("Don't have an account?")
-                        .fontWeight(.heavy)
-                        .foregroundColor(.gray)
-                    
-                    Button(action: {
-                        self.show = true
-                    }, label: {
-                        Text("sign up")
-                            .fontWeight(.heavy)
-                            .foregroundColor(Color.themeColor)
+                        .padding(.leading, 20)
+                        .padding(.trailing, 20)
                     })
-                    .navigationDestination(isPresented: $show) {
-                        Register(show: $show)
+                    HStack(spacing: 8){
+                        
+                        Text("Don't have an account?")
+                            .fontWeight(.heavy)
+                            .foregroundColor(.gray)
+                        
+                        Button(action: {
+                            self.show = true
+                        }, label: {
+                            Text("sign up")
+                                .fontWeight(.heavy)
+                                .foregroundColor(.themeColor)
+                        })
+                        .navigationDestination(isPresented: $show) {
+                            Register(show: $show)
+                        }
                     }
+                }
+                
+                if loading {
+                    ProgressView()
+                        .scaleEffect(3)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .background(Color.black.opacity(0.5))
                 }
             }
         }
-        .tint(Color.themeColor)
+        .tint(.themeColor)
         .navigationBarTitleDisplayMode(.inline)
     }
 }

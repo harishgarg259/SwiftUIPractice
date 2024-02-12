@@ -1,6 +1,6 @@
 //
 //  FilterView.swift
-//  SwiftUIPractice
+//  Yappetizer
 //
 //  Created by Harish Garg on 04/02/24.
 //

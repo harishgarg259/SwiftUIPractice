@@ -1,6 +1,6 @@
 //
 //  Register.swift
-//  SwiftUIPractice
+//  Yappetizer
 //
 //  Created by Harish Garg on 04/02/24.
 //
@@ -11,6 +11,7 @@ struct Register: View {
     
     @State var email = ""
     @State var password = ""
+    @State var confirmPassword = ""
     @State var name = ""
     
     @Binding var show : Bool
@@ -42,7 +43,7 @@ struct Register: View {
                     CustomTextField(image: "lock", title: "PASSWORD", value: $password, animation: animation)
                         .padding(.top,5)
                     
-                    CustomTextField(image: "lock", title: "CONFIRM PASSWORD", value: $password, animation: animation)
+                    CustomTextField(image: "lock", title: "CONFIRM PASSWORD", value: $confirmPassword, animation: animation)
                         .padding(.top,5)
                         .padding(.bottom,20)
                     
@@ -56,8 +57,9 @@ struct Register: View {
                     .buttonStyle(.borderedProminent)
                     .controlSize(.large)
                     .shadow(color: .themeColor,radius: 2)
+                    .disabled(name.count < 3 || password.count < 8 || (confirmPassword != password) || (email.textFieldValidatorEmail() == false))
                     .navigationDestination(isPresented: $showHome) {
-                        HomeScreen(showMenu: .constant(false))
+                        BaseView()
                     }
                     
                     HStack{
@@ -69,7 +71,7 @@ struct Register: View {
                         Button(action: {show.toggle()}) {
                             Text("sign in")
                                 .fontWeight(.heavy)
-                                .foregroundColor(Color.themeColor)
+                                .foregroundColor(.themeColor)
                         }
                     }
                     .padding()

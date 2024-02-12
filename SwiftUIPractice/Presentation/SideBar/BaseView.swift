@@ -1,6 +1,6 @@
 //
 //  BaseView.swift
-//  SwiftUIPractice
+//  Yappetizer
 //
 //  Created by Harish Garg on 03/02/24.
 //
@@ -18,6 +18,8 @@ struct BaseView: View {
     
     @GestureState var gestureOffset: CGFloat = 0
     
+    @EnvironmentObject var vm: UserStateViewModel
+
     private let sideBarWidth = UIScreen.main.bounds.width - 90
     
     init() {
@@ -28,36 +30,12 @@ struct BaseView: View {
         
         let sideBarWidth = getRect().width - 90
         
-        NavigationView {
+        NavigationStack {
             
             HStack(spacing: 0) {
                 SideMenu(showMenu: $showMenu)
-                
-                // Main Tab View
-                VStack(spacing: 0) {
-                    TabView(selection: $currentTab) {
-                        NavigationStack {
-                            HomeScreen(showMenu: $showMenu)
-                        }
-                        .tabItem {
-                            Label("Home", systemImage: "gear")
-                        }
-                        .tag("Home")
-                        NavigationStack {
-                            CartView(showMenu: $showMenu)
-                        }
-                        .tabItem {
-                            Label("Cart", systemImage: "gear")
-                        }
-                        .tag("Cart")
-                        NavigationStack {
-                            ProfileView(showMenu: $showMenu)
-                        }
-                        .tabItem {
-                            Label("Profile", systemImage: "gear")
-                        }
-                        .tag("Cart")
-                    }
+                NavigationStack {
+                    HomeScreen(showMenu: $showMenu)
                 }
                 .frame(width: getRect().width)
                 .overlay(
@@ -67,7 +45,6 @@ struct BaseView: View {
                             // 1 / 5 = 0.2
                             Color.primary.opacity( (offset / sideBarWidth) / 5.0 )
                         )
-                        .ignoresSafeArea(.container, edges: .all)
                         .onTapGesture {
                             showMenu.toggle()
                         }
@@ -85,10 +62,14 @@ struct BaseView: View {
                     })
                     .onEnded(onEnd(value:))
             )
-            
+            .navigationTitle("Yappetizer")
+            .navigationBarItems(trailing: trailingBarItems)
+            .navigationBarItems(leading: leadingBarItems)
             .navigationBarTitleDisplayMode(.inline)
-            //            .navigationBarHidden(true)
+            .toolbarBackground(.visible, for: .navigationBar)
         }
+        .edgesIgnoringSafeArea(.top)
+        .tint(.themeColor)
         .animation(.linear(duration: 0.15), value: offset == 0)
         .onChange(of: showMenu) { newValue in
             if showMenu && offset == 0 {
@@ -119,6 +100,29 @@ struct BaseView: View {
                 }
             }
         }
+    }
+    
+    var trailingBarItems: some View {
+        NavigationLink(destination:
+            CartView(showMenu: .constant(false))
+        )
+        {
+            Image(systemName: "cart")
+                .font(.system(size: 20))
+        }
+        .overlay(Badge(count: 8))
+    }
+    
+    var leadingBarItems: some View {
+        Button(action: {
+            withAnimation {
+                showMenu.toggle()
+            }
+        }) {
+            Image(systemName: "list.bullet")
+                .font(.system(size: 20))
+        }
+        .padding(5)
     }
     
     func onEnd(value: DragGesture.Value) {
@@ -179,23 +183,6 @@ struct BaseView: View {
         
         lastStoredOffset = offset
     }
-    
-    @ViewBuilder
-    func TabButton(image: String) -> some View {
-        Button {
-            withAnimation {
-                currentTab = image
-            }
-        } label: {
-            Image(systemName: image)
-                .resizable()
-                .renderingMode(.template)
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 23, height: 23)
-                .foregroundColor(currentTab == image ? .primary : .gray)
-                .frame(maxWidth: .infinity)
-        }
-    }
 }
 
 struct BaseView_Previews: PreviewProvider {
@@ -203,3 +190,46 @@ struct BaseView_Previews: PreviewProvider {
         BaseView()
     }
 }
+
+
+
+// Main Tab View
+//                VStack(spacing: 0) {
+//                    TabView(selection: $currentTab) {
+//                        NavigationStack {
+//                            HomeScreen(showMenu: $showMenu)
+//                        }
+//                        .tabItem {
+//                            Label("Home", systemImage: "gear")
+//                        }
+//                        .tag("Home")
+//                        NavigationStack {
+//                            CartView(showMenu: $showMenu)
+//                        }
+//                        .tabItem {
+//                            Label("Cart", systemImage: "gear")
+//                        }
+//                        .tag("Cart")
+//                        NavigationStack {
+//                            ProfileView(showMenu: $showMenu)
+//                        }
+//                        .tabItem {
+//                            Label("Profile", systemImage: "gear")
+//                        }
+//                        .tag("Cart")
+//                    }
+//                }
+//                .frame(width: getRect().width)
+//                .overlay(
+//                    Rectangle()
+//                        .fill(
+//                            // offset: 300 / 300 = 1
+//                            // 1 / 5 = 0.2
+//                            Color.primary.opacity( (offset / sideBarWidth) / 5.0 )
+//                        )
+//                        .ignoresSafeArea(.container, edges: .all)
+//                        .onTapGesture {
+//                            showMenu.toggle()
+//                        }
+//
+//                )

@@ -1,6 +1,6 @@
 //
 //  Enum.swift
-//  SwiftUIPractice
+//  Yappetizer
 //
 //  Created by Harish Garg on 05/02/24.
 //

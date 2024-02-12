@@ -1,6 +1,6 @@
 //
 //  ImageViewExtension.swift
-//  SwiftUIPractice
+//  Yappetizer
 //
 //  Created by Harish Garg on 03/02/24.
 //

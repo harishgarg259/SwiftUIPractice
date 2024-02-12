@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		387FFEC22B505DFF003B1280 /* SwiftUIPracticeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 387FFEC12B505DFF003B1280 /* SwiftUIPracticeApp.swift */; };
+		384F40682B7989BC007DC1FE /* CartBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384F40672B7989BC007DC1FE /* CartBadgeView.swift */; };
+		384F406F2B79A0A6007DC1FE /* UserStateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384F406E2B79A0A6007DC1FE /* UserStateViewModel.swift */; };
+		384F40732B79A1B4007DC1FE /* LoginFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384F40722B79A1B4007DC1FE /* LoginFlow.swift */; };
 		387FFEC42B505DFF003B1280 /* SearchImageContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 387FFEC32B505DFF003B1280 /* SearchImageContent.swift */; };
 		387FFEC62B505E06003B1280 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 387FFEC52B505E06003B1280 /* Assets.xcassets */; };
 		387FFEC92B505E06003B1280 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 387FFEC82B505E06003B1280 /* Preview Assets.xcassets */; };
@@ -78,14 +80,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		387FFEBE2B505DFF003B1280 /* SwiftUIPractice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftUIPractice.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		387FFEC12B505DFF003B1280 /* SwiftUIPracticeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIPracticeApp.swift; sourceTree = "<group>"; };
+		384F40672B7989BC007DC1FE /* CartBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartBadgeView.swift; sourceTree = "<group>"; };
+		384F406E2B79A0A6007DC1FE /* UserStateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStateViewModel.swift; sourceTree = "<group>"; };
+		384F40722B79A1B4007DC1FE /* LoginFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFlow.swift; sourceTree = "<group>"; };
+		387FFEBE2B505DFF003B1280 /* Yappetizer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Yappetizer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		387FFEC32B505DFF003B1280 /* SearchImageContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchImageContent.swift; sourceTree = "<group>"; };
 		387FFEC52B505E06003B1280 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		387FFEC82B505E06003B1280 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		387FFECE2B505E06003B1280 /* SwiftUIPracticeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftUIPracticeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		387FFECE2B505E06003B1280 /* YappetizerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YappetizerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		387FFED22B505E06003B1280 /* SwiftUIPracticeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIPracticeTests.swift; sourceTree = "<group>"; };
-		387FFED82B505E06003B1280 /* SwiftUIPracticeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftUIPracticeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		387FFED82B505E06003B1280 /* YappetizerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YappetizerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		387FFEDC2B505E06003B1280 /* SwiftUIPracticeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIPracticeUITests.swift; sourceTree = "<group>"; };
 		387FFEDE2B505E06003B1280 /* SwiftUIPracticeUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIPracticeUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		387FFEEE2B5C7D79003B1280 /* WebError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebError.swift; sourceTree = "<group>"; };
@@ -149,6 +153,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		384F406D2B79A089007DC1FE /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				384F406E2B79A0A6007DC1FE /* UserStateViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		384F40702B79A198007DC1FE /* LoginFlow */ = {
+			isa = PBXGroup;
+			children = (
+				384F40712B79A1A2007DC1FE /* View */,
+			);
+			path = LoginFlow;
+			sourceTree = "<group>";
+		};
+		384F40712B79A1A2007DC1FE /* View */ = {
+			isa = PBXGroup;
+			children = (
+				384F40722B79A1B4007DC1FE /* LoginFlow.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		387FFEB52B505DFF003B1280 = {
 			isa = PBXGroup;
 			children = (
@@ -162,9 +190,9 @@
 		387FFEBF2B505DFF003B1280 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				387FFEBE2B505DFF003B1280 /* SwiftUIPractice.app */,
-				387FFECE2B505E06003B1280 /* SwiftUIPracticeTests.xctest */,
-				387FFED82B505E06003B1280 /* SwiftUIPracticeUITests.xctest */,
+				387FFEBE2B505DFF003B1280 /* Yappetizer.app */,
+				387FFECE2B505E06003B1280 /* YappetizerTests.xctest */,
+				387FFED82B505E06003B1280 /* YappetizerUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -172,7 +200,6 @@
 		387FFEC02B505DFF003B1280 /* SwiftUIPractice */ = {
 			isa = PBXGroup;
 			children = (
-				387FFEEB2B5C7D50003B1280 /* ApplicationLayer */,
 				387FFEEC2B5C7D5F003B1280 /* Presentation */,
 				387FFEED2B5C7D79003B1280 /* NetworkLayer */,
 				387FFF022B5C7D95003B1280 /* Utilities */,
@@ -206,14 +233,6 @@
 				387FFEDE2B505E06003B1280 /* SwiftUIPracticeUITestsLaunchTests.swift */,
 			);
 			path = SwiftUIPracticeUITests;
-			sourceTree = "<group>";
-		};
-		387FFEEB2B5C7D50003B1280 /* ApplicationLayer */ = {
-			isa = PBXGroup;
-			children = (
-				387FFEC12B505DFF003B1280 /* SwiftUIPracticeApp.swift */,
-			);
-			path = ApplicationLayer;
 			sourceTree = "<group>";
 		};
 		387FFEEC2B5C7D5F003B1280 /* Presentation */ = {
@@ -293,6 +312,7 @@
 			isa = PBXGroup;
 			children = (
 				389EEA9F2B7087050050591E /* ProductCell.swift */,
+				384F40672B7989BC007DC1FE /* CartBadgeView.swift */,
 			);
 			path = ProductListCell;
 			sourceTree = "<group>";
@@ -316,6 +336,7 @@
 		389EEAA72B75EB7A0050591E /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				384F40702B79A198007DC1FE /* LoginFlow */,
 				389EEAAB2B75EBA30050591E /* ForgetPassword */,
 				389EEAAA2B75EB970050591E /* Registration */,
 				389EEAA82B75EB860050591E /* Login */,
@@ -326,6 +347,7 @@
 		389EEAA82B75EB860050591E /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				384F406D2B79A089007DC1FE /* ViewModel */,
 				389EEAA92B75EB8C0050591E /* View */,
 			);
 			path = Login;
@@ -481,9 +503,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		387FFEBD2B505DFF003B1280 /* SwiftUIPractice */ = {
+		387FFEBD2B505DFF003B1280 /* Yappetizer */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 387FFEE22B505E06003B1280 /* Build configuration list for PBXNativeTarget "SwiftUIPractice" */;
+			buildConfigurationList = 387FFEE22B505E06003B1280 /* Build configuration list for PBXNativeTarget "Yappetizer" */;
 			buildPhases = (
 				387FFEBA2B505DFF003B1280 /* Sources */,
 				387FFEBB2B505DFF003B1280 /* Frameworks */,
@@ -493,14 +515,14 @@
 			);
 			dependencies = (
 			);
-			name = SwiftUIPractice;
+			name = Yappetizer;
 			productName = SwiftUIPractice;
-			productReference = 387FFEBE2B505DFF003B1280 /* SwiftUIPractice.app */;
+			productReference = 387FFEBE2B505DFF003B1280 /* Yappetizer.app */;
 			productType = "com.apple.product-type.application";
 		};
-		387FFECD2B505E06003B1280 /* SwiftUIPracticeTests */ = {
+		387FFECD2B505E06003B1280 /* YappetizerTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 387FFEE52B505E06003B1280 /* Build configuration list for PBXNativeTarget "SwiftUIPracticeTests" */;
+			buildConfigurationList = 387FFEE52B505E06003B1280 /* Build configuration list for PBXNativeTarget "YappetizerTests" */;
 			buildPhases = (
 				387FFECA2B505E06003B1280 /* Sources */,
 				387FFECB2B505E06003B1280 /* Frameworks */,
@@ -511,14 +533,14 @@
 			dependencies = (
 				387FFED02B505E06003B1280 /* PBXTargetDependency */,
 			);
-			name = SwiftUIPracticeTests;
+			name = YappetizerTests;
 			productName = SwiftUIPracticeTests;
-			productReference = 387FFECE2B505E06003B1280 /* SwiftUIPracticeTests.xctest */;
+			productReference = 387FFECE2B505E06003B1280 /* YappetizerTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		387FFED72B505E06003B1280 /* SwiftUIPracticeUITests */ = {
+		387FFED72B505E06003B1280 /* YappetizerUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 387FFEE82B505E06003B1280 /* Build configuration list for PBXNativeTarget "SwiftUIPracticeUITests" */;
+			buildConfigurationList = 387FFEE82B505E06003B1280 /* Build configuration list for PBXNativeTarget "YappetizerUITests" */;
 			buildPhases = (
 				387FFED42B505E06003B1280 /* Sources */,
 				387FFED52B505E06003B1280 /* Frameworks */,
@@ -529,9 +551,9 @@
 			dependencies = (
 				387FFEDA2B505E06003B1280 /* PBXTargetDependency */,
 			);
-			name = SwiftUIPracticeUITests;
+			name = YappetizerUITests;
 			productName = SwiftUIPracticeUITests;
-			productReference = 387FFED82B505E06003B1280 /* SwiftUIPracticeUITests.xctest */;
+			productReference = 387FFED82B505E06003B1280 /* YappetizerUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -557,7 +579,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 387FFEB92B505DFF003B1280 /* Build configuration list for PBXProject "SwiftUIPractice" */;
+			buildConfigurationList = 387FFEB92B505DFF003B1280 /* Build configuration list for PBXProject "Yappetizer" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -571,9 +593,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				387FFEBD2B505DFF003B1280 /* SwiftUIPractice */,
-				387FFECD2B505E06003B1280 /* SwiftUIPracticeTests */,
-				387FFED72B505E06003B1280 /* SwiftUIPracticeUITests */,
+				387FFEBD2B505DFF003B1280 /* Yappetizer */,
+				387FFECD2B505E06003B1280 /* YappetizerTests */,
+				387FFED72B505E06003B1280 /* YappetizerUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -617,7 +639,6 @@
 				389EEAAD2B75EBD60050591E /* LoginScreen.swift in Sources */,
 				389EEABB2B7610BE0050591E /* Button.swift in Sources */,
 				387FFEC42B505DFF003B1280 /* SearchImageContent.swift in Sources */,
-				387FFEC22B505DFF003B1280 /* SwiftUIPracticeApp.swift in Sources */,
 				38BD15E12B5C996200D66184 /* NavigationBar.swift in Sources */,
 				38BD15F82B65C53D00D66184 /* Color.swift in Sources */,
 				389EEA972B704F8B0050591E /* FilterView.swift in Sources */,
@@ -641,10 +662,13 @@
 				389EEABE2B782BE00050591E /* ForgetPasssword.swift in Sources */,
 				389EEAB72B76056A0050591E /* Register.swift in Sources */,
 				38F3BBE42B6F098D00BB8A52 /* BaseView.swift in Sources */,
+				384F406F2B79A0A6007DC1FE /* UserStateViewModel.swift in Sources */,
 				38BD15F62B5F614000D66184 /* DetailView.swift in Sources */,
+				384F40682B7989BC007DC1FE /* CartBadgeView.swift in Sources */,
 				389EEAA42B7210B60050591E /* WebView.swift in Sources */,
 				38BD15E62B5CD60B00D66184 /* SearchServiceViewModel.swift in Sources */,
 				38F3BBEE2B6F292100BB8A52 /* ProfileView.swift in Sources */,
+				384F40732B79A1B4007DC1FE /* LoginFlow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -680,12 +704,12 @@
 /* Begin PBXTargetDependency section */
 		387FFED02B505E06003B1280 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 387FFEBD2B505DFF003B1280 /* SwiftUIPractice */;
+			target = 387FFEBD2B505DFF003B1280 /* Yappetizer */;
 			targetProxy = 387FFECF2B505E06003B1280 /* PBXContainerItemProxy */;
 		};
 		387FFEDA2B505E06003B1280 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 387FFEBD2B505DFF003B1280 /* SwiftUIPractice */;
+			target = 387FFEBD2B505DFF003B1280 /* Yappetizer */;
 			targetProxy = 387FFED92B505E06003B1280 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -959,7 +983,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		387FFEB92B505DFF003B1280 /* Build configuration list for PBXProject "SwiftUIPractice" */ = {
+		387FFEB92B505DFF003B1280 /* Build configuration list for PBXProject "Yappetizer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				387FFEE02B505E06003B1280 /* Debug */,
@@ -968,7 +992,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		387FFEE22B505E06003B1280 /* Build configuration list for PBXNativeTarget "SwiftUIPractice" */ = {
+		387FFEE22B505E06003B1280 /* Build configuration list for PBXNativeTarget "Yappetizer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				387FFEE32B505E06003B1280 /* Debug */,
@@ -977,7 +1001,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		387FFEE52B505E06003B1280 /* Build configuration list for PBXNativeTarget "SwiftUIPracticeTests" */ = {
+		387FFEE52B505E06003B1280 /* Build configuration list for PBXNativeTarget "YappetizerTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				387FFEE62B505E06003B1280 /* Debug */,
@@ -986,7 +1010,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		387FFEE82B505E06003B1280 /* Build configuration list for PBXNativeTarget "SwiftUIPracticeUITests" */ = {
+		387FFEE82B505E06003B1280 /* Build configuration list for PBXNativeTarget "YappetizerUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				387FFEE92B505E06003B1280 /* Debug */,

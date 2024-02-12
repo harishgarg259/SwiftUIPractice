@@ -1,6 +1,6 @@
 //
 //  DetailView.swift
-//  SwiftUIPractice
+//  Yappetizer
 //
 //  Created by Harish Garg on 22/01/24.
 //
@@ -9,8 +9,6 @@ import SwiftUI
 
 struct ProfileView: View {
     
-    @Binding var showMenu: Bool
-
     var body: some View {
         VStack {
             Text("This is Profile view")
@@ -20,5 +18,5 @@ struct ProfileView: View {
 }
 
 #Preview {
-    ProfileView(showMenu: .constant(true))
+    ProfileView()
 }

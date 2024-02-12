@@ -1,6 +1,6 @@
 //
 //  ForgetPasssword.swift
-//  SwiftUIPractice
+//  Yappetizer
 //
 //  Created by Harish Garg on 10/02/24.
 //
@@ -50,6 +50,7 @@ struct ForgetPasssword: View {
                 .controlSize(.large)
                 .shadow(color: .themeColor,radius: 2)
                 .padding(.top, 10)
+                .disabled((email.textFieldValidatorEmail() == false))
 
                 Spacer(minLength: 0)
             }

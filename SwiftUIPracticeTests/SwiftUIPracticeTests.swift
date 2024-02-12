@@ -1,14 +1,14 @@
 //
-//  SwiftUIPracticeTests.swift
-//  SwiftUIPracticeTests
+//  YappetizerTests.swift
+//  YappetizerTests
 //
 //  Created by Harish Garg on 11/01/24.
 //
 
 import XCTest
-@testable import SwiftUIPractice
+@testable import Yappetizer
 
-final class SwiftUIPracticeTests: XCTestCase {
+final class YappetizerTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.

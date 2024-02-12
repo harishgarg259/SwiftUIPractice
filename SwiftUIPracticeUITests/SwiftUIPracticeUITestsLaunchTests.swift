@@ -1,13 +1,13 @@
 //
-//  SwiftUIPracticeUITestsLaunchTests.swift
-//  SwiftUIPracticeUITests
+//  YappetizerUITestsLaunchTests.swift
+//  YappetizerUITests
 //
 //  Created by Harish Garg on 11/01/24.
 //
 
 import XCTest
 
-final class SwiftUIPracticeUITestsLaunchTests: XCTestCase {
+final class YappetizerUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true

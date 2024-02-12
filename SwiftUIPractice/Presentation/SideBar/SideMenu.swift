@@ -1,6 +1,6 @@
 //
 //  SideMenu.swift
-//  SwiftUIPractice
+//  Yappetizer
 //
 //  Created by Harish Garg on 03/02/24.
 //
@@ -12,18 +12,15 @@ struct SideMenu: View {
     @State private var isLoading = true
     @Binding var showMenu: Bool
     @State private var showAlert = false
-
+    @State var logout = false
+    @EnvironmentObject var settings: UserStateViewModel
+    
     var body: some View {
         
         VStack(alignment: .leading, spacing: 0) {
             
             // Profile
-            VStack(alignment: .leading, spacing: 10) {
-                Image("logo")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: 65, height: 65)
-                    .clipShape(Circle())
+            VStack(alignment: .leading, spacing: 2) {
                 Text("Harish")
                     .font(.title.bold())
                 Text("harishgarg259@gmail.com")
@@ -36,59 +33,61 @@ struct SideMenu: View {
                 VStack {
                     VStack(alignment: .leading, spacing: 40) {
                         
-                        TabButton(title: "My Profile", image: "logo", type: .None)
-                        TabButton(title: "Blog", image: "logo", type: .Blog)
-                        TabButton(title: "About Us", image: "logo", type: .AboutUS)
-                        TabButton(title: "Contact Us", image: "logo", type: .ContactUS)
-                        TabButton(title: "Log Out", image: "logo", type: .None)
-                            .alert(Text("Are you sure you want to logout?"),isPresented: $showAlert) {
-                                    Button("Cancel", role: .cancel) {}
-                                    Button("OK") {
-                                            // Handle the acknowledgement.
-                                    }
-                            }
+                        TabButton(title: "My Profile", image: "person.crop.circle", type: .None)
+                        TabButton(title: "Blog", image: "note.text", type: .Blog)
+                        TabButton(title: "About Us", image: "exclamationmark.bubble", type: .AboutUS)
+                        TabButton(title: "Contact Us", image: "phone.connection", type: .ContactUS)
                     }
                     .padding()
                     .padding(.leading)
-                    .padding(.top, 35)
+                    .padding(.top, 25)
                     
                     Spacer()
                     
                     Divider()
                 }
+                
+                Image("menuBG")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .padding()
             }
             
             // Footer
-            VStack(spacing: 0) {
+            Divider()
+                .padding(.bottom, 12)
+            HStack(spacing: 12) {
+                Image(systemName: "arrow.forward.square")
+                    .resizable()
+                    .renderingMode(.original)
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 20, height: 20)
+                    .tint(.themeColor)
+                    .padding(.leading,12)
                 
-                Divider()
-                
-                HStack {
-                    Button {
-                        
-                    } label: {
-                        Image("eye.trianglebadge.exclamationmark")
-                            .resizable()
-                            .renderingMode(.template)
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: 22, height: 22)
-                        
-                        Spacer()
-                    }
+                Button() {
+                    showAlert = true
+                } label: {
+                    Text("Logout")
+                        .fontWeight(.medium)
                 }
-                .padding([.horizontal, .top, .bottom])
+                .alert(isPresented:$showAlert) {
+                    Alert(
+                        title: Text("Are you sure you want to logout?"),
+                        primaryButton: .destructive(Text("Logout")) {
+                            settings.isLoggedIn = false
+                        },
+                        secondaryButton: .cancel()
+                    )
+                }
             }
+            .foregroundColor(.themeColor)
+            .padding([.leading, .bottom])
             
         }
         .padding(.vertical)
-        .frame(maxWidth: .infinity, alignment: .leading)
         .frame(width: getRect().width - 90)
-        .frame(maxHeight: .infinity)
-        .background(
-            Color.primary
-                .opacity(0.08)
-                .ignoresSafeArea(.container, edges: .vertical)
-        )
+        .background(.white)
         .frame(maxWidth: .infinity, alignment: .leading)
         .ignoresSafeArea(.container, edges: .bottom)
     }
@@ -96,10 +95,12 @@ struct SideMenu: View {
     @ViewBuilder
     func TabButton(title: String, image: String, type: SafariURL) -> some View {
         
-        if title == "Log Out"{
+        NavigationLink {
             
-        }else{
-            NavigationLink {
+            if type == .None{
+                ProfileView()
+            }else
+            {
                 WebView(isLoading: $isLoading, type: type)
                     .ignoresSafeArea()
                     .navigationTitle(title)
@@ -107,19 +108,21 @@ struct SideMenu: View {
                 if isLoading{
                     ProgressView()
                 }
-            } label: {
-                HStack(spacing: 13) {
-                    Image(image)
-                        .resizable()
-                        .renderingMode(.template)
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: 22, height: 22)
-                    
-                    Text(title)
-                }
-                .foregroundColor(.primary)
-                .frame(maxWidth: .infinity, alignment: .leading)
             }
+        } label: {
+            HStack(spacing: 12) {
+                Image(systemName: image)
+                    .resizable()
+                    .renderingMode(.original)
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 20, height: 20)
+                    .tint(.themeColor)
+                
+                Text(title)
+                    .fontWeight(.medium)
+            }
+            .foregroundColor(.themeColor)
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
 }

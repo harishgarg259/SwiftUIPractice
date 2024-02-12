@@ -65,7 +65,6 @@ struct CustomTextField: View {
             }
             
             if value == ""{
-                
                 Divider()
             }
         }
@@ -74,5 +73,15 @@ struct CustomTextField: View {
         .shadow(color: Color.black.opacity(value == "" ? 0 : 0.1), radius: 5, x: 5, y: 5)
         .shadow(color: Color.black.opacity(value == "" ? 0 : 0.05), radius: 5, x: -5, y: -5)
         .padding(.top)
+    }
+}
+
+
+extension String{
+    func textFieldValidatorEmail() -> Bool {
+        var isValidEmail: Bool {
+                NSPredicate(format: "SELF MATCHES %@", "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}").evaluate(with: self)
+        }
+        return isValidEmail
     }
 }
