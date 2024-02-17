@@ -68,28 +68,51 @@ struct FilterView: View {
     @Environment(\.presentationMode) private var presentationMode
 
     @Binding var showScreen: Bool
-    @Binding var selectedIndex: Int
     @State private var expanded = true
     @ObservedObject var filterModel: FilterViewModel
+    @Binding var selectedText: String
 
     var body: some View {
         
-        List {
-            ForEach(Array(filterModel.animalsGroups.enumerated()), id: \.offset) { section, element in
-                DisclosureGroup(element.groupName, isExpanded: $filterModel.animalsGroups[section].expandMe) {
-                    ForEach(Array(element.animals.enumerated()), id: \.offset) { index, animal in
-                        FilterTableRow(title: animal.name, index: index, markIndex: $selectedIndex)
-                    }.listRowInsets(.init(top: 0, leading: -8, bottom: 0, trailing: 0))
+        NavigationStack {
+            List {
+                ForEach(Array(filterModel.animalsGroups.enumerated()), id: \.offset) { section, element in
+                    DisclosureGroup(element.groupName, isExpanded: $filterModel.animalsGroups[section].expandMe) {
+                        ForEach(Array(element.animals.enumerated()), id: \.offset) { index, animal in
+                            FilterTableRow(title: animal.name, selectedRow: $selectedText)
+                        }.listRowInsets(.init(top: 0, leading: -8, bottom: 0, trailing: 0))
+                    }
                 }
             }
+            .navigationTitle("Select Catogary")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbarBackground(.visible, for: .navigationBar)
+            .navigationBarHidden(false)
+            .toolbar {
+                Button("Cancel") {
+                    selectedText = ""
+                    presentationMode.wrappedValue.dismiss()
+                }
+            }
+            
+            Button {
+            } label: {
+                Text("Filter")
+                    .frame(maxWidth: .infinity)
+                    .fontWeight(.bold)
+            }
+            .buttonStyle(.borderedProminent)
+            .controlSize(.large)
+            .shadow(color: .themeColor,radius: 2)
+            .padding()
+            .disabled(selectedText.isEmpty)
+            
         }
-//        .listStyle(.automatic)
-        .navigationTitle("Filters")
     }
 }
 
 struct FilterView_Previews: PreviewProvider {
     static var previews: some View {
-        FilterView(showScreen: .constant(false), selectedIndex: .constant(0), filterModel: FilterViewModel())
+        FilterView(showScreen: .constant(false), filterModel: FilterViewModel(), selectedText: .constant(""))
     }
 }

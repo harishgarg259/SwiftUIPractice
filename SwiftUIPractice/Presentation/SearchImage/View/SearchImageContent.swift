@@ -21,7 +21,7 @@ struct SearchImageContent: View {
                 Button("Filters") {
                     self.presented = true
                 }.sheet(isPresented: $presented) {
-                    FilterView(showScreen: .constant(false), selectedIndex: .constant(0), filterModel: FilterViewModel())
+                    FilterView(showScreen: .constant(false), filterModel: FilterViewModel(), selectedText: .constant(""))
                 }
                 
                 SearchBar(text: $searchText, onTextChanged: searchImages)

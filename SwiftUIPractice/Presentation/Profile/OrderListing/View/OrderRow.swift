@@ -1,5 +1,5 @@
 //
-//  ImageRow.swift
+//  OrderRow.swift
 //  UserDisplayApp-SwiftUI
 //
 //  Created by Harish garg on 20/01/24.
@@ -7,13 +7,11 @@
 
 import SwiftUI
 
-struct FilterTableRow: View {
+struct OrderRow: View {
     let title: String
-    @Binding var selectedRow: String
     
     var body: some View {
         Button(action: {
-            selectedRow = title
         }) {
             HStack {
                 Text(title)
@@ -21,9 +19,6 @@ struct FilterTableRow: View {
                     .font(.footnote)
                     .padding()
                 Spacer()
-                Image(systemName: title == selectedRow ? "checkmark.circle.fill" : "")
-                    .foregroundColor(title == selectedRow ? .themeColor : .clear)
-                    .padding(.trailing, 5)
             }
         }
         .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 5))
@@ -31,7 +26,7 @@ struct FilterTableRow: View {
     }
 }
 
-struct FilterTableRow_Previews: PreviewProvider {
+struct OrderRow_Previews: PreviewProvider {
     static var previews: some View {
         FilterTableRow(title: "Harish", selectedRow: .constant(""))
     }

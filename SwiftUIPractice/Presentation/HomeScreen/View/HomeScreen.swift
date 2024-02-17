@@ -62,7 +62,13 @@ struct HomeScreen: View {
                 showFab ? createFab(): nil,
                 alignment: Alignment.bottomTrailing
             )
+            .navigationTitle("Yappetizer")
+            .navigationBarItems(trailing: trailingBarItems)
+            .navigationBarItems(leading: leadingBarItems)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbarBackground(.visible, for: .navigationBar)
         }
+        .tint(.themeColor)
     }
     
     func searchProducts(for searchText: String) {
@@ -80,19 +86,42 @@ struct HomeScreen: View {
             Image(systemName: "slider.horizontal.2.square")
                 .font(.title)
                 .foregroundColor(.white)
-                .frame(width: 40, height: 40, alignment: .center)
+                .frame(width: 35, height: 35, alignment: .center)
         })
         .sheet(isPresented: $presented) {
-            FilterView(showScreen: .constant(false), selectedIndex: .constant(0), filterModel: FilterViewModel())
+            FilterView(showScreen: .constant(false), filterModel: FilterViewModel(), selectedText: $searchText)
         }
-        .padding(12)
+        .padding(10)
         .background(Color.themeColor)
         .cornerRadius(15)
-        .padding(12)
+        .padding(15)
         .shadow(radius: 3,
                 x: 3,
                 y: 3)
         .transition(.scale)
+    }
+    
+    var trailingBarItems: some View {
+        NavigationLink(destination:
+            CartView(showMenu: .constant(false))
+        )
+        {
+            Image(systemName: "cart")
+                .font(.system(size: 20))
+        }
+        .overlay(Badge(count: 8))
+    }
+    
+    var leadingBarItems: some View {
+        Button(action: {
+            withAnimation {
+                showMenu.toggle()
+            }
+        }) {
+            Image(systemName: "list.bullet")
+                .font(.system(size: 20))
+        }
+        .padding(5)
     }
 }
 

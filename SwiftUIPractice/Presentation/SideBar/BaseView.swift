@@ -30,7 +30,6 @@ struct BaseView: View {
         
         let sideBarWidth = getRect().width - 90
         
-        NavigationStack {
             
             HStack(spacing: 0) {
                 SideMenu(showMenu: $showMenu)
@@ -62,13 +61,7 @@ struct BaseView: View {
                     })
                     .onEnded(onEnd(value:))
             )
-            .navigationTitle("Yappetizer")
-            .navigationBarItems(trailing: trailingBarItems)
-            .navigationBarItems(leading: leadingBarItems)
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbarBackground(.visible, for: .navigationBar)
-        }
-        .edgesIgnoringSafeArea(.top)
+            .navigationBarBackButtonHidden()
         .tint(.themeColor)
         .animation(.linear(duration: 0.15), value: offset == 0)
         .onChange(of: showMenu) { newValue in
@@ -100,29 +93,6 @@ struct BaseView: View {
                 }
             }
         }
-    }
-    
-    var trailingBarItems: some View {
-        NavigationLink(destination:
-            CartView(showMenu: .constant(false))
-        )
-        {
-            Image(systemName: "cart")
-                .font(.system(size: 20))
-        }
-        .overlay(Badge(count: 8))
-    }
-    
-    var leadingBarItems: some View {
-        Button(action: {
-            withAnimation {
-                showMenu.toggle()
-            }
-        }) {
-            Image(systemName: "list.bullet")
-                .font(.system(size: 20))
-        }
-        .padding(5)
     }
     
     func onEnd(value: DragGesture.Value) {

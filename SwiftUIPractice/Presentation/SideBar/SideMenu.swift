@@ -25,9 +25,11 @@ struct SideMenu: View {
                     .font(.title.bold())
                 Text("harishgarg259@gmail.com")
                     .font(.callout)
+                    .padding(.bottom, 15)
             }
             .padding(.horizontal)
             .padding(.leading)
+            Divider()
             
             ScrollView(.vertical, showsIndicators: false) {
                 VStack {
@@ -40,7 +42,7 @@ struct SideMenu: View {
                     }
                     .padding()
                     .padding(.leading)
-                    .padding(.top, 25)
+                    .padding(.top, 10)
                     
                     Spacer()
                     
@@ -105,6 +107,7 @@ struct SideMenu: View {
                     .ignoresSafeArea()
                     .navigationTitle(title)
                     .navigationBarTitleDisplayMode(.inline)
+                    .tint(.themeColor)
                 if isLoading{
                     ProgressView()
                 }
