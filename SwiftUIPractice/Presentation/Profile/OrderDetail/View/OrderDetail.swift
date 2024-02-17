@@ -1,23 +1,23 @@
 //
-//  OrderListing.swift
+//  OrderDetail.swift
 //  Yappetizer
 //
-//  Created by Harish Garg on 04/02/24.
+//  Created by Harish Garg on 16/02/24.
 //
 
 import SwiftUI
 
-struct OrderListing: View {
+struct OrderDetail: View {
     
+    var orderTitle: String
+        
     let cards: [String] = ["123456","123456","123456","123456","123456","123456","123456","123456","123456","123456","123456","123456","123456","123456","123456","123456","123456","123456","123456","123456"]
     
     var body: some View {
-        List {
-            ForEach(Array(cards.enumerated()), id: \.offset) { section, element in
-                OrderRow(title: element)
-            }
+        VStack {
+            Text(orderTitle)
         }
-        .navigationTitle("Order Listing")
+        .navigationTitle("Order Detail")
         .navigationBarTitleDisplayMode(.inline)
         .tint(.themeColor)
     }
@@ -25,5 +25,5 @@ struct OrderListing: View {
 }
 
 #Preview {
-    OrderListing()
+    OrderDetail(orderTitle: "Order Title")
 }

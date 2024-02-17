@@ -43,7 +43,7 @@ class ViewFactory {
         case 0:
             return AnyView(OrderListing())
         case 1:
-            return AnyView(CartView(showMenu: .constant(false)))
+            return AnyView(AddressView())
         case 2:
             return AnyView(CartView(showMenu: .constant(false)))
         case 3:
