@@ -3,4 +3,69 @@
    uuid = "968B7275-7A71-4011-9831-3FD321A77AB5"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7076DE56-FDDB-4247-8EEE-B3F9235D210A"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SwiftUIPractice/Presentation/Profile/Address/View/AddressDetailView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "80"
+            endingLineNumber = "80"
+            landmarkName = "updateCountryName(selectedRow:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "7076DE56-FDDB-4247-8EEE-B3F9235D210A - 16843d6edc8882b3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Yappetizer.AddressDetailView.updateCountryName(selectedRow: Any) -&gt; ()"
+                  moduleName = "Yappetizer"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/harishgarg/Desktop/SwiftUIPractice/SwiftUIPractice/Presentation/Profile/Address/View/AddressDetailView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "80"
+                  endingLineNumber = "80"
+                  offsetFromSymbolStart = "1158">
+               </Location>
+               <Location
+                  uuid = "7076DE56-FDDB-4247-8EEE-B3F9235D210A - 16843d6edc8882b3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Yappetizer.AddressDetailView.updateCountryName(selectedRow: Any) -&gt; ()"
+                  moduleName = "Yappetizer"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/harishgarg/Desktop/SwiftUIPractice/SwiftUIPractice/Presentation/Profile/Address/View/AddressDetailView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "80"
+                  endingLineNumber = "80"
+                  offsetFromSymbolStart = "137">
+               </Location>
+               <Location
+                  uuid = "7076DE56-FDDB-4247-8EEE-B3F9235D210A - 16843d6edc8882b3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Yappetizer.AddressDetailView.updateCountryName(selectedRow: Any) -&gt; ()"
+                  moduleName = "Yappetizer"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/harishgarg/Desktop/SwiftUIPractice/SwiftUIPractice/Presentation/Profile/Address/View/AddressDetailView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "80"
+                  endingLineNumber = "80"
+                  offsetFromSymbolStart = "1140">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

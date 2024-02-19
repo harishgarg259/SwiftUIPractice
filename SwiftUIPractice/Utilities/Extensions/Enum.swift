@@ -7,6 +7,11 @@
 
 import Foundation
 
+public enum CountryPicker: String{
+    case Country
+    case State
+}
+
 public enum EmptyScreenEnum: String{
     case ImageNotFound
     case EmptyView

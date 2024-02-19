@@ -10,8 +10,13 @@ import SwiftUI
 struct AddressDetailView: View {
     
     var headerTitle: String
-    @State var text = ""
-    
+    @State private var text = ""
+    @State private var countryText = ""
+    @State private var stateText = ""
+    @State private var presented = false
+    @State private var isPresented = false
+    private var states: [States] = []
+
     var body: some View {
         ScrollView {
             VStack {
@@ -21,16 +26,22 @@ struct AddressDetailView: View {
                     .setTitleText("Last Name")
                 YPTextField(text: $text)
                     .setTitleText("Company Name")
-                YPTextField(text: $text)
+                YPTextField(text: $countryText)
                     .setTitleText("Country / Region")
                     .setTrailingImage(Image(systemName: "arrowtriangle.down"), click: {
-                        print("qr image tapped")
+                        self.presented = true
                     })
-                YPTextField(text: $text)
+                    .sheet(isPresented: $presented) {
+                        CountryListView(selectedCountry: updateCountryName, pickerType: .Country)
+                    }
+                YPTextField(text: $stateText)
                     .setTitleText("Province/State")
                     .setTrailingImage(Image(systemName: "arrowtriangle.down"), click: {
-                        print("qr image tapped")
+                        self.isPresented = true
                     })
+                    .sheet(isPresented: $isPresented) {
+                        CountryListView(selectedCountry: updateCountryName, pickerType: .State, states: self.states)
+                    }
                 
                 YPTextField(text: $text)
                     .setTitleText("Street address")
@@ -62,6 +73,17 @@ struct AddressDetailView: View {
             .navigationBarTitleDisplayMode(.inline)
             .tint(.themeColor)
         }
+    }
+    
+    mutating private func updateCountryName(selectedRow: Any){
+        
+        if let selectedRow = selectedRow as? Country {
+            self.countryText = selectedRow.name ?? ""
+            self.states = selectedRow.states ?? []
+        }else if let selectedRow = selectedRow as? States {
+            self.stateText = selectedRow.name ?? ""
+        }
+        
     }
     
 }

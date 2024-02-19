@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		38318C092B82CCF500211937 /* Countries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38318C072B82CCF500211937 /* Countries.swift */; };
+		38318C0C2B82CEC700211937 /* CountryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38318C0B2B82CEC700211937 /* CountryListView.swift */; };
 		384F40682B7989BC007DC1FE /* CartBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384F40672B7989BC007DC1FE /* CartBadgeView.swift */; };
 		384F406F2B79A0A6007DC1FE /* UserStateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384F406E2B79A0A6007DC1FE /* UserStateViewModel.swift */; };
 		384F40732B79A1B4007DC1FE /* LoginFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384F40722B79A1B4007DC1FE /* LoginFlow.swift */; };
@@ -67,6 +69,7 @@
 		38FE80692B807D0D00B09927 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FE80672B807D0D00B09927 /* TextField.swift */; };
 		38FE806A2B807D0D00B09927 /* TextFieldConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FE80682B807D0D00B09927 /* TextFieldConfig.swift */; };
 		38FE806C2B8082E900B09927 /* AddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FE806B2B8082E900B09927 /* AddressView.swift */; };
+		38FE806F2B82CB7000B09927 /* countries.json in Resources */ = {isa = PBXBuildFile; fileRef = 38FE806E2B82CB7000B09927 /* countries.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +90,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		38318C072B82CCF500211937 /* Countries.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Countries.swift; sourceTree = "<group>"; };
+		38318C0B2B82CEC700211937 /* CountryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryListView.swift; sourceTree = "<group>"; };
 		384F40672B7989BC007DC1FE /* CartBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartBadgeView.swift; sourceTree = "<group>"; };
 		384F406E2B79A0A6007DC1FE /* UserStateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStateViewModel.swift; sourceTree = "<group>"; };
 		384F40722B79A1B4007DC1FE /* LoginFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFlow.swift; sourceTree = "<group>"; };
@@ -140,6 +145,7 @@
 		38FE80672B807D0D00B09927 /* TextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 		38FE80682B807D0D00B09927 /* TextFieldConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldConfig.swift; sourceTree = "<group>"; };
 		38FE806B2B8082E900B09927 /* AddressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressView.swift; sourceTree = "<group>"; };
+		38FE806E2B82CB7000B09927 /* countries.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = countries.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -280,6 +286,7 @@
 		387FFF022B5C7D95003B1280 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				38FE806D2B82CB5600B09927 /* CountryListJSON */,
 				389EEAAE2B7601DB0050591E /* Localization */,
 				38BD15ED2B5CDF6F00D66184 /* SearchBar */,
 				38BD15EA2B5CD71000D66184 /* Constant */,
@@ -577,6 +584,16 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		38FE806D2B82CB5600B09927 /* CountryListJSON */ = {
+			isa = PBXGroup;
+			children = (
+				38318C0B2B82CEC700211937 /* CountryListView.swift */,
+				38318C072B82CCF500211937 /* Countries.swift */,
+				38FE806E2B82CB7000B09927 /* countries.json */,
+			);
+			path = CountryListJSON;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -684,6 +701,7 @@
 			files = (
 				387FFEC92B505E06003B1280 /* Preview Assets.xcassets in Resources */,
 				389EEAB12B7604050050591E /* Localizable.strings in Resources */,
+				38FE806F2B82CB7000B09927 /* countries.json in Resources */,
 				387FFEC62B505E06003B1280 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -730,6 +748,7 @@
 				38BD15E92B5CD69300D66184 /* SearchNasaImageBase.swift in Sources */,
 				389EEA942B7047D20050591E /* SideMenuModel.swift in Sources */,
 				38BD15F12B5CE11100D66184 /* ImageRow.swift in Sources */,
+				38318C0C2B82CEC700211937 /* CountryListView.swift in Sources */,
 				387FFEF62B5C7D79003B1280 /* RequestUrl.swift in Sources */,
 				38F3BBE12B6EF88900BB8A52 /* ImageViewExtension.swift in Sources */,
 				389EEAB92B7605D80050591E /* CustomTextField.swift in Sources */,
@@ -740,6 +759,7 @@
 				38F3BBF12B6F295A00BB8A52 /* CartView.swift in Sources */,
 				38F3BBE62B6F09F000BB8A52 /* SideMenu.swift in Sources */,
 				389EEABE2B782BE00050591E /* ForgetPasssword.swift in Sources */,
+				38318C092B82CCF500211937 /* Countries.swift in Sources */,
 				389EEAB72B76056A0050591E /* Register.swift in Sources */,
 				38FE806A2B807D0D00B09927 /* TextFieldConfig.swift in Sources */,
 				38FE80662B80742C00B09927 /* AddressDetailView.swift in Sources */,
