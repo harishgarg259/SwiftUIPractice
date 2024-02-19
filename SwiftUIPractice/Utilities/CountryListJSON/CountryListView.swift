@@ -47,7 +47,7 @@ struct CountryListView: View {
             }
         }
         .navigationTitle("Select Country")
-        .navigationBarBackButtonHidden(false)
+        .navigationBarHidden(false)
         .toolbar {
             Button("Cancel") {
                 presentationMode.wrappedValue.dismiss()

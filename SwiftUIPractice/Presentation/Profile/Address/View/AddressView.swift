@@ -7,23 +7,47 @@
 
 import SwiftUI
 
+class AddressViewModel: ObservableObject {
+    
+    @Published var addresses = [
+        AnimalGroup(groupName: "Billing address", animals: [
+            Animal(name: "No Address")
+        ], expandMe: true),
+        AnimalGroup(groupName: "Shipping address", animals: [
+            Animal(name: "No Address")
+        ], expandMe:true)
+    ]
+
+    init() {
+    }
+}
+
+
 struct AddressView: View {
     
-    let myAddressOptions: [String] = ["Billing address","Shipping address"]
+    @ObservedObject var addresses: AddressViewModel
+    
     var body: some View {
         VStack {
-            List(Array(myAddressOptions.enumerated()), id: \.offset) { index, contact in
-                AddressListCellView(index: index, title: contact)
+            List {
+                ForEach(Array(addresses.addresses.enumerated()), id: \.offset) { section, element in
+                    DisclosureGroup(element.groupName, isExpanded: .constant(true)) {
+                        ForEach(Array(element.animals.enumerated()), id: \.offset) { index, animal in
+                            AddressListCellView(index: index, title: animal.name)
+                        }.listRowInsets(.init(top: 0, leading: -8, bottom: 0, trailing: 0))
+                    }
+                    .accentColor(.clear)
+                }
+                .accentColor(.clear)
             }
         }
         .navigationBarTitle("Addresses",displayMode: .inline)
         .toolbarBackground(.visible, for: .navigationBar)
-        .tint(.themeColor)
     }
 }
 
 #Preview {
-    AddressView()
+    AddressView(addresses: AddressViewModel())
 }
 
 struct AddressListCellView: View {
@@ -31,8 +55,15 @@ struct AddressListCellView: View {
     var title: String
     var body: some View {
         return   NavigationLink(destination: AddressViewFactory.create(index, title: title))  {
-            Text(title)
+            HStack {
+                Text(title)
+                    .padding()
                 .fontWeight(.medium)
+                Spacer()
+                Image(systemName: "pencil")
+                    .renderingMode(.template)
+                    .foregroundColor(.black)
+            }
         }
     }
 }

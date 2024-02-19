@@ -9,13 +9,17 @@ import SwiftUI
 
 struct AddressDetailView: View {
     
-    var headerTitle: String
+    var headerTitle: String = ""
     @State private var text = ""
     @State private var countryText = ""
     @State private var stateText = ""
     @State private var presented = false
     @State private var isPresented = false
     private var states: [States] = []
+    
+    init(headerTitle: String){
+        self.headerTitle = headerTitle
+    }
 
     var body: some View {
         ScrollView {
@@ -32,7 +36,7 @@ struct AddressDetailView: View {
                         self.presented = true
                     })
                     .sheet(isPresented: $presented) {
-                        CountryListView(selectedCountry: updateCountryName, pickerType: .Country)
+//                        CountryListView(selectedCountry: updateCountryName, pickerType: .Country)
                     }
                 YPTextField(text: $stateText)
                     .setTitleText("Province/State")
@@ -40,7 +44,7 @@ struct AddressDetailView: View {
                         self.isPresented = true
                     })
                     .sheet(isPresented: $isPresented) {
-                        CountryListView(selectedCountry: updateCountryName, pickerType: .State, states: self.states)
+//                        CountryListView(selectedCountry: updateCountryName, pickerType: .State, states: self.states)
                     }
                 
                 YPTextField(text: $text)
