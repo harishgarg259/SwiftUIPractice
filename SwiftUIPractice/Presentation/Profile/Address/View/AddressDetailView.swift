@@ -20,7 +20,8 @@ struct AddressDetailView: View {
     @State private var presented = false
     @State private var isPresented = false
     var addressDetailViewModel = AddressDetailViewModel()
-    
+    @StateObject private var alert = AlertContext()
+
     init(headerTitle: String){
         self.headerTitle = headerTitle
     }
@@ -36,7 +37,7 @@ struct AddressDetailView: View {
                     .setTitleText("Company Name")
                 YPTextField(text: $countryText)
                     .setTitleText("Country / Region")
-                    .setTrailingImage(Image(systemName: "arrowtriangle.down"), click: {
+                    .setTrailingImage(Image("down"), click: {
                         self.presented = true
                     })
                     .sheet(isPresented: $presented) {
@@ -44,9 +45,14 @@ struct AddressDetailView: View {
                     }
                 YPTextField(text: $stateText)
                     .setTitleText("Province/State")
-                    .setTrailingImage(Image(systemName: "arrowtriangle.down"), click: {
-                        self.isPresented = true
+                    .setTrailingImage(Image("down"), click: {
+                        if self.addressDetailViewModel.states.isEmpty{
+                            alert.present(Alert(title: Text(""), message: Text("Please select country.")))
+                        }else{
+                            self.isPresented = true
+                        }
                     })
+                    .alert(alert)
                     .sheet(isPresented: $isPresented) {
                         CountryListView(selectedCountry: updateCountryName, pickerType: .State, states: self.addressDetailViewModel.states)
                     }
@@ -88,6 +94,7 @@ struct AddressDetailView: View {
         if let selectedRow = selectedRow as? Country {
             self.countryText = selectedRow.name ?? ""
             self.addressDetailViewModel.states = selectedRow.states ?? []
+            self.stateText = ""
         }else if let selectedRow = selectedRow as? States {
             self.stateText = selectedRow.name ?? ""
         }
