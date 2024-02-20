@@ -86,7 +86,7 @@ struct LoginScreen: View {
                                         .foregroundColor(.themeColor)
                                 })
                                 .navigationDestination(isPresented: $showForget) {
-                                    ForgetPasssword(show: $showForget)
+                                    //ForgetPasssword(show: $showForget)
                                 }
                             }
                             .padding(.top, 10)
@@ -110,7 +110,7 @@ struct LoginScreen: View {
                                 .foregroundColor(.themeColor)
                         })
                         .navigationDestination(isPresented: $show) {
-                            Register(show: $show)
+                            //Register(show: $show)
                         }
                     }
                 }

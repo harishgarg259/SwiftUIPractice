@@ -14,7 +14,7 @@ struct Register: View {
     @State var confirmPassword = ""
     @State var name = ""
     
-    @Binding var show : Bool
+    //@Binding var show : Bool
     @State var showHome = false
     
     @Namespace var animation
@@ -62,20 +62,7 @@ struct Register: View {
                         BaseView()
                     }
                     
-                    HStack{
-                        
-                        Text("Already have a account?")
-                            .fontWeight(.heavy)
-                            .foregroundColor(.gray)
-                        
-                        Button(action: {show.toggle()}) {
-                            Text("sign in")
-                                .fontWeight(.heavy)
-                                .foregroundColor(.themeColor)
-                        }
-                    }
-                    .padding()
-                    .padding(.top,5)
+                    showLoginScreen()
                     
                 }
                 .padding(.leading, 20)
@@ -88,5 +75,28 @@ struct Register: View {
 }
 
 #Preview {
-    Register(show: .constant(true))
+    Register()
+}
+
+struct showLoginScreen: View {
+    
+    @Environment(\.dismiss) var dismiss
+    
+    var body: some View {
+        HStack{
+            Text("Already have a account?")
+                .fontWeight(.heavy)
+                .foregroundColor(.gray)
+            
+            Button(action: {
+                dismiss()
+            }, label: {
+                Text("LogIn")
+                    .fontWeight(.heavy)
+                    .foregroundColor(.themeColor)
+            })
+        }
+        .padding()
+        .padding(.top,5)
+    }
 }

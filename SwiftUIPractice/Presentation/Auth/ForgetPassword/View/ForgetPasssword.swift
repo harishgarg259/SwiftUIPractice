@@ -13,7 +13,7 @@ struct ForgetPasssword: View {
     @Namespace var animation
     @State var transition: Int? = 0
     
-    @Binding var show : Bool
+    //@Binding var show : Bool
 
     var body: some View {
             
@@ -65,5 +65,5 @@ struct ForgetPasssword: View {
 }
 
 #Preview {
-    ForgetPasssword(show: .constant(false))
+    ForgetPasssword()
 }

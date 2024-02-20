@@ -29,9 +29,9 @@ struct ApplicationSwitcher: View {
     
     var body: some View {
         if (vm.isLoggedIn) {
-            BaseView()
+            NewLoginScreen()
         } else {
-            LoginScreen()
+            NewLoginScreen()
         }
     }
 }

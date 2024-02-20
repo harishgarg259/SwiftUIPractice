@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		380A6B962B85477700279659 /* NewLoginScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380A6B952B85477700279659 /* NewLoginScreen.swift */; };
 		38318C092B82CCF500211937 /* Countries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38318C072B82CCF500211937 /* Countries.swift */; };
 		38318C0C2B82CEC700211937 /* CountryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38318C0B2B82CEC700211937 /* CountryListView.swift */; };
 		384F40682B7989BC007DC1FE /* CartBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384F40672B7989BC007DC1FE /* CartBadgeView.swift */; };
@@ -91,6 +92,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		380A6B952B85477700279659 /* NewLoginScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewLoginScreen.swift; sourceTree = "<group>"; };
 		38318C072B82CCF500211937 /* Countries.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Countries.swift; sourceTree = "<group>"; };
 		38318C0B2B82CEC700211937 /* CountryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryListView.swift; sourceTree = "<group>"; };
 		384F40672B7989BC007DC1FE /* CartBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartBadgeView.swift; sourceTree = "<group>"; };
@@ -380,6 +382,7 @@
 			isa = PBXGroup;
 			children = (
 				389EEAAC2B75EBD60050591E /* LoginScreen.swift */,
+				380A6B952B85477700279659 /* NewLoginScreen.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -752,6 +755,7 @@
 				389EEA942B7047D20050591E /* SideMenuModel.swift in Sources */,
 				38BD15F12B5CE11100D66184 /* ImageRow.swift in Sources */,
 				38318C0C2B82CEC700211937 /* CountryListView.swift in Sources */,
+				380A6B962B85477700279659 /* NewLoginScreen.swift in Sources */,
 				38BDCEC22B84401100B6CA18 /* AlertView.swift in Sources */,
 				387FFEF62B5C7D79003B1280 /* RequestUrl.swift in Sources */,
 				38F3BBE12B6EF88900BB8A52 /* ImageViewExtension.swift in Sources */,
