@@ -54,16 +54,20 @@ struct AddressListCellView: View {
     var index: Int
     var title: String
     var body: some View {
-        return   NavigationLink(destination: AddressViewFactory.create(index, title: title))  {
+        return   ZStack {
             HStack {
                 Text(title)
                     .padding()
-                .fontWeight(.medium)
+                    .fontWeight(.regular)
+                    .foregroundColor(.gray)
                 Spacer()
                 Image(systemName: "pencil")
                     .renderingMode(.template)
-                    .foregroundColor(.black)
+                    .foregroundColor(.gray)
+                    .padding(.trailing, 15)
             }
+            NavigationLink(destination: AddressViewFactory.create(index, title: title))  {
+            }.opacity(0)
         }
     }
 }

@@ -7,6 +7,10 @@
 
 import SwiftUI
 
+class AddressDetailViewModel: ObservableObject {
+    var states: [States] = []
+}
+
 struct AddressDetailView: View {
     
     var headerTitle: String = ""
@@ -15,7 +19,7 @@ struct AddressDetailView: View {
     @State private var stateText = ""
     @State private var presented = false
     @State private var isPresented = false
-    private var states: [States] = []
+    var addressDetailViewModel = AddressDetailViewModel()
     
     init(headerTitle: String){
         self.headerTitle = headerTitle
@@ -36,7 +40,7 @@ struct AddressDetailView: View {
                         self.presented = true
                     })
                     .sheet(isPresented: $presented) {
-//                        CountryListView(selectedCountry: updateCountryName, pickerType: .Country)
+                        CountryListView(selectedCountry: updateCountryName, pickerType: .Country)
                     }
                 YPTextField(text: $stateText)
                     .setTitleText("Province/State")
@@ -44,7 +48,7 @@ struct AddressDetailView: View {
                         self.isPresented = true
                     })
                     .sheet(isPresented: $isPresented) {
-//                        CountryListView(selectedCountry: updateCountryName, pickerType: .State, states: self.states)
+                        CountryListView(selectedCountry: updateCountryName, pickerType: .State, states: self.addressDetailViewModel.states)
                     }
                 
                 YPTextField(text: $text)
@@ -79,11 +83,11 @@ struct AddressDetailView: View {
         }
     }
     
-    mutating private func updateCountryName(selectedRow: Any){
+    private func updateCountryName(selectedRow: Any){
         
         if let selectedRow = selectedRow as? Country {
             self.countryText = selectedRow.name ?? ""
-            self.states = selectedRow.states ?? []
+            self.addressDetailViewModel.states = selectedRow.states ?? []
         }else if let selectedRow = selectedRow as? States {
             self.stateText = selectedRow.name ?? ""
         }
