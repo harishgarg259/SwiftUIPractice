@@ -14,7 +14,8 @@ struct HomeScreen: View {
     @State private var presented = false
     @State var showFab = true
     @State var scrollOffset: CGFloat = 0.00
-    
+    @State var badgeCount: Int = 5
+
     // 1. Number of items will be display in row
     var columns: [GridItem] = [
         GridItem(.flexible(), spacing: 20),
@@ -33,7 +34,7 @@ struct HomeScreen: View {
                 // 4. Populate into grid
                 LazyVGrid(columns: columns, spacing: 20) {
                     ForEach(Array(cards.enumerated()), id: \.offset) { section, element in
-                        ProductView(productName: element)
+                        ProductView(imageDetail: sampleProduct, productName: element, badgeCount: <#Binding<Int>#>)
                             .frame(height: height)
                     }
                 }
@@ -109,7 +110,7 @@ struct HomeScreen: View {
             Image(systemName: "cart")
                 .font(.system(size: 20))
         }
-        .overlay(Badge(count: 8))
+        .overlay(Badge(count: badgeCount))
     }
     
     var leadingBarItems: some View {

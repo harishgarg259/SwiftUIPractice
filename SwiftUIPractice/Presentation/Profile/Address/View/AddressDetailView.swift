@@ -14,9 +14,15 @@ class AddressDetailViewModel: ObservableObject {
 struct AddressDetailView: View {
     
     var headerTitle: String = ""
-    @State private var text = ""
+    @State private var firstName = ""
+    @State private var lastName = ""
+    @State private var companyName = ""
     @State private var countryText = ""
     @State private var stateText = ""
+    @State private var streetAddress = ""
+    @State private var apartmentName = ""
+    @State private var town = ""
+    @State private var postcode = ""
     @State private var presented = false
     @State private var isPresented = false
     var addressDetailViewModel = AddressDetailViewModel()
@@ -28,15 +34,19 @@ struct AddressDetailView: View {
 
     var body: some View {
         ScrollView {
-            VStack {
-                YPTextField(text: $text)
-                    .setTitleText("First name")
-                YPTextField(text: $text)
-                    .setTitleText("Last Name")
-                YPTextField(text: $text)
+            VStack(spacing: 15, content: {
+                YPTextField(text: $firstName)
+                    .setTitleText("First name*")
+                    .setPlaceHolderText("First name")
+                YPTextField(text: $lastName)
+                    .setTitleText("Last Name*")
+                    .setPlaceHolderText("Last Name")
+                YPTextField(text: $companyName)
                     .setTitleText("Company Name")
+                    .setPlaceHolderText("Company Name")
                 YPTextField(text: $countryText)
-                    .setTitleText("Country / Region")
+                    .setTitleText("Country / Region*")
+                    .setPlaceHolderText("Select Country")
                     .setTrailingImage(Image("down"), click: {
                         self.presented = true
                     })
@@ -44,7 +54,8 @@ struct AddressDetailView: View {
                         CountryListView(selectedCountry: updateCountryName, pickerType: .Country)
                     }
                 YPTextField(text: $stateText)
-                    .setTitleText("Province/State")
+                    .setTitleText("Province/State*")
+                    .setPlaceHolderText("Select Province")
                     .setTrailingImage(Image("down"), click: {
                         if self.addressDetailViewModel.states.isEmpty{
                             alert.present(Alert(title: Text(""), message: Text("Please select country.")))
@@ -57,16 +68,17 @@ struct AddressDetailView: View {
                         CountryListView(selectedCountry: updateCountryName, pickerType: .State, states: self.addressDetailViewModel.states)
                     }
                 
-                YPTextField(text: $text)
-                    .setTitleText("Street address")
-                    .setPlaceHolderText("House number and street name")
-                YPTextField(text: $text)
+                YPTextField(text: $streetAddress)
+                    .setTitleText("Street address*")
+                    .setPlaceHolderText("Street address")
+                YPTextField(text: $apartmentName)
                     .setPlaceHolderText("Apartment, suite, unit etc")
-                
-                YPTextField(text: $text)
-                    .setTitleText("Town / City")
-                YPTextField(text: $text)
-                    .setTitleText("Postcode / ZIP")
+                YPTextField(text: $town)
+                    .setTitleText("Town / City*")
+                    .setPlaceHolderText("Town / City")
+                YPTextField(text: $postcode)
+                    .setTitleText("Postcode / ZIP*")
+                    .setPlaceHolderText("Postcode / ZIP")
                     .padding(.bottom,20)
                 
                 Button {
@@ -79,14 +91,14 @@ struct AddressDetailView: View {
                 .controlSize(.large)
                 .shadow(color: .themeColor,radius: 2)
                 .padding(.top, 10)
-                .disabled(text.isEmpty)
+                .disabled(firstName.isEmpty || lastName.isEmpty || countryText.isEmpty || stateText.isEmpty || streetAddress.isEmpty || town.isEmpty || postcode.isEmpty)
                 Spacer()
-            }
+            })
             .padding()
-            .navigationTitle(headerTitle)
-            .navigationBarTitleDisplayMode(.inline)
             .tint(.themeColor)
         }
+        .navigationBarTitle(headerTitle,displayMode: .inline)
+        .toolbarBackground(.visible, for: .navigationBar)
     }
     
     private func updateCountryName(selectedRow: Any){

@@ -96,6 +96,7 @@ struct FilterView: View {
             }
             
             Button {
+                presentationMode.wrappedValue.dismiss()
             } label: {
                 Text("Filter")
                     .frame(maxWidth: .infinity)

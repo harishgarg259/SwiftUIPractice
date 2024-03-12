@@ -6,7 +6,12 @@
 //
 
 import SwiftUI
+import UIKit
 
 extension Color{
+    static let themeColor = Color("BlueColor")
+}
+
+extension UIColor{
     static let themeColor = Color("BlueColor")
 }

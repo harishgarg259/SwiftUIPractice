@@ -17,8 +17,8 @@ struct OrderListing: View {
                 OrderRow(title: element)
             }
         }
-        .navigationTitle("Order Listing")
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarTitle("Order Listing",displayMode: .inline)
+        .toolbarBackground(.visible, for: .navigationBar)
         .tint(.themeColor)
     }
     

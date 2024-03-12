@@ -33,7 +33,7 @@ struct AddressView: View {
                 ForEach(Array(addresses.addresses.enumerated()), id: \.offset) { section, element in
                     DisclosureGroup(element.groupName, isExpanded: .constant(true)) {
                         ForEach(Array(element.animals.enumerated()), id: \.offset) { index, animal in
-                            AddressListCellView(index: index, title: animal.name)
+                            AddressListCellView(index: index, title: animal.name, header: element.groupName)
                         }.listRowInsets(.init(top: 0, leading: -8, bottom: 0, trailing: 0))
                     }
                     .accentColor(.clear)
@@ -53,6 +53,7 @@ struct AddressView: View {
 struct AddressListCellView: View {
     var index: Int
     var title: String
+    var header: String
     var body: some View {
         return   ZStack {
             HStack {
@@ -66,7 +67,7 @@ struct AddressListCellView: View {
                     .foregroundColor(.gray)
                     .padding(.trailing, 15)
             }
-            NavigationLink(destination: AddressViewFactory.create(index, title: title))  {
+            NavigationLink(destination: AddressViewFactory.create(index, title: header))  {
             }.opacity(0)
         }
     }

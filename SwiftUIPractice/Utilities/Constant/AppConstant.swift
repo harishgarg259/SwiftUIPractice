@@ -17,5 +17,6 @@ struct AppConstants {
     static let aboutUsURL: String = "https://www.pawsitivelycanadian.ca/about-us/"
     static let contactUsURL: String = "https://www.pawsitivelycanadian.ca/contact-us/"
 
+    static let STRIPE_PUBLISHING_KEY = "pk_test_51BTUDGJAJfZb9HEBwDg86TN1KNprHjkfipXmEDMb0gSCassK5T3ZfxsAbcgKVmAIXF7oZ6ItlZZbXO6idTHE67IM007EwQ4uN3"
     
 }

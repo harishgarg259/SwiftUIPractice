@@ -6,20 +6,18 @@
 //
 
 import SwiftUI
+import Stripe
 
-@main
-struct LoginFlowApp: App {
+struct LoginFlowApp: View {
     
     @StateObject var userStateViewModel = UserStateViewModel()
     
-    var body: some Scene {
-        WindowGroup {
-            NavigationView{
-                ApplicationSwitcher()
-            }
-            .navigationViewStyle(.stack)
-            .environmentObject(userStateViewModel)
+    var body: some View {
+        NavigationView{
+            ApplicationSwitcher()
         }
+        .navigationViewStyle(.stack)
+        .environmentObject(userStateViewModel)
     }
 }
 
@@ -29,7 +27,7 @@ struct ApplicationSwitcher: View {
     
     var body: some View {
         if (vm.isLoggedIn) {
-            NewLoginScreen()
+            BaseView()
         } else {
             NewLoginScreen()
         }

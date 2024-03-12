@@ -13,7 +13,7 @@ struct OrderRow: View {
     var body: some View {
         NavigationLink(destination: OrderDetail(orderTitle: title)) {
             HStack {
-                VStack(alignment: .leading, content: {
+                VStack(alignment: .leading,spacing: 5, content: {
                     HStack {
                         Text("Order:")
                             .foregroundColor(.primary)
