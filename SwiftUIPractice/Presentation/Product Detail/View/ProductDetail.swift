@@ -20,7 +20,7 @@ struct ProductDetailView: View {
     let product: Product
     @State private var selectedSizeIndex = 0
     @State private var quantity = 1
-    @Binding var badgeCount : Int
+//    @Binding var badgeCount : Int
 
     // 1. Number of items will be display in row
     var columns: [GridItem] = [
@@ -104,7 +104,7 @@ struct ProductDetailView: View {
                 // 4. Populate into grid
                 LazyVGrid(columns: columns, spacing: 20) {
                     ForEach(Array(cards.enumerated()), id: \.offset) { section, element in
-                        ProductView(imageDetail: sampleProduct, productName: element, badgeCount: .constant(0))
+                        ProductView(imageDetail: sampleProduct, productName: element)
                             .frame(height: height)
                     }
                 }
@@ -159,12 +159,12 @@ struct ProductDescription {
 struct ProductDetailView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            ProductDetailView(product: sampleProduct, badgeCount: .constant(0))
+            ProductDetailView(product: sampleProduct)
         }
     }
 }
 
 
 #Preview {
-    ProductDetailView(product: sampleProduct, badgeCount: .constant(0))
+    ProductDetailView(product: sampleProduct)
 }

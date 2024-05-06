@@ -11,10 +11,10 @@ struct ProductView: View {
     
     @State var imageDetail: Product
     let productName: String
-    @Binding var badgeCount : Int
+//    @Binding var badgeCount : Int
 
     var body: some View {
-        NavigationLink(destination: ProductDetailView(product: imageDetail, badgeCount: $badgeCount)) {
+        NavigationLink(destination: ProductDetailView(product: imageDetail)) {
             VStack {
                 // Sale badge
                 HStack {
@@ -65,7 +65,7 @@ struct ProductView: View {
 
 struct ProductView_Previews: PreviewProvider {
     static var previews: some View {
-        ProductView(imageDetail: sampleProduct, productName: "Pork Liver", badgeCount: .constant(0))
+        ProductView(imageDetail: sampleProduct, productName: "Pork Liver")
     }
 }
 
