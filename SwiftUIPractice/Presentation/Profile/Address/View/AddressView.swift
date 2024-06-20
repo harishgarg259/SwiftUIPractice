@@ -7,38 +7,73 @@
 
 import SwiftUI
 
+struct CustomerAddresses: Identifiable {
+    var id = UUID()
+    var isSelected : Bool = false
+    var addressDetail: AddressDetail?
+}
+
+struct AddressGroup: Identifiable {
+
+    var id = UUID()
+    var addressType : String
+    var address : [CustomerAddresses]
+    var expandMe : Bool
+}
+
 class AddressViewModel: ObservableObject {
     
-    @Published var addresses = [
-        AnimalGroup(groupName: "Billing address", animals: [
-            Animal(name: "No Address")
-        ], expandMe: true),
-        AnimalGroup(groupName: "Shipping address", animals: [
-            Animal(name: "No Address")
-        ], expandMe:true)
-    ]
-
+    @Published var addresses: [AddressGroup] = []
+    
     init() {
+        prepareAddressArray()
+    }
+    
+    func customerProfile() -> CustomerProfile? {
+        let userID = "\(UserDefaultsManager.userID ?? 0)"
+        let storage = PawStorageManager.PawStorageFile.customerDetail(userID)
+        let response = PawStorageManager.shared.retrieve(storage, from: .caches, as: CustomerProfile.self)
+        return response
+    }
+    
+    func prepareAddressArray() {
+        
+        let customerProfile = customerProfile()
+        
+        if let billingAddress = customerProfile?.billing {
+            let detail = AddressGroup(addressType: "Billing Address", address: [
+                CustomerAddresses(addressDetail: billingAddress)
+            ], expandMe: true)
+            self.addresses.append(detail)
+        }
+        if let shippingAddress = customerProfile?.shipping {
+            let detail = AddressGroup(addressType: "Shipping Address", address: [
+                CustomerAddresses(addressDetail: shippingAddress)
+            ], expandMe: true)
+            self.addresses.append(detail)
+        }
     }
 }
 
 
 struct AddressView: View {
     
-    @ObservedObject var addresses: AddressViewModel
+    @StateObject var viewModel: AddressViewModel = AddressViewModel()
     
     var body: some View {
         VStack {
-            List {
-                ForEach(Array(addresses.addresses.enumerated()), id: \.offset) { section, element in
-                    DisclosureGroup(element.groupName, isExpanded: .constant(true)) {
-                        ForEach(Array(element.animals.enumerated()), id: \.offset) { index, animal in
-                            AddressListCellView(index: index, title: animal.name, header: element.groupName)
-                        }.listRowInsets(.init(top: 0, leading: -8, bottom: 0, trailing: 0))
+            if !viewModel.addresses.isEmpty{
+                List {
+                    ForEach(Array(viewModel.addresses.enumerated()), id: \.offset) { index, element in
+                        DisclosureGroup(element.addressType, isExpanded: .constant(true)) {
+                            ForEach(Array(element.address.enumerated()), id: \.offset) { index, address in
+                                AddressListCellView(address: element, index: index)
+                            }.listRowInsets(.init(top: 0, leading: -8, bottom: 0, trailing: 0))
+                        }
+                        .accentColor(.clear)
                     }
                     .accentColor(.clear)
                 }
-                .accentColor(.clear)
             }
         }
         .navigationBarTitle("Addresses",displayMode: .inline)
@@ -47,17 +82,16 @@ struct AddressView: View {
 }
 
 #Preview {
-    AddressView(addresses: AddressViewModel())
+    AddressView(viewModel: AddressViewModel())
 }
 
 struct AddressListCellView: View {
+    var address: AddressGroup?
     var index: Int
-    var title: String
-    var header: String
     var body: some View {
         return   ZStack {
             HStack {
-                Text(title)
+                Text(formatAddress())
                     .padding()
                     .fontWeight(.regular)
                     .foregroundColor(.gray)
@@ -67,21 +101,13 @@ struct AddressListCellView: View {
                     .foregroundColor(.gray)
                     .padding(.trailing, 15)
             }
-            NavigationLink(destination: AddressViewFactory.create(index, title: header))  {
+            NavigationLink(destination: AddressDetailView(headerTitle: address?.addressType ?? "", addressDetail: address))  {
             }.opacity(0)
         }
     }
-}
-
-class AddressViewFactory {
-    static func create(_ index: Int, title: String) -> AnyView {
-        switch index {
-        case 0:
-            return AnyView(AddressDetailView(headerTitle: title))
-        case 1:
-            return AnyView(AddressDetailView(headerTitle: title))
-        default:
-            return AnyView(EmptyView())
-        }
+    
+    func formatAddress() -> String{
+        let address = ((address?.address[0].addressDetail?.address_1?.isEmpty ?? true) ? "No Address" : address?.address[0].addressDetail?.address_1) ?? ""
+        return address
     }
 }

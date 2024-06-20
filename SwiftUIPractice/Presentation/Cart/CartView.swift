@@ -23,7 +23,8 @@ struct CartView: View {
         CartItem(image: "pork-liver", title: "2018 Sale Blue Jackets", price: "US $20.25", color: "gray", size: "XL"),
         CartItem(image: "pork-liver", title: "2018 Sale Green Jackets", price: "US $32.89", color: "gray", size: "XL")
     ]
-    
+    @State private var isConfirmed = false
+
     @Binding var showMenu: Bool
     
     var body: some View {
@@ -96,9 +97,12 @@ struct CartView: View {
                     Spacer()
                     
                     Button("NEXT") {
-                        // Next action
+                        self.isConfirmed = true
                     }
                     .foregroundColor(.blue)
+                    .navigationDestination(isPresented: $isConfirmed) {
+                        ConfirmAddressView()
+                    }
                 }
                 .padding()
             })

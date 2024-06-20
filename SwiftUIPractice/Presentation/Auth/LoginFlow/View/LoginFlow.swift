@@ -26,7 +26,8 @@ struct ApplicationSwitcher: View {
     @EnvironmentObject var vm: UserStateViewModel
     
     var body: some View {
-        if (vm.isLoggedIn) {
+        
+        if (UserDefaultsManager.isLoggedIn ?? false) {
             BaseView()
         } else {
             NewLoginScreen()

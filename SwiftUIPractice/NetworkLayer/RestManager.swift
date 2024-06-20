@@ -56,6 +56,12 @@ class RestManager<T: Codable> {
                         }
                     }
                     
+                    if let responseData = data
+                    {
+                        let str = String(decoding: responseData, as: UTF8.self)
+                        print(str)
+                    }
+                    
                     switch response.statusCode {
                     case (200..<300):
                         guard let model = Response<T>().parceModel(data: data) else {
@@ -68,8 +74,26 @@ class RestManager<T: Codable> {
                             completion(.failure(.other((error?.localizedDescription) ?? "Internal server error")))
                             return
                         }
-                        let message = json["reason"] as? String ?? WebError.unauthorized.description
+                        
+                        let requestURL = request.url?.absoluteString ?? ""
+                        if requestURL.contains("rest_route=/simple-jwt-login"){
+                            if let model = Response<RegisterErrorResponse>().parceModel(data: data) {
+                                completion(.failure(.other(model.data?.message ?? WebError.parse.description)))
+                                return
+                            }else{
+                                let message = json["error_description"] as? String ?? WebError.parse.description
+                                completion(.failure(.other(message)))
+                                return
+                            }
+                        }
+                        else if requestURL.contains("jwt-auth/v1/token"){
+                            let message = json["message"] as? String ?? WebError.parse.description
+                            completion(.failure(.other(message)))
+                            return
+                        }
+                        let message = json["error_description"] as? String ?? WebError.parse.description
                         completion(.failure(.other(message)))
+                        return
                     default:
                         break
                     }

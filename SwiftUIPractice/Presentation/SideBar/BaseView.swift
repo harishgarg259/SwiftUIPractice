@@ -34,7 +34,7 @@ struct BaseView: View {
             HStack(spacing: 0) {
                 SideMenu(showMenu: $showMenu)
                 NavigationStack {
-                    HomeScreen(showMenu: $showMenu)
+                    HomeScreen(showMenu: $showMenu, viewModel: HomeViewModel())
                 }
                 .frame(width: getRect().width)
                 .overlay(

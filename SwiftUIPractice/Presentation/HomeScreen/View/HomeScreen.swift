@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ActivityIndicatorView
 
 struct HomeScreen: View {
     
@@ -14,6 +15,10 @@ struct HomeScreen: View {
     @State private var presented = false
     @State var showFab = true
     @State var scrollOffset: CGFloat = 0.00
+    @StateObject var viewModel: HomeViewModel = HomeViewModel()
+    @State var showLoadingIndicator = false
+    @State var tags: [String] = []
+    @State var keyword: String = ""
     
     // 1. Number of items will be display in row
     var columns: [GridItem] = [
@@ -23,38 +28,38 @@ struct HomeScreen: View {
     // 2. Fixed height of card
     let height: CGFloat = 200
     // 3. Get mock cards data
-    let cards: [String] = ["Kangroo","Venison","Kangroo","Venison","Kangroo","Venison","Kangroo","Venison","Kangroo","Venison"]
-    
     
     var body: some View {
         NavigationStack {
             ScrollView {
                 
-                // 4. Populate into grid
-                LazyVGrid(columns: columns, spacing: 20) {
-                    ForEach(Array(cards.enumerated()), id: \.offset) { section, element in
-                        ProductView(imageDetail: sampleProduct, productName: element)
-                            .frame(height: height)
+                TagTextField(tags: $tags, keyword: $keyword, tagRemoved:  { isDeleted in
+                    if isDeleted{
+                        viewModel.localProductList()
                     }
-                }
-                .padding()
-                .searchable(text: $searchText)
-                .onSubmit(of: .search) {
-                    searchProducts(for: searchText)
-                }
-                .background(GeometryReader {
-                    return Color.clear.preference(key: ViewOffsetKey.self, value: -$0.frame(in: .named("scroll")).origin.y)
                 })
-                .onPreferenceChange(ViewOffsetKey.self) { offset in
-                    withAnimation {
-                        if offset > 50 {
-                            showFab = offset < scrollOffset
-                        } else  {
-                            showFab = true
+                if viewModel.isLoading {
+                    ProgressView()
+                } else if !viewModel.productListArray.isEmpty{
+                    
+                    listView
+                    .background(GeometryReader {
+                        return Color.clear.preference(key: ViewOffsetKey.self, value: -$0.frame(in: .named("scroll")).origin.y)
+                    })
+                    .onPreferenceChange(ViewOffsetKey.self) { offset in
+                        withAnimation {
+                            if offset > 50 {
+                                showFab = offset < scrollOffset
+                            } else  {
+                                showFab = true
+                            }
                         }
+                        scrollOffset = offset
                     }
-                    scrollOffset = offset
+                } else {
+                    Text("No products found")
                 }
+               
             }
             .padding(10)
             .coordinateSpace(name: "scroll")
@@ -68,14 +73,37 @@ struct HomeScreen: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(.visible, for: .navigationBar)
         }
+        .overlay(
+            ActivityIndicatorView(isVisible: $showLoadingIndicator, type: .default())
+                .frame(width: 50.0, height: 50.0)
+                .foregroundColor(.themeColor)
+        )
         .tint(.themeColor)
     }
     
     func searchProducts(for searchText: String) {
         if !searchText.isEmpty {
-            //            viewModel.searchImages(searchString: searchText, page: 1)
+            self.viewModel.productList(searchText: searchText)
         }else{
-            //            viewModel.records.removeAll()
+            viewModel.productListArray.removeAll()
+        }
+    }
+    
+    var listView: some View {
+        // 4. Populate into grid
+        LazyVGrid(columns: columns, spacing: 20) {
+            ForEach(viewModel.productListArray, id: \.id) { element in
+                ProductView(productDetail: element)
+                    .frame(height: height)
+            }
+        }
+        .padding()
+        .searchable(text: $searchText)
+        .onSubmit(of: .search) {
+            if tags.contains(searchText) == false {
+                tags.append(searchText)
+            }
+            searchProducts(for: searchText)
         }
     }
     
@@ -89,7 +117,11 @@ struct HomeScreen: View {
                 .frame(width: 35, height: 35, alignment: .center)
         })
         .sheet(isPresented: $presented) {
-            FilterView(showScreen: .constant(false), filterModel: FilterViewModel(), selectedText: $searchText)
+            FilterView(showScreen: .constant(false), viewModel: CatagoryViewModel()) { text in
+                tags.removeAll()
+                tags.append(text)
+                searchProducts(for: text)
+            }
         }
         .padding(10)
         .background(Color.themeColor)
@@ -134,5 +166,5 @@ struct ViewOffsetKey: PreferenceKey {
 }
 
 #Preview {
-    HomeScreen(showMenu: .constant(true))
+    HomeScreen(showMenu: .constant(true), viewModel: HomeViewModel())
 }

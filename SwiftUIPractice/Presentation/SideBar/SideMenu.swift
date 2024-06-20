@@ -13,7 +13,7 @@ struct SideMenu: View {
     @Binding var showMenu: Bool
     @State private var showAlert = false
     @State var logout = false
-    @EnvironmentObject var settings: UserStateViewModel
+    @EnvironmentObject var userState: UserStateViewModel
     
     var body: some View {
         
@@ -21,9 +21,9 @@ struct SideMenu: View {
             
             // Profile
             VStack(alignment: .leading, spacing: 2) {
-                Text("Harish")
+                Text((userState.userDetail()?.name ?? "Username").capitalized)
                     .font(.title.bold())
-                Text("harishgarg259@gmail.com")
+                Text(userState.userDetail()?.email ?? "youremail@gmail.com")
                     .font(.callout)
                     .padding(.bottom, 15)
             }
@@ -77,7 +77,8 @@ struct SideMenu: View {
                     Alert(
                         title: Text("Are you sure you want to logout?"),
                         primaryButton: .destructive(Text("Logout")) {
-                            settings.isLoggedIn = false
+                            UserDefaultsManager.isLoggedIn = false
+//                            userState.isLoggedIn = false
                         },
                         secondaryButton: .cancel()
                     )
@@ -100,7 +101,7 @@ struct SideMenu: View {
         NavigationLink {
             
             if type == .None{
-                ProfileView()
+                ProfileView(userModel: UserProfileViewModel())
             }else
             {
                 WebView(isLoading: $isLoading, type: type)

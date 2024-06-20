@@ -7,17 +7,9 @@
 
 import SwiftUI
 
-// Example usage:
-let sampleProduct = Product(name: "Sample Product", price: 49.99,
-                            discountedPrice: 39.99,
-                            images: ["pork-liver", "pork-liver", "pork-liver"], sizes: ["Small", "Medium", "Large"],
-                            description: ProductDescription(headings: ["Description", "Direction"],
-                                                            details: ["Description": "Yappetizers Bison Liver Food topper for dogs is made from 100% human grade bison liver. Our bison liver is dehydrated slowly over 20 hours to ensure natural shelf stability without any added additives or preservatives. Bison liver is high in protein and low in fat and cholesterol. Our bison food enhancer is rich in vitamin A and vitamin B which can aid in our dog’s overall dogs health including skin, joints, coat and immune system.",
-                                                                      "Direction": "Simply sprinkle on wet or dry food to help stimulate your dog or cats appetite. Can be used with each meal."]))
-
 struct ProductDetailView: View {
     
-    let product: Product
+    let product: ProductListModel?
     @State private var selectedSizeIndex = 0
     @State private var quantity = 1
 //    @Binding var badgeCount : Int
@@ -36,78 +28,97 @@ struct ProductDetailView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
                 // Multiple images in grid view with pagination view
-                ImageGridView(images: product.images)
+                ImageGridView(images: product?.images ?? [])
                     .frame(height: 200) // Set your preferred height
                 
                 // Product name and price detail after discount
                 VStack(alignment: .leading, spacing: 8) {
-                    Text(product.name)
+                    Text(product?.name ?? "Title")
                         .font(.title)
                     HStack {
                         Text("Price:")
                             .font(.headline)
-                        Text("$\(product.price, specifier: "%.2f")")
-                            .font(.headline)
-                            .strikethrough()
-                        Text("$\(product.discountedPrice, specifier: "%.2f")")
+                        if ((product?.regular_price ?? "") != ""){
+                            Text("$\(product?.regular_price ?? "")")
+                                .font(.headline)
+                                .strikethrough()
+                        }
+                        Text("$\(product?.price ?? "")")
                             .font(.headline)
                     }
                 }
                 
-                // Choose Size Dropdown
-                HStack {
-                    Text("Select Size:")
+                if !(product?.in_stock ?? true){
+                    Text("Out Of Stock")
                         .font(.headline)
-                    Spacer()
-                    Picker("Select Size", selection: $selectedSizeIndex) {
-                        ForEach(0..<product.sizes.count, id: \.self) { index in
-                            Text(product.sizes[index])
+                        .foregroundStyle(.red)
+                }else{
+                    if let sizes = product?.attributes?.filter({ $0.name == "SIZE" }), let options = sizes.first?.options, options.count > 0{
+                        // Choose Size Dropdown
+                        HStack {
+                            Text("Select Size:")
+                                .font(.headline)
+                            Spacer()
+                            Picker("Select Size", selection: $selectedSizeIndex) {
+                                ForEach(0..<options.count, id: \.self) { index in
+                                    Text(options[index])
+                                }
+                            }
+                            .pickerStyle(.menu)
+                            .tint(.themeColor)
                         }
                     }
-                    .pickerStyle(.menu)
-                    .tint(.themeColor)
-                }
-                
-                // Quantity Stepper
-                Stepper(value: $quantity, in: 1...10) {
-                    Text("Quantity: \(quantity)")
-                        .font(.headline)
-                }
-                
-                // Add to cart button
-                Button {
                     
-                } label: {
-                    Text("Add to Cart")
-                        .frame(maxWidth: .infinity)
-                        .fontWeight(.bold)
+                    // Quantity Stepper
+                    Stepper(value: $quantity, in: 1...(product?.stock_quantity ?? 20)) {
+                        Text("Quantity: \(quantity)")
+                            .font(.headline)
+                    }
+                    
+                    // Add to cart button
+                    Button {
+                        
+                    } label: {
+                        Text("Add to Cart")
+                            .frame(maxWidth: .infinity)
+                            .fontWeight(.bold)
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .controlSize(.large)
+                    .shadow(color: .themeColor,radius: 2)
+//                    .disabled(product?.atum_stock_status == "outofstock")
                 }
-                .buttonStyle(.borderedProminent)
-                .controlSize(.large)
-                .shadow(color: .themeColor,radius: 2)
-                //.disabled(selectedSizeIndex <= 0)
+                
+               
+                
+                // Product Categories
+                VStack(alignment: .leading, spacing: 12) {
+                    Text("SKU: N/A Categories:")
+                        .font(.headline)
+                    let categories = product?.categories?.map({$0.name ?? ""}).joined(separator: ", ")
+                    Text(categories ?? "No Categories")
+                        .font(.body)
+                }
                 
                 // Product description with multiple headings and details
                 VStack(alignment: .leading, spacing: 12) {
-                    ForEach(product.description.headings, id: \.self) { heading in
-                        Text(heading)
-                            .font(.headline)
-                        Text(product.description.details[heading] ?? "")
-                            .font(.body)
-                    }
+                    Text("Description")
+                        .font(.headline)
+                    Text(product?.yoast_head_json?.description ?? "")
+                        .font(.body)
                 }
                 
                 // Similar product listing at the end
-                Text("Related Products")
-                    .font(.title)
+//                Text("Related Products")
+//                    .font(.title)
                 
                 // 4. Populate into grid
-                LazyVGrid(columns: columns, spacing: 20) {
-                    ForEach(Array(cards.enumerated()), id: \.offset) { section, element in
-                        ProductView(imageDetail: sampleProduct, productName: element)
-                            .frame(height: height)
-                    }
-                }
+//                LazyVGrid(columns: columns, spacing: 20) {
+//                    ForEach(Array(cards.enumerated()), id: \.offset) { section, element in
+//                        ProductView(imageDetail: sampleProduct, productName: element)
+//                            .frame(height: height)
+//                    }
+//                }
             }
             .padding()
         }
@@ -116,17 +127,19 @@ struct ProductDetailView: View {
 }
 
 struct ImageGridView: View {
-    let images: [String]
+    let images: [Images]
     @State private var currentPage = 0
     
     var body: some View {
         VStack {
             TabView(selection: $currentPage) {
-                ForEach(images, id: \.self) { imageName in
-                    Image(imageName)
-                        .resizable()
-                        .scaledToFit()
-                        .tag(images.firstIndex(of: imageName) ?? 0)
+                ForEach(Array(images.enumerated()), id: \.offset) { section, element in
+                    if let imageURL = element.src {
+                        ImageView(url: imageURL)
+                            .scaledToFit()
+                            .tag(element.name)
+                            
+                    }
                 }
             }
             .tabViewStyle(PageTabViewStyle())
@@ -159,12 +172,12 @@ struct ProductDescription {
 struct ProductDetailView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            ProductDetailView(product: sampleProduct)
+            ProductDetailView(product: nil)
         }
     }
 }
 
 
 #Preview {
-    ProductDetailView(product: sampleProduct)
+    ProductDetailView(product: nil)
 }
