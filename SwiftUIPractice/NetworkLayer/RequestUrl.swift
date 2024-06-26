@@ -14,8 +14,8 @@ enum RequestUrl :String{
     static var UserBaseURL = "https://www.pawsitivelycanadian.ca/?rest_route=/simple-jwt-login/v1"
     static var WPBaseURL = "https://www.pawsitivelycanadian.ca/wp-json/wp/v2"
     static var WooBaseURL = "https://www.pawsitivelycanadian.ca/wp-json/wc/v2"
-    static var WooOrderBaseURL = "https://www.pawsitivelycanadian.ca/wp-json/wc/v3"
     static var MenuBaseURL = "https://www.pawsitivelycanadian.ca/wp-json/wp-api-menus/v2"
+    static var PasswordBaseURL = "https://www.pawsitivelycanadian.ca/api"
 
     //Complete API url
     var tokenURL : String{ return RequestUrl.AuthTokenURL + self.rawValue }
@@ -23,15 +23,18 @@ enum RequestUrl :String{
     var profile : String{ return RequestUrl.WPBaseURL + self.rawValue }
     var products : String{ return RequestUrl.WooBaseURL + self.rawValue }
     var menu : String{ return RequestUrl.MenuBaseURL + self.rawValue }
+    var password : String{ return RequestUrl.PasswordBaseURL + self.rawValue }
 
     
     
     //Nasa Apis
     case token = "/token"
     case user = "/users"
+    case updateProfile = "/users/"
     case resetPassword = "/user/reset_password"
     case getProfile = "/users/me"
     case customerProfile = "/customers/"
+    case updatePassword = "/change_password.php"
     
     //Products
     case products = "/products"

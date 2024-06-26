@@ -6,12 +6,14 @@
 //
 
 import SwiftUI
+import ActivityIndicatorView
 
 struct AddressDetailView: View {
     
 
     @State private var firstName = ""
     @State private var lastName = ""
+    @State private var email = ""
     @State private var companyName = ""
     @State private var countryText = ""
     @State private var stateText = ""
@@ -19,10 +21,15 @@ struct AddressDetailView: View {
     @State private var apartmentName = ""
     @State private var town = ""
     @State private var postcode = ""
+    @State private var phone = ""
     @State private var presented = false
     @State private var isPresented = false
+    @State var showLoadingIndicator = false
+    @State var showAlert = false
+    @State var alertMessage: String = ""
+
     @StateObject private var alert = AlertContext()
-    var addressDetailViewModel = AddressDetailViewModel()
+    var viewModel = AddressDetailViewModel()
     var addressDetail: AddressGroup?
     var headerTitle: String = ""
 
@@ -40,6 +47,12 @@ struct AddressDetailView: View {
                 YPTextField(text: $lastName)
                     .setTitleText("Last Name*")
                     .setPlaceHolderText("Last Name")
+                YPTextField(text: $email)
+                    .setTitleText("Email*")
+                    .setPlaceHolderText("name@gmail.com")
+                YPTextField(text: $phone)
+                    .setTitleText("Phone*")
+                    .setPlaceHolderText("(XXX)-XXX XXXX")
                 YPTextField(text: $companyName)
                     .setTitleText("Company Name")
                     .setPlaceHolderText("Company Name")
@@ -56,7 +69,7 @@ struct AddressDetailView: View {
                     .setTitleText("Province/State*")
                     .setPlaceHolderText("Select Province")
                     .setTrailingImage(Image("down"), click: {
-                        if self.addressDetailViewModel.states.isEmpty{
+                        if self.viewModel.states.isEmpty{
                             alert.present(Alert(title: Text(""), message: Text("Please select country.")))
                         }else{
                             self.isPresented = true
@@ -64,7 +77,7 @@ struct AddressDetailView: View {
                     })
                     .alert(alert)
                     .sheet(isPresented: $isPresented) {
-                        CountryListView(selectedCountry: updateCountryName, pickerType: .State, states: self.addressDetailViewModel.states)
+                        CountryListView(selectedCountry: updateCountryName, pickerType: .State, states: self.viewModel.states)
                     }
                 
                 YPTextField(text: $streetAddress)
@@ -81,6 +94,8 @@ struct AddressDetailView: View {
                     .padding(.bottom,20)
                 
                 Button {
+                    self.showLoadingIndicator = true
+                    self.viewModel.updateProfile(firstName: firstName, lastName: lastName, email: email, companyName: companyName, streetAddress: streetAddress, apartmentName: apartmentName, town: town, postcode: postcode, countryText: countryText, stateText: stateText, phone: phone, type: headerTitle)
                 } label: {
                     Text("Save")
                         .frame(maxWidth: .infinity)
@@ -90,12 +105,37 @@ struct AddressDetailView: View {
                 .controlSize(.large)
                 .shadow(color: .themeColor,radius: 2)
                 .padding(.top, 10)
-                .disabled(firstName.isEmpty || lastName.isEmpty || countryText.isEmpty || stateText.isEmpty || streetAddress.isEmpty || town.isEmpty || postcode.isEmpty)
+                .disabled(firstName.isEmpty || lastName.isEmpty || email.isEmpty || phone.isEmpty || countryText.isEmpty || stateText.isEmpty || streetAddress.isEmpty || town.isEmpty || postcode.isEmpty)
+                .alert(isPresented: $showAlert, content: {
+                    Alert(title: Text("Alert"), message: Text("\(self.alertMessage)"), dismissButton: .default(Text("Ok")))
+                })
                 Spacer()
             })
             .padding()
             .tint(.themeColor)
         }
+        .onReceive(viewModel.$state, perform:  { state in
+            
+            //Hide Loader
+            self.showLoadingIndicator = false
+            switch state {
+            case .idle:
+                break;
+            case .loading:
+                break;
+            case .success:
+                self.showAlert = true
+                self.alertMessage = "The address has been updated"
+            case let .failed(message: message):
+                self.showAlert = true
+                self.alertMessage = message
+            }
+        })
+        .overlay(
+            ActivityIndicatorView(isVisible: $showLoadingIndicator, type: .default())
+            .frame(width: 50.0, height: 50.0)
+            .foregroundColor(.themeColor)
+        )
         .onAppear(perform: {
             self.updateFieldValues()
         })
@@ -107,7 +147,7 @@ struct AddressDetailView: View {
         
         if let selectedRow = selectedRow as? Country {
             self.countryText = selectedRow.name ?? ""
-            self.addressDetailViewModel.states = selectedRow.states ?? []
+            self.viewModel.states = selectedRow.states ?? []
             self.stateText = ""
         }else if let selectedRow = selectedRow as? States {
             self.stateText = selectedRow.name ?? ""

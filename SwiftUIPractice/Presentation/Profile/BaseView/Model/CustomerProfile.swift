@@ -53,4 +53,5 @@ struct Shipping : Codable {
     let country : String?
     let state : String?
     let phone : String?
+    let email : String?
 }

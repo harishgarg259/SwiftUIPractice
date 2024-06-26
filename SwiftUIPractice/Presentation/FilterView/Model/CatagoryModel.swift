@@ -93,7 +93,7 @@ struct MenuChildren : Codable {
     let type_label : String?
 }
 
-struct MenuObject: Identifiable {
+struct MenuObject: Codable {
     var id = UUID()
     var menuName : String
     var subMenus : [MenuChildren]

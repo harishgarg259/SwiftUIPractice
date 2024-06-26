@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct OrderListing: View {
-    
-    let cards: [String] = ["123456","123456","123456","123456","123456","123456","123456","123456","123456","123456","123456","123456","123456","123456","123456","123456","123456","123456","123456","123456"]
+        
+    @StateObject var orderViewModel: OrderListViewModel = OrderListViewModel()
     
     var body: some View {
         List {
-            ForEach(Array(cards.enumerated()), id: \.offset) { section, element in
-                OrderRow(title: element)
+            ForEach(Array(orderViewModel.orderList.enumerated()), id: \.offset) { section, element in
+                OrderRow(orderDetail: element)
             }
         }
         .navigationBarTitle("Order Listing",displayMode: .inline)

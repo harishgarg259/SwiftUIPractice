@@ -15,14 +15,22 @@ struct SideMenu: View {
     @State var logout = false
     @EnvironmentObject var userState: UserStateViewModel
     
+    
     var body: some View {
         
         VStack(alignment: .leading, spacing: 0) {
             
             // Profile
             VStack(alignment: .leading, spacing: 2) {
-                Text((userState.userDetail()?.name ?? "Username").capitalized)
-                    .font(.title.bold())
+                
+                HStack{
+                    Text((userState.userDetail()?.first_name ?? "").capitalized)
+                        .font(.title.bold())
+                    Text((userState.userDetail()?.last_name ?? "").capitalized)
+                        .font(.title.bold())
+                }
+                
+                
                 Text(userState.userDetail()?.email ?? "youremail@gmail.com")
                     .font(.callout)
                     .padding(.bottom, 15)
@@ -78,7 +86,7 @@ struct SideMenu: View {
                         title: Text("Are you sure you want to logout?"),
                         primaryButton: .destructive(Text("Logout")) {
                             UserDefaultsManager.isLoggedIn = false
-//                            userState.isLoggedIn = false
+                            userState.isLoggedIn = false
                         },
                         secondaryButton: .cancel()
                     )
@@ -88,6 +96,9 @@ struct SideMenu: View {
             .padding([.leading, .bottom])
             
         }
+        .onDisappear(perform: {
+            self.showMenu = false
+        })
         .padding(.vertical)
         .frame(width: getRect().width - 90)
         .background(.white)
@@ -99,9 +110,13 @@ struct SideMenu: View {
     func TabButton(title: String, image: String, type: SafariURL) -> some View {
         
         NavigationLink {
-            
             if type == .None{
                 ProfileView(userModel: UserProfileViewModel())
+                    .environmentObject(userState)
+            }else if type == .ContactUS{
+                ContactUsView()
+            }else if type == .Blog{
+                BlogListing()
             }else
             {
                 WebView(isLoading: $isLoading, type: type)

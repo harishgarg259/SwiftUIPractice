@@ -18,7 +18,7 @@ extension View {
                 image.resizable()
                     .aspectRatio(contentMode: .fit)
             case .failure:
-                Image(systemName: "photo")
+                Image(systemName: "placeholder")
             @unknown default:
                 // Since the AsyncImagePhase enum isn't frozen,
                 // we need to add this currently unused fallback

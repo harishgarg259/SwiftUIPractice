@@ -91,6 +91,11 @@ class RestManager<T: Codable> {
                             completion(.failure(.other(message)))
                             return
                         }
+                        else if requestURL.contains("wp/v2/users"){
+                            let message = json["message"] as? String ?? WebError.parse.description
+                            completion(.failure(.other(message)))
+                            return
+                        }
                         let message = json["error_description"] as? String ?? WebError.parse.description
                         completion(.failure(.other(message)))
                         return

@@ -18,10 +18,9 @@ class UserProfileViewModel: ObservableObject {
     
     func getProfile() {
         
-        let specialPUTParams = "\(UserDefaultsManager.userID ?? 0)"
-        let params = ["consumer_key":AppConstants.Consumer_Key, "consumer_secret": AppConstants.Consumer_Secret]
+        let specialGETParams = "\(UserDefaultsManager.userID ?? 0)?consumer_key=\(AppConstants.Consumer_Key)&consumer_secret=\(AppConstants.Consumer_Secret)&\(String.random())"
         let rest = RestManager<CustomerProfile>()
-        rest.makeRequest(request : WebAPI().auth(params : params, type: .customerProfile,specialGETParams: specialPUTParams)!) { (result) in
+        rest.makeRequest(request : WebAPI().auth(params : [:], type: .customerProfile,specialGETParams: specialGETParams)!) { (result) in
             switch result {
             case .success(let response):
                 debugPrint(response)

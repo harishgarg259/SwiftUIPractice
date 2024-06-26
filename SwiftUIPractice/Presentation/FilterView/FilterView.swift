@@ -53,10 +53,6 @@ struct FilterView: View {
             .shadow(color: .themeColor,radius: 2)
             .padding()
             .disabled(selectedText.isEmpty)
-            .onAppear {
-                self.viewModel.catagoryList()
-            }
-            
         }
     }
 }

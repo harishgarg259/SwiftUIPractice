@@ -594,47 +594,47 @@ struct IsPartOf : Codable {
 
 
 struct Meta_data : Codable {
-//    let id : Int?
-//    let key : String?
-//    let value : String?
-//
-//    enum CodingKeys: String, CodingKey {
-//
-//        case id = "id"
-//        case key = "key"
-//        case value = "value"
-//    }
-//
-//    init(from decoder: Decoder) throws {
-//        let values = try decoder.container(keyedBy: CodingKeys.self)
-//        id = try values.decodeIfPresent(Int.self, forKey: .id)
-//        key = try values.decodeIfPresent(String.self, forKey: .key)
-//        value = try values.decodeIfPresent(String.self, forKey: .value)
-//    }
+    let id : Int?
+    let key : String?
+    let value : MetaDataQuantumValue?
+
+    enum CodingKeys: String, CodingKey {
+
+        case id = "id"
+        case key = "key"
+        case value = "value"
+    }
+
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        id = try values.decodeIfPresent(Int.self, forKey: .id)
+        key = try values.decodeIfPresent(String.self, forKey: .key)
+        value = try values.decodeIfPresent(MetaDataQuantumValue.self, forKey: .value)
+    }
 
 }
 
 struct OgImage : Codable {
-//    let width : Int?
-//    let height : Int?
-//    let url : String?
-//    let type : String?
-//
-//    enum CodingKeys: String, CodingKey {
-//
-//        case width = "width"
-//        case height = "height"
-//        case url = "url"
-//        case type = "type"
-//    }
-//
-//    init(from decoder: Decoder) throws {
-//        let values = try decoder.container(keyedBy: CodingKeys.self)
-//        width = try values.decodeIfPresent(Int.self, forKey: .width)
-//        height = try values.decodeIfPresent(Int.self, forKey: .height)
-//        url = try values.decodeIfPresent(String.self, forKey: .url)
-//        type = try values.decodeIfPresent(String.self, forKey: .type)
-//    }
+    let width : Int?
+    let height : Int?
+    let url : String?
+    let type : String?
+
+    enum CodingKeys: String, CodingKey {
+
+        case width = "width"
+        case height = "height"
+        case url = "url"
+        case type = "type"
+    }
+
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        width = try values.decodeIfPresent(Int.self, forKey: .width)
+        height = try values.decodeIfPresent(Int.self, forKey: .height)
+        url = try values.decodeIfPresent(String.self, forKey: .url)
+        type = try values.decodeIfPresent(String.self, forKey: .type)
+    }
 
 }
 

@@ -14,6 +14,14 @@ class CatagoryViewModel: ObservableObject {
     @Published var errorMessage = ""
     @Published var hasError = false
     
+    init() {
+        //Intially load from local
+        localFilterList()
+        
+        //call api for updated data
+        catagoryList()
+    }
+    
     func catagoryList() {
         let parameters = ["page":1, "per_page": 100] as [String : Any]
         let rest = RestManager<CatagoryModel>()
@@ -45,5 +53,19 @@ extension CatagoryViewModel {
             let menuItem = MenuObject(menuName: menu.title ?? "", subMenus: menu.children ?? [], expandMe: true)
             self.menuListArray.append(menuItem)
         }
+        
+        saveLocalCache(response: self.menuListArray)
     }
+    
+    func saveLocalCache(response: [MenuObject]) {
+        let storage = PawStorageManager.PawStorageFile.filterList
+        PawStorageManager.shared.store(response, to: .caches, as: storage)
+    }
+    
+    func localFilterList() {
+        let storage = PawStorageManager.PawStorageFile.filterList
+        let response = PawStorageManager.shared.retrieve(storage, from: .caches, as: [MenuObject].self)
+        self.menuListArray = response ?? []
+    }
+
 }

@@ -14,7 +14,7 @@ struct CustomerAddresses: Identifiable {
 }
 
 struct AddressGroup: Identifiable {
-
+    
     var id = UUID()
     var addressType : String
     var address : [CustomerAddresses]
@@ -24,10 +24,6 @@ struct AddressGroup: Identifiable {
 class AddressViewModel: ObservableObject {
     
     @Published var addresses: [AddressGroup] = []
-    
-    init() {
-        prepareAddressArray()
-    }
     
     func customerProfile() -> CustomerProfile? {
         let userID = "\(UserDefaultsManager.userID ?? 0)"
@@ -39,7 +35,7 @@ class AddressViewModel: ObservableObject {
     func prepareAddressArray() {
         
         let customerProfile = customerProfile()
-        
+        self.addresses.removeAll()
         if let billingAddress = customerProfile?.billing {
             let detail = AddressGroup(addressType: "Billing Address", address: [
                 CustomerAddresses(addressDetail: billingAddress)
@@ -76,6 +72,9 @@ struct AddressView: View {
                 }
             }
         }
+        .onAppear(perform: {
+            self.viewModel.prepareAddressArray()
+        })
         .navigationBarTitle("Addresses",displayMode: .inline)
         .toolbarBackground(.visible, for: .navigationBar)
     }
@@ -91,10 +90,7 @@ struct AddressListCellView: View {
     var body: some View {
         return   ZStack {
             HStack {
-                Text(formatAddress())
-                    .padding()
-                    .fontWeight(.regular)
-                    .foregroundColor(.gray)
+                addressView(address: address)
                 Spacer()
                 Image(systemName: "pencil")
                     .renderingMode(.template)
@@ -106,8 +102,41 @@ struct AddressListCellView: View {
         }
     }
     
-    func formatAddress() -> String{
-        let address = ((address?.address[0].addressDetail?.address_1?.isEmpty ?? true) ? "No Address" : address?.address[0].addressDetail?.address_1) ?? ""
-        return address
+    func addressView(address: AddressGroup?) -> some View{
+        return VStack(alignment: .leading, spacing: 8) {
+            Text(((address?.address[0].addressDetail?.address_1?.isEmpty ?? true) ? "No Address" : address?.address[0].addressDetail?.address_1) ?? "")
+                .font(.title)
+                .fontWeight(.bold)
+            
+            if let address1 = address?.address[0].addressDetail?.address_1, !address1.isEmpty
+            {
+                Text(address1)
+                    .font(.body)
+            }
+            if let address2 = address?.address[0].addressDetail?.address_2, !address2.isEmpty
+            {
+                Text(address2)
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+            }
+            if let city = address?.address[0].addressDetail?.city, let postcode = address?.address[0].addressDetail?.postcode, !city.isEmpty
+            {
+                Text("\(city), \(postcode)")
+                    .font(.body)
+            }
+            if let country = address?.address[0].addressDetail?.country, !country.isEmpty
+            {
+                Text(country)
+                    .font(.footnote)
+                    .italic()
+            }
+            if let phone = address?.address[0].addressDetail?.phone, !phone.isEmpty
+            {
+                Text("(Contact: \(phone))")
+                    .font(.footnote)
+                    .italic()
+            }
+        }
+        .padding()
     }
 }

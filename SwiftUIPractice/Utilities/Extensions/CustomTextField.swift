@@ -49,7 +49,7 @@ struct CustomTextField: View {
                                 .matchedGeometryEffect(id: title, in: animation)
                         }
                         
-                        if title == "PASSWORD"{
+                        if title.contains("PASSWORD"){
                             
                             SecureField("", text: $value)
                         }
