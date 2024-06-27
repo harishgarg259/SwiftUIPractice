@@ -19,7 +19,8 @@ struct HomeScreen: View {
     @State var showLoadingIndicator = false
     @State var tags: [String] = []
     @State var keyword: String = ""
-    
+    @EnvironmentObject var cart: CartViewModel
+
     // 1. Number of items will be display in row
     var columns: [GridItem] = [
         GridItem(.flexible(), spacing: 20),
@@ -94,6 +95,7 @@ struct HomeScreen: View {
         LazyVGrid(columns: columns, spacing: 20) {
             ForEach(viewModel.productListArray, id: \.id) { element in
                 ProductView(productDetail: element)
+                    .environmentObject(cart)
                     .frame(height: height)
             }
         }
@@ -135,13 +137,13 @@ struct HomeScreen: View {
     
     var trailingBarItems: some View {
         NavigationLink(destination:
-            CartView(showMenu: .constant(false))
+            CartView(cartProducts: cart)
         )
         {
             Image(systemName: "cart")
                 .font(.system(size: 20))
         }
-        .overlay(Badge(count: 8))
+        .overlay(Badge(count: cart.cartProduct.count))
     }
     
     var leadingBarItems: some View {

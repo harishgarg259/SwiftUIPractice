@@ -52,7 +52,7 @@ class ViewFactory {
         case 1:
             return AnyView(AddressView(viewModel: AddressViewModel()))
         case 2:
-            return AnyView(CartView(showMenu: .constant(false)))
+            return AnyView(PaymentMethod())
         case 3:
             return AnyView(ProfileDetailView())
         case 4:

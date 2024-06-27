@@ -59,4 +59,11 @@ class UserStateViewModel: ObservableObject {
         let response = PawStorageManager.shared.retrieve(storage, from: .caches, as: UserProfile.self)
         return response
     }
+    
+    func customerProfile() -> CustomerProfile? {
+        let userID = "\(UserDefaultsManager.userID ?? 0)"
+        let storage = PawStorageManager.PawStorageFile.customerDetail(userID)
+        let response = PawStorageManager.shared.retrieve(storage, from: .caches, as: CustomerProfile.self)
+        return response
+    }
 }

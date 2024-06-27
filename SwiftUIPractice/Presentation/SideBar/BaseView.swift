@@ -19,6 +19,7 @@ struct BaseView: View {
     @GestureState var gestureOffset: CGFloat = 0
     
     @EnvironmentObject var vm: UserStateViewModel
+    @StateObject var cartItems = CartViewModel()
 
     private let sideBarWidth = UIScreen.main.bounds.width - 90
     
@@ -35,6 +36,7 @@ struct BaseView: View {
                 SideMenu(showMenu: $showMenu)
                 NavigationStack {
                     HomeScreen(showMenu: $showMenu, viewModel: HomeViewModel())
+                        .environmentObject(cartItems)
                 }
                 .frame(width: getRect().width)
                 .overlay(

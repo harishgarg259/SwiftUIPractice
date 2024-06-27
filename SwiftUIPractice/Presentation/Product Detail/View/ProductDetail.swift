@@ -12,6 +12,8 @@ struct ProductDetailView: View {
     let product: ProductListModel?
     @State private var selectedSizeIndex = 0
     @State private var quantity = 1
+    @EnvironmentObject var cart: CartViewModel
+
 //    @Binding var badgeCount : Int
 
     // 1. Number of items will be display in row
@@ -77,7 +79,7 @@ struct ProductDetailView: View {
                     
                     // Add to cart button
                     Button {
-                        
+                        cart.addToCart(addedProduct: product, quantity: 1)
                     } label: {
                         Text("Add to Cart")
                             .frame(maxWidth: .infinity)

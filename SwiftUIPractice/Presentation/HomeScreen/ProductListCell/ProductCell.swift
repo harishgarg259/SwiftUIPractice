@@ -10,9 +10,10 @@ import SwiftUI
 struct ProductView: View {
     
     @State var productDetail: ProductListModel?
-    
+    @EnvironmentObject var cart: CartViewModel
+
     var body: some View {
-        NavigationLink(destination: ProductDetailView(product: productDetail)) {
+        NavigationLink(destination: ProductDetailView(product: productDetail).environmentObject(cart)) {
             VStack {
                 // Sale badge
                 //                HStack {
@@ -57,6 +58,7 @@ struct ProductView: View {
                         Button(action: {
                             // Add to cart action
                             print("Item added to cart")
+                            cart.addToCart(addedProduct: productDetail, quantity: 1)
                         }) {
                             Text("+ Add")
                                 .font(.system(size: 13).bold())

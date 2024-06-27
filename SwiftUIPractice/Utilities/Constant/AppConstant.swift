@@ -19,6 +19,6 @@ struct AppConstants {
     static let Consumer_Key = "ck_83def4695403633dfe7fc2035578d95b1b4247ed"
     static let Consumer_Secret = "cs_458ac2d2ac1444680d1ffabaeb5f0e2f7a66a77a"
 
-    static let STRIPE_PUBLISHING_KEY = "pk_test_51BTUDGJAJfZb9HEBwDg86TN1KNHjkfipXmEDMb0gSCassK5T3ZfxsAbcgKVmAIXF7oZ6ItlZZbXO6idTHE67IM007EwQ4uN3"
+    static let STRIPE_PUBLISHING_KEY = "pk_test_51BTUDGJAJfZb9HEBwDg86TN1KNHjkfipXmEDMb0grSCassK5T3ZfxsAbcgKVmAIXF7oZ6ItlZZbXO6idTHE67IM007EwQ4uN3"
     
 }
