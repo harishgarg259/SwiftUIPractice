@@ -10,7 +10,7 @@ import ActivityIndicatorView
 
 struct NewLoginScreen: View {
     @State var emailId = "testing1234@gmail.com"
-    @State var password = "testing123"
+    @State var password = "12345678"
     @Namespace var animation
     @State var transition: Int? = 0
     
