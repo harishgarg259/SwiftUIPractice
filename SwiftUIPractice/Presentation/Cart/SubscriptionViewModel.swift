@@ -32,7 +32,7 @@ class SubscriptionViewModel: ObservableObject, SubscriptionResponseProtocol {
         //success result from api
         var configuration = PaymentSheet.Configuration()
         configuration.merchantDisplayName = "iOS Sample, Inc."
-        configuration.customer = .init(id: "Harish", ephemeralKeySecret: "sk_test_51BTUDGJAJfZb9HEBwDg86TN1KNHjkfipXmEDMb0grSCassK5T3ZfxsAbcgKVmAIXF7oZ6ItlZZbXO6idTHE67IM007EwQ4uN3")
+        configuration.customer = .init(id: "Harish", ephemeralKeySecret: AppConstants.Consumer_Secret)
         configuration.primaryButtonColor = UIColor.init(.blue)
         DispatchQueue.main.async {
             self.paymentSheet = PaymentSheet(paymentIntentClientSecret: subscriptionResult.paymentIntent, configuration: configuration)
