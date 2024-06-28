@@ -33,7 +33,7 @@ struct CartView: View {
         }
         .onAppear(perform: {
         })
-        .navigationBarTitle("My Cart",displayMode: .inline)
+        .navigationBarTitle("Cart",displayMode: .inline)
         .toolbarBackground(.visible, for: .navigationBar)
     }
 }
@@ -262,12 +262,10 @@ struct CartView_Previews: PreviewProvider {
 
 struct CartLoadingView: View {
     var body: some View {
-        VStack {
-            Spacer()
+        VStack(alignment: .center) {
             GifImageView("shopping-cart")
                 .frame(width: 50, height: 50, alignment: .center)
             Text("Your cart is empty").font(.headline)
-            Spacer()
         }
     }
 }

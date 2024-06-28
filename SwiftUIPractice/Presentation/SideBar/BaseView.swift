@@ -19,8 +19,9 @@ struct BaseView: View {
     @GestureState var gestureOffset: CGFloat = 0
     
     @EnvironmentObject var vm: UserStateViewModel
-    @StateObject var cartItems = CartViewModel()
 
+    @StateObject var cartItems = CartViewModel()
+    
     private let sideBarWidth = UIScreen.main.bounds.width - 90
     
     init() {
@@ -29,131 +30,46 @@ struct BaseView: View {
     
     var body: some View {
         
-        let sideBarWidth = getRect().width - 90
-        
-            
-            HStack(spacing: 0) {
-                SideMenu(showMenu: $showMenu)
+        VStack(spacing: 0) {
+            TabView(selection: $currentTab) {
                 NavigationStack {
-                    HomeScreen(showMenu: $showMenu, viewModel: HomeViewModel())
+                    HomeScreen(showMenu: $showMenu)
                         .environmentObject(cartItems)
                 }
-                .frame(width: getRect().width)
-                .overlay(
-                    Rectangle()
-                        .fill(
-                            // offset: 300 / 300 = 1
-                            // 1 / 5 = 0.2
-                            Color.primary.opacity( (offset / sideBarWidth) / 5.0 )
-                        )
-                        .onTapGesture {
-                            showMenu.toggle()
-                        }
-                    
+                .tabItem {
+                    Label("Home", systemImage: "house")
+                }
+                .tag("Home")
+                NavigationStack {
+                    CartView(cartProducts: cartItems)
+                }
+                .tabItem {
+                    Label("Cart", systemImage: "cart")
+                }.badge(cartItems.cartProduct.count)
+                .tag("Cart")
+                NavigationStack {
+                    ProfileView(userModel: UserProfileViewModel())
+                }
+                .tabItem {
+                    Label("Profile", systemImage: "person.crop.circle")
+                }
+                .tag("Profile")
+            }
+        }
+        .frame(width: getRect().width)
+        .overlay(
+            Rectangle()
+                .fill(
+                    // offset: 300 / 300 = 1
+                    // 1 / 5 = 0.2
+                    Color.primary.opacity( (offset / sideBarWidth) / 5.0 )
                 )
-            }
-            // maxWidth : sideBarWidth + screenWidth
-            .frame(width: sideBarWidth + getRect().width)
-            .offset(x: -sideBarWidth / 2)
-            .offset(x: offset)
-            .gesture(
-                DragGesture()
-                    .updating($gestureOffset, body: { value, out, _ in
-                        out = value.translation.width
-                    })
-                    .onEnded(onEnd(value:))
-            )
-            .navigationBarBackButtonHidden()
-        .tint(.themeColor)
-        .animation(.linear(duration: 0.15), value: offset == 0)
-        .onChange(of: showMenu) { newValue in
-            if showMenu && offset == 0 {
-                offset = sideBarWidth
-                lastStoredOffset = offset
-            }
-            
-            if !showMenu && offset == sideBarWidth {
-                offset = 0
-                lastStoredOffset = 0
-            }
-        }
-        .onChange(of: gestureOffset) { newValue in
-            
-            if gestureOffset != 0 {
-                
-                // Dragging width SideBarWidth
-                if gestureOffset + lastStoredOffset < sideBarWidth && (gestureOffset + lastStoredOffset) > 0 {
-                    
-                    offset = lastStoredOffset + gestureOffset
-                    
-                } else {
-                    // sideMenuWidth
-                    if gestureOffset + lastStoredOffset < 0 {
-                        // Dragging device
-                        offset = 0
-                    }
+                .ignoresSafeArea(.container, edges: .all)
+                .onTapGesture {
+                    showMenu.toggle()
                 }
-            }
-        }
-    }
-    
-    func onEnd(value: DragGesture.Value) {
-        
-        withAnimation(.spring(duration: 0.15)) {
             
-            if value.translation.width > 0 {
-                // Dragging>>>
-                
-                if value.translation.width > sideBarWidth / 2 {
-                    
-                    offset = sideBarWidth
-                    lastStoredOffset = sideBarWidth
-                    showMenu = true
-                } else {
-                    
-                    // sideMenu dragging
-                    if value.translation.width > sideBarWidth && showMenu {
-                        offset = 0
-                        showMenu = false
-                    } else {
-                        // velocity
-                        // sideMenu dragging
-                        if value.velocity.width > 800 {
-                            offset = sideBarWidth
-                            showMenu = true
-                        } else if showMenu == false {
-                            // showSideMenu == false
-                            offset = 0
-                            showMenu = false
-                        }
-                    }
-                }
-            } else {
-                // <<<Dragging
-                
-                if -value.translation.width > sideBarWidth / 2 {
-                    offset = 0
-                    showMenu = false
-                } else {
-                    
-                    // sideMenu dragging
-                    guard showMenu else {
-                        return }
-                    
-                    // sideMenu dragging
-                    if -value.velocity.width > 800 {
-                        offset = 0
-                        showMenu = false
-                    } else {
-                        offset = sideBarWidth
-                        showMenu = true
-                    }
-                    
-                }
-            }
-        }
-        
-        lastStoredOffset = offset
+        )
     }
 }
 
@@ -165,31 +81,14 @@ struct BaseView_Previews: PreviewProvider {
 
 
 
-// Main Tab View
-//                VStack(spacing: 0) {
-//                    TabView(selection: $currentTab) {
-//                        NavigationStack {
-//                            HomeScreen(showMenu: $showMenu)
-//                        }
-//                        .tabItem {
-//                            Label("Home", systemImage: "gear")
-//                        }
-//                        .tag("Home")
-//                        NavigationStack {
-//                            CartView(showMenu: $showMenu)
-//                        }
-//                        .tabItem {
-//                            Label("Cart", systemImage: "gear")
-//                        }
-//                        .tag("Cart")
-//                        NavigationStack {
-//                            ProfileView(showMenu: $showMenu)
-//                        }
-//                        .tabItem {
-//                            Label("Profile", systemImage: "gear")
-//                        }
-//                        .tag("Cart")
-//                    }
+//        let sideBarWidth = getRect().width - 90
+//
+//
+//            HStack(spacing: 0) {
+//                SideMenu(showMenu: $showMenu)
+//                NavigationStack {
+//                    HomeScreen(showMenu: $showMenu, viewModel: HomeViewModel())
+//                        .environmentObject(cartItems)
 //                }
 //                .frame(width: getRect().width)
 //                .overlay(
@@ -199,9 +98,113 @@ struct BaseView_Previews: PreviewProvider {
 //                            // 1 / 5 = 0.2
 //                            Color.primary.opacity( (offset / sideBarWidth) / 5.0 )
 //                        )
-//                        .ignoresSafeArea(.container, edges: .all)
 //                        .onTapGesture {
 //                            showMenu.toggle()
 //                        }
 //
 //                )
+//            }
+//            // maxWidth : sideBarWidth + screenWidth
+//            .frame(width: sideBarWidth + getRect().width)
+//            .offset(x: -sideBarWidth / 2)
+//            .offset(x: offset)
+//            .gesture(
+//                DragGesture()
+//                    .updating($gestureOffset, body: { value, out, _ in
+//                        out = value.translation.width
+//                    })
+//                    .onEnded(onEnd(value:))
+//            )
+//            .navigationBarBackButtonHidden()
+//        .tint(.themeColor)
+//        .animation(.linear(duration: 0.15), value: offset == 0)
+//        .onChange(of: showMenu) { newValue in
+//            if showMenu && offset == 0 {
+//                offset = sideBarWidth
+//                lastStoredOffset = offset
+//            }
+//
+//            if !showMenu && offset == sideBarWidth {
+//                offset = 0
+//                lastStoredOffset = 0
+//            }
+//        }
+//        .onChange(of: gestureOffset) { newValue in
+//
+//            if gestureOffset != 0 {
+//
+//                // Dragging width SideBarWidth
+//                if gestureOffset + lastStoredOffset < sideBarWidth && (gestureOffset + lastStoredOffset) > 0 {
+//
+//                    offset = lastStoredOffset + gestureOffset
+//
+//                } else {
+//                    // sideMenuWidth
+//                    if gestureOffset + lastStoredOffset < 0 {
+//                        // Dragging device
+//                        offset = 0
+//                    }
+//                }
+//            }
+//        }
+
+
+
+//    func onEnd(value: DragGesture.Value) {
+//
+//        withAnimation(.spring(duration: 0.15)) {
+//
+//            if value.translation.width > 0 {
+//                // Dragging>>>
+//
+//                if value.translation.width > sideBarWidth / 2 {
+//
+//                    offset = sideBarWidth
+//                    lastStoredOffset = sideBarWidth
+//                    showMenu = true
+//                } else {
+//
+//                    // sideMenu dragging
+//                    if value.translation.width > sideBarWidth && showMenu {
+//                        offset = 0
+//                        showMenu = false
+//                    } else {
+//                        // velocity
+//                        // sideMenu dragging
+//                        if value.velocity.width > 800 {
+//                            offset = sideBarWidth
+//                            showMenu = true
+//                        } else if showMenu == false {
+//                            // showSideMenu == false
+//                            offset = 0
+//                            showMenu = false
+//                        }
+//                    }
+//                }
+//            } else {
+//                // <<<Dragging
+//
+//                if -value.translation.width > sideBarWidth / 2 {
+//                    offset = 0
+//                    showMenu = false
+//                } else {
+//
+//                    // sideMenu dragging
+//                    guard showMenu else {
+//                        return }
+//
+//                    // sideMenu dragging
+//                    if -value.velocity.width > 800 {
+//                        offset = 0
+//                        showMenu = false
+//                    } else {
+//                        offset = sideBarWidth
+//                        showMenu = true
+//                    }
+//
+//                }
+//            }
+//        }
+//
+//        lastStoredOffset = offset
+//    }

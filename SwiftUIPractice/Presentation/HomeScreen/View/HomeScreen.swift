@@ -68,11 +68,11 @@ struct HomeScreen: View {
                 showFab ? createFab(): nil,
                 alignment: Alignment.bottomTrailing
             )
-            .navigationTitle("Yappetizer")
-            .navigationBarItems(trailing: trailingBarItems)
-            .navigationBarItems(leading: leadingBarItems)
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbarBackground(.visible, for: .navigationBar)
+            .navigationTitle("Products")
+//            .navigationBarItems(trailing: trailingBarItems)
+//            .navigationBarItems(leading: leadingBarItems)
+//            .navigationBarTitleDisplayMode(.inline)
+//            .toolbarBackground(.visible, for: .navigationBar)
         }
         .overlay(
             ActivityIndicatorView(isVisible: $showLoadingIndicator, type: .default())

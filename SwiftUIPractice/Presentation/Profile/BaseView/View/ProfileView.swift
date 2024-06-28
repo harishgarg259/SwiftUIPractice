@@ -23,7 +23,7 @@ struct ProfileView: View {
         .onAppear{
             self.userModel.getProfile()
         }
-        .navigationBarTitle("My Profile",displayMode: .inline)
+        .navigationBarTitle("Profile",displayMode: .inline)
         .toolbarBackground(.visible, for: .navigationBar)
         .tint(.themeColor)
     }
