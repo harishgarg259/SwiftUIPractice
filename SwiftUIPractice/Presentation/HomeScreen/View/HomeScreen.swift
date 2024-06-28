@@ -10,12 +10,19 @@ import ActivityIndicatorView
 
 struct HomeScreen: View {
     
+    let categories: [String] = ["Our Brand","Dog", "Cat"]
+    @State private var selectedCategory: String = "Our Brand"
+    let subCategories: [String] = ["All","Charmy","KaliWags", "Earth Rated", "Smack","Dog Delights", "NutriBites", "Sensitivia"]
+    @State private var selectedSubCategory: String = "All"
+    @Namespace var category
+    @Namespace var subCategory
+    
     @Binding var showMenu: Bool
     @State private var searchText: String = ""
     @State private var presented = false
     @State var showFab = true
     @State var scrollOffset: CGFloat = 0.00
-    @StateObject var viewModel: HomeViewModel = HomeViewModel()
+    @StateObject var viewModel = HomeViewModel()
     @State var showLoadingIndicator = false
     @State var tags: [String] = []
     @State var keyword: String = ""
@@ -33,7 +40,6 @@ struct HomeScreen: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                
                 TagTextField(tags: $tags, keyword: $keyword, tagRemoved:  { isDeleted in
                     if isDeleted{
                         viewModel.localProductList()
@@ -42,8 +48,71 @@ struct HomeScreen: View {
                 if viewModel.isLoading {
                     ProgressView()
                 } else if !viewModel.productListArray.isEmpty{
+                    HStack() {
+                        ForEach(categories, id: \.self) { segment in
+                            Button {
+                                selectedCategory = segment
+                                selectedSubCategory = "All"
+                            } label: {
+                                VStack {
+                                    HStack{
+                                        Text(segment)
+                                            .font(.headline)
+                                            .fontWeight(.medium)
+                                            .foregroundColor(selectedCategory == segment ? .red : Color(uiColor: .systemGray))
+                                    }
+                                    ZStack {
+                                        Capsule()
+                                            .fill(Color.clear)
+                                            .frame(height: 4)
+                                        if selectedCategory == segment {
+                                            Capsule()
+                                                .fill(Color.red)
+                                                .frame(height: 3)
+                                                .matchedGeometryEffect(id: "Tab", in: category)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    .padding(5)
+                    
+                    ScrollView(.horizontal,showsIndicators: false) {
+                        HStack() {
+                            ForEach(subCategories, id: \.self) { segment in
+                                Button {
+                                    selectedSubCategory = segment
+                                } label: {
+                                    VStack {
+                                        HStack{
+                                            Text(segment)
+                                                .font(.headline)
+                                                .fontWeight(.medium)
+                                                .foregroundColor(selectedSubCategory == segment ? .red : Color(uiColor: .systemGray))
+                                                .padding()
+                                        }
+                                        ZStack {
+                                            Capsule()
+                                                .fill(Color.clear)
+                                                .frame(height: 4)
+                                            if selectedSubCategory == segment {
+                                                Capsule()
+                                                    .fill(Color.red)
+                                                    .frame(height: 3)
+                                                    .matchedGeometryEffect(id: "Tab", in: subCategory)
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        .padding(5)
+                    }
+                    
                     
                     listView
+                    
                     .background(GeometryReader {
                         return Color.clear.preference(key: ViewOffsetKey.self, value: -$0.frame(in: .named("scroll")).origin.y)
                     })
@@ -62,13 +131,13 @@ struct HomeScreen: View {
                 }
                
             }
-            .padding(10)
             .coordinateSpace(name: "scroll")
             .overlay(
                 showFab ? createFab(): nil,
                 alignment: Alignment.bottomTrailing
             )
             .navigationTitle("Products")
+            .searchable(text: $searchText)
 //            .navigationBarItems(trailing: trailingBarItems)
 //            .navigationBarItems(leading: leadingBarItems)
 //            .navigationBarTitleDisplayMode(.inline)
@@ -100,7 +169,6 @@ struct HomeScreen: View {
             }
         }
         .padding()
-        .searchable(text: $searchText)
         .onSubmit(of: .search) {
             if tags.contains(searchText) == false {
                 tags.append(searchText)
@@ -168,5 +236,5 @@ struct ViewOffsetKey: PreferenceKey {
 }
 
 #Preview {
-    HomeScreen(showMenu: .constant(true), viewModel: HomeViewModel())
+    HomeScreen(showMenu: .constant(true))
 }
