@@ -55,7 +55,7 @@ struct ProductDetailView: View {
                         .font(.headline)
                         .foregroundStyle(.red)
                 }else{
-                    if let sizes = product?.attributes?.filter({ $0.name == "SIZE" }), let options = sizes.first?.options, options.count > 0{
+                    if let sizes = product?.attributes?.filter({ ($0.name?.contains("SIZE") ?? false) }), let options = sizes.first?.options, options.count > 0{
                         // Choose Size Dropdown
                         HStack {
                             Text("Select Size:")
@@ -102,13 +102,7 @@ struct ProductDetailView: View {
                         .font(.body)
                 }
                 
-                // Product description with multiple headings and details
-                VStack(alignment: .leading, spacing: 12) {
-                    Text("Description")
-                        .font(.headline)
-                    Text(product?.description ?? "")
-                        .font(.body)
-                }
+//                descriptionView
                 
                 // Similar product listing at the end
 //                Text("Related Products")
@@ -125,6 +119,18 @@ struct ProductDetailView: View {
             .padding()
         }
         .navigationTitle("Product Detail")
+    }
+    
+    var descriptionView: some View {
+        // Product description with multiple headings and details
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Description")
+                .font(.headline)
+            if let attributedText = product?.description?.attributedHtmlString {
+                Text(attributedText.string)
+                    .font(.body)
+            }
+        }
     }
 }
 

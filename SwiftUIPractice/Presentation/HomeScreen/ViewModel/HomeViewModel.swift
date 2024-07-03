@@ -38,6 +38,8 @@ class HomeViewModel: ObservableObject {
         localFilterList()
         localProductList()
         
+        
+        //Search products
         $searchTerm
             .dropFirst()
             .removeDuplicates()
@@ -49,10 +51,12 @@ class HomeViewModel: ObservableObject {
             }.store(in: &subscriptions)
     }
     
-    func productList(searchText: String) {
+    func productList(searchText: String,isSearching: Bool = true) {
         
-        guard !searchText.isEmpty else {
-            return
+        if isSearching{
+            guard searchText.count > 2 else {
+                return
+            }
         }
         
         guard state == FetchState.idle else {
@@ -150,7 +154,7 @@ extension HomeViewModel{
         self.productListArray = response ?? []
         if !self.menuListArray.isEmpty && self.productListArray.isEmpty{
             //Load from api
-            self.productList(searchText: "")
+            self.productList(searchText: "", isSearching: false)
         }else{
             self.state = .loadedAllProducts
         }
