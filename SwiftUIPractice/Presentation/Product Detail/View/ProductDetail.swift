@@ -106,7 +106,7 @@ struct ProductDetailView: View {
                 VStack(alignment: .leading, spacing: 12) {
                     Text("Description")
                         .font(.headline)
-                    Text(product?.yoast_head_json?.description ?? "")
+                    Text(product?.description ?? "")
                         .font(.body)
                 }
                 
@@ -129,7 +129,7 @@ struct ProductDetailView: View {
 }
 
 struct ImageGridView: View {
-    let images: [Images]
+    let images: [ProductImages]
     @State private var currentPage = 0
     
     var body: some View {

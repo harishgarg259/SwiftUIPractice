@@ -7,306 +7,366 @@
 
 import Foundation
 
-
 struct ProductListModel : Codable {
     let id : Int?
     let name : String?
-    let slug : String?
-    let permalink : String?
-    let date_created : String?
-    let date_created_gmt : String?
-    let date_modified : String?
-    let date_modified_gmt : String?
-    let type : String?
-    let status : String?
-    let featured : Bool?
-    let catalog_visibility : String?
-    let description : String?
-    let short_description : String?
-    let sku : String?
-    let price : String?
     let regular_price : String?
-    let sale_price : String?
-    let date_on_sale_from : String?
-    let date_on_sale_from_gmt : String?
-    let date_on_sale_to : String?
-    let date_on_sale_to_gmt : String?
-    let on_sale : Bool?
-    let purchasable : Bool?
-    let total_sales : Int?
-    let virtual : Bool?
-    let downloadable : Bool?
-    let downloads : [String]?
-    let download_limit : Int?
-    let download_expiry : Int?
-    let external_url : String?
-    let button_text : String?
-    let tax_status : String?
-    let tax_class : String?
-    let manage_stock : Bool?
     let stock_quantity : Int?
+    let date_created : String?
+    let featured : Bool?
+    let description : String?
+    let price : String?
+    let sale_price : String?
+    let on_sale : Bool?
     let in_stock : Bool?
-    let backorders : String?
-    let backorders_allowed : Bool?
-    let backordered : Bool?
-    let sold_individually : Bool?
     let weight : String?
-    let dimensions : Dimensions?
-    let shipping_required : Bool?
-    let shipping_taxable : Bool?
-    let shipping_class : String?
-    let shipping_class_id : Int?
-    let reviews_allowed : Bool?
-    let average_rating : String?
-    let rating_count : Int?
-    let upsell_ids : [Int]?
-    let cross_sell_ids : [Int]?
-    let parent_id : Int?
-    let purchase_note : String?
-    let categories : [Categories]?
-    let tags : [String]?
-    let images : [Images]?
+    let images : [ProductImages]?
     let attributes : [Attributes]?
-    let default_attributes : [DefaultAttributes]?
-    let variations : [Int]?
-    let grouped_products : [String]?
-    let menu_order : Int?
-    let low_stock_amount : String?
+    let categories : [Categories]?
     let price_html : String?
-    let related_ids : [Int]?
-    let meta_data : [Meta_data]?
-    let purchase_price : String?
-    let supplier_id : String?
-    let supplier_sku : String?
-    let barcode : String?
-    let atum_controlled : Bool?
-    let out_stock_date : String?
-    let out_stock_threshold : String?
-    let inheritable : Bool?
-    let inbound_stock : Int?
-    let stock_on_hold : Int?
-    let sold_today : Int?
-    let sales_last_days : Int?
-    let reserved_stock : Int?
-    let customer_returns : Int?
-    let warehouse_damage : Int?
-    let lost_in_post : Int?
-    let other_logs : Int?
-    let out_stock_days : Int?
-    let lost_sales : Int?
-    let has_location : Bool?
-    let update_date : String?
-    let atum_locations : [String]?
-    let atum_stock_status : String?
-    let restock_status : Bool?
-    let sales_update_date : String?
-    let calc_backorders : String?
-    let yoast_head : String?
-    let yoast_head_json : YoastHeadJson?
-    let _links : Links?
-    
+
     enum CodingKeys: String, CodingKey {
 
         case id = "id"
         case name = "name"
-        case slug = "slug"
-        case permalink = "permalink"
-        case date_created = "date_created"
-        case date_created_gmt = "date_created_gmt"
-        case date_modified = "date_modified"
-        case date_modified_gmt = "date_modified_gmt"
-        case type = "type"
-        case status = "status"
-        case featured = "featured"
-        case catalog_visibility = "catalog_visibility"
-        case description = "description"
-        case short_description = "short_description"
-        case sku = "sku"
-        case price = "price"
         case regular_price = "regular_price"
-        case sale_price = "sale_price"
-        case date_on_sale_from = "date_on_sale_from"
-        case date_on_sale_from_gmt = "date_on_sale_from_gmt"
-        case date_on_sale_to = "date_on_sale_to"
-        case date_on_sale_to_gmt = "date_on_sale_to_gmt"
-        case on_sale = "on_sale"
-        case purchasable = "purchasable"
-        case total_sales = "total_sales"
-        case virtual = "virtual"
-        case downloadable = "downloadable"
-        case downloads = "downloads"
-        case download_limit = "download_limit"
-        case download_expiry = "download_expiry"
-        case external_url = "external_url"
-        case button_text = "button_text"
-        case tax_status = "tax_status"
-        case tax_class = "tax_class"
-        case manage_stock = "manage_stock"
         case stock_quantity = "stock_quantity"
+        case date_created = "date_created"
+        case featured = "featured"
+        case description = "description"
+        case price = "price"
+        case sale_price = "sale_price"
+        case on_sale = "on_sale"
         case in_stock = "in_stock"
-        case backorders = "backorders"
-        case backorders_allowed = "backorders_allowed"
-        case backordered = "backordered"
-        case sold_individually = "sold_individually"
         case weight = "weight"
-        case dimensions = "dimensions"
-        case shipping_required = "shipping_required"
-        case shipping_taxable = "shipping_taxable"
-        case shipping_class = "shipping_class"
-        case shipping_class_id = "shipping_class_id"
-        case reviews_allowed = "reviews_allowed"
-        case average_rating = "average_rating"
-        case rating_count = "rating_count"
-        case upsell_ids = "upsell_ids"
-        case cross_sell_ids = "cross_sell_ids"
-        case parent_id = "parent_id"
-        case purchase_note = "purchase_note"
-        case categories = "categories"
-        case tags = "tags"
         case images = "images"
         case attributes = "attributes"
-        case default_attributes = "default_attributes"
-        case variations = "variations"
-        case grouped_products = "grouped_products"
-        case menu_order = "menu_order"
-        case low_stock_amount = "low_stock_amount"
+        case categories = "categories"
         case price_html = "price_html"
-        case related_ids = "related_ids"
-        case meta_data = "meta_data"
-        case purchase_price = "purchase_price"
-        case supplier_id = "supplier_id"
-        case supplier_sku = "supplier_sku"
-        case barcode = "barcode"
-        case atum_controlled = "atum_controlled"
-        case out_stock_date = "out_stock_date"
-        case out_stock_threshold = "out_stock_threshold"
-        case inheritable = "inheritable"
-        case inbound_stock = "inbound_stock"
-        case stock_on_hold = "stock_on_hold"
-        case sold_today = "sold_today"
-        case sales_last_days = "sales_last_days"
-        case reserved_stock = "reserved_stock"
-        case customer_returns = "customer_returns"
-        case warehouse_damage = "warehouse_damage"
-        case lost_in_post = "lost_in_post"
-        case other_logs = "other_logs"
-        case out_stock_days = "out_stock_days"
-        case lost_sales = "lost_sales"
-        case has_location = "has_location"
-        case update_date = "update_date"
-        case atum_locations = "atum_locations"
-        case atum_stock_status = "atum_stock_status"
-        case restock_status = "restock_status"
-        case sales_update_date = "sales_update_date"
-        case calc_backorders = "calc_backorders"
-        case yoast_head = "yoast_head"
-        case yoast_head_json = "yoast_head_json"
-        case _links = "_links"
     }
 
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         id = try values.decodeIfPresent(Int.self, forKey: .id)
         name = try values.decodeIfPresent(String.self, forKey: .name)
-        slug = try values.decodeIfPresent(String.self, forKey: .slug)
-        permalink = try values.decodeIfPresent(String.self, forKey: .permalink)
-        date_created = try values.decodeIfPresent(String.self, forKey: .date_created)
-        date_created_gmt = try values.decodeIfPresent(String.self, forKey: .date_created_gmt)
-        date_modified = try values.decodeIfPresent(String.self, forKey: .date_modified)
-        date_modified_gmt = try values.decodeIfPresent(String.self, forKey: .date_modified_gmt)
-        type = try values.decodeIfPresent(String.self, forKey: .type)
-        status = try values.decodeIfPresent(String.self, forKey: .status)
-        featured = try values.decodeIfPresent(Bool.self, forKey: .featured)
-        catalog_visibility = try values.decodeIfPresent(String.self, forKey: .catalog_visibility)
-        description = try values.decodeIfPresent(String.self, forKey: .description)
-        short_description = try values.decodeIfPresent(String.self, forKey: .short_description)
-        sku = try values.decodeIfPresent(String.self, forKey: .sku)
-        price = try values.decodeIfPresent(String.self, forKey: .price)
         regular_price = try values.decodeIfPresent(String.self, forKey: .regular_price)
-        sale_price = try values.decodeIfPresent(String.self, forKey: .sale_price)
-        date_on_sale_from = try values.decodeIfPresent(String.self, forKey: .date_on_sale_from)
-        date_on_sale_from_gmt = try values.decodeIfPresent(String.self, forKey: .date_on_sale_from_gmt)
-        date_on_sale_to = try values.decodeIfPresent(String.self, forKey: .date_on_sale_to)
-        date_on_sale_to_gmt = try values.decodeIfPresent(String.self, forKey: .date_on_sale_to_gmt)
-        on_sale = try values.decodeIfPresent(Bool.self, forKey: .on_sale)
-        purchasable = try values.decodeIfPresent(Bool.self, forKey: .purchasable)
-        if let totalSales = try? values.decodeIfPresent(String.self, forKey: .total_sales){
-            total_sales = Int(totalSales)
-        }else{
-            total_sales = try values.decodeIfPresent(Int.self, forKey: .total_sales)
-        }
-        virtual = try values.decodeIfPresent(Bool.self, forKey: .virtual)
-        downloadable = try values.decodeIfPresent(Bool.self, forKey: .downloadable)
-        downloads = try values.decodeIfPresent([String].self, forKey: .downloads)
-        download_limit = try values.decodeIfPresent(Int.self, forKey: .download_limit)
-        download_expiry = try values.decodeIfPresent(Int.self, forKey: .download_expiry)
-        external_url = try values.decodeIfPresent(String.self, forKey: .external_url)
-        button_text = try values.decodeIfPresent(String.self, forKey: .button_text)
-        tax_status = try values.decodeIfPresent(String.self, forKey: .tax_status)
-        tax_class = try values.decodeIfPresent(String.self, forKey: .tax_class)
-        manage_stock = try values.decodeIfPresent(Bool.self, forKey: .manage_stock)
         stock_quantity = try values.decodeIfPresent(Int.self, forKey: .stock_quantity)
+        date_created = try values.decodeIfPresent(String.self, forKey: .date_created)
+        featured = try values.decodeIfPresent(Bool.self, forKey: .featured)
+        description = try values.decodeIfPresent(String.self, forKey: .description)
+        price = try values.decodeIfPresent(String.self, forKey: .price)
+        sale_price = try values.decodeIfPresent(String.self, forKey: .sale_price)
+        on_sale = try values.decodeIfPresent(Bool.self, forKey: .on_sale)
         in_stock = try values.decodeIfPresent(Bool.self, forKey: .in_stock)
-        backorders = try values.decodeIfPresent(String.self, forKey: .backorders)
-        backorders_allowed = try values.decodeIfPresent(Bool.self, forKey: .backorders_allowed)
-        backordered = try values.decodeIfPresent(Bool.self, forKey: .backordered)
-        sold_individually = try values.decodeIfPresent(Bool.self, forKey: .sold_individually)
         weight = try values.decodeIfPresent(String.self, forKey: .weight)
-        dimensions = try values.decodeIfPresent(Dimensions.self, forKey: .dimensions)
-        shipping_required = try values.decodeIfPresent(Bool.self, forKey: .shipping_required)
-        shipping_taxable = try values.decodeIfPresent(Bool.self, forKey: .shipping_taxable)
-        shipping_class = try values.decodeIfPresent(String.self, forKey: .shipping_class)
-        shipping_class_id = try values.decodeIfPresent(Int.self, forKey: .shipping_class_id)
-        reviews_allowed = try values.decodeIfPresent(Bool.self, forKey: .reviews_allowed)
-        average_rating = try values.decodeIfPresent(String.self, forKey: .average_rating)
-        rating_count = try values.decodeIfPresent(Int.self, forKey: .rating_count)
-        upsell_ids = try values.decodeIfPresent([Int].self, forKey: .upsell_ids)
-        cross_sell_ids = try values.decodeIfPresent([Int].self, forKey: .cross_sell_ids)
-        parent_id = try values.decodeIfPresent(Int.self, forKey: .parent_id)
-        purchase_note = try values.decodeIfPresent(String.self, forKey: .purchase_note)
-        categories = try values.decodeIfPresent([Categories].self, forKey: .categories)
-        tags = try values.decodeIfPresent([String].self, forKey: .tags)
-        images = try values.decodeIfPresent([Images].self, forKey: .images)
+        images = try values.decodeIfPresent([ProductImages].self, forKey: .images)
         attributes = try values.decodeIfPresent([Attributes].self, forKey: .attributes)
-        default_attributes = try values.decodeIfPresent([DefaultAttributes].self, forKey: .default_attributes)
-        variations = try values.decodeIfPresent([Int].self, forKey: .variations)
-        grouped_products = try values.decodeIfPresent([String].self, forKey: .grouped_products)
-        menu_order = try values.decodeIfPresent(Int.self, forKey: .menu_order)
-        low_stock_amount = try values.decodeIfPresent(String.self, forKey: .low_stock_amount)
+        categories = try values.decodeIfPresent([Categories].self, forKey: .categories)
         price_html = try values.decodeIfPresent(String.self, forKey: .price_html)
-        related_ids = try values.decodeIfPresent([Int].self, forKey: .related_ids)
-        meta_data = try values.decodeIfPresent([Meta_data].self, forKey: .meta_data)
-        purchase_price = try values.decodeIfPresent(String.self, forKey: .purchase_price)
-        supplier_id = try values.decodeIfPresent(String.self, forKey: .supplier_id)
-        supplier_sku = try values.decodeIfPresent(String.self, forKey: .supplier_sku)
-        barcode = try values.decodeIfPresent(String.self, forKey: .barcode)
-        atum_controlled = try values.decodeIfPresent(Bool.self, forKey: .atum_controlled)
-        out_stock_date = try values.decodeIfPresent(String.self, forKey: .out_stock_date)
-        out_stock_threshold = try values.decodeIfPresent(String.self, forKey: .out_stock_threshold)
-        inheritable = try values.decodeIfPresent(Bool.self, forKey: .inheritable)
-        inbound_stock = try values.decodeIfPresent(Int.self, forKey: .inbound_stock)
-        stock_on_hold = try values.decodeIfPresent(Int.self, forKey: .stock_on_hold)
-        sold_today = try values.decodeIfPresent(Int.self, forKey: .sold_today)
-        sales_last_days = try values.decodeIfPresent(Int.self, forKey: .sales_last_days)
-        reserved_stock = try values.decodeIfPresent(Int.self, forKey: .reserved_stock)
-        customer_returns = try values.decodeIfPresent(Int.self, forKey: .customer_returns)
-        warehouse_damage = try values.decodeIfPresent(Int.self, forKey: .warehouse_damage)
-        lost_in_post = try values.decodeIfPresent(Int.self, forKey: .lost_in_post)
-        other_logs = try values.decodeIfPresent(Int.self, forKey: .other_logs)
-        out_stock_days = try values.decodeIfPresent(Int.self, forKey: .out_stock_days)
-        lost_sales = try values.decodeIfPresent(Int.self, forKey: .lost_sales)
-        has_location = try values.decodeIfPresent(Bool.self, forKey: .has_location)
-        update_date = try values.decodeIfPresent(String.self, forKey: .update_date)
-        atum_locations = try values.decodeIfPresent([String].self, forKey: .atum_locations)
-        atum_stock_status = try values.decodeIfPresent(String.self, forKey: .atum_stock_status)
-        restock_status = try values.decodeIfPresent(Bool.self, forKey: .restock_status)
-        sales_update_date = try values.decodeIfPresent(String.self, forKey: .sales_update_date)
-        calc_backorders = try values.decodeIfPresent(String.self, forKey: .calc_backorders)
-        yoast_head = try values.decodeIfPresent(String.self, forKey: .yoast_head)
-        yoast_head_json = try values.decodeIfPresent(YoastHeadJson.self, forKey: .yoast_head_json)
-        _links = try values.decodeIfPresent(Links.self, forKey: ._links)
     }
+
 }
+
+
+//struct ProductListModel : Codable {
+//    let id : Int?
+//    let name : String?
+//    let slug : String?
+//    let permalink : String?
+//    let date_created : String?
+//    let date_created_gmt : String?
+//    let date_modified : String?
+//    let date_modified_gmt : String?
+//    let type : String?
+//    let status : String?
+//    let featured : Bool?
+//    let catalog_visibility : String?
+//    let description : String?
+//    let short_description : String?
+//    let sku : String?
+//    let price : String?
+//    let regular_price : String?
+//    let sale_price : String?
+//    let date_on_sale_from : String?
+//    let date_on_sale_from_gmt : String?
+//    let date_on_sale_to : String?
+//    let date_on_sale_to_gmt : String?
+//    let on_sale : Bool?
+//    let purchasable : Bool?
+//    let total_sales : Int?
+//    let virtual : Bool?
+//    let downloadable : Bool?
+//    let downloads : [String]?
+//    let download_limit : Int?
+//    let download_expiry : Int?
+//    let external_url : String?
+//    let button_text : String?
+//    let tax_status : String?
+//    let tax_class : String?
+//    let manage_stock : Bool?
+//    let stock_quantity : Int?
+//    let in_stock : Bool?
+//    let backorders : String?
+//    let backorders_allowed : Bool?
+//    let backordered : Bool?
+//    let sold_individually : Bool?
+//    let weight : String?
+//    let dimensions : Dimensions?
+//    let shipping_required : Bool?
+//    let shipping_taxable : Bool?
+//    let shipping_class : String?
+//    let shipping_class_id : Int?
+//    let reviews_allowed : Bool?
+//    let average_rating : String?
+//    let rating_count : Int?
+//    let upsell_ids : [Int]?
+//    let cross_sell_ids : [Int]?
+//    let parent_id : Int?
+//    let purchase_note : String?
+//    let categories : [Categories]?
+//    let tags : [Categories]?
+//    let images : [ProductImages]?
+//    let attributes : [Attributes]?
+//    let default_attributes : [DefaultAttributes]?
+//    let variations : [Int]?
+//    let grouped_products : [String]?
+//    let menu_order : Int?
+//    let low_stock_amount : IDQuantumValue?
+//    let price_html : String?
+//    let related_ids : [Int]?
+//    let meta_data : [Meta_data]?
+//    let purchase_price : String?
+//    let supplier_id : String?
+//    let supplier_sku : String?
+//    let barcode : String?
+//    let atum_controlled : Bool?
+//    let out_stock_date : String?
+//    let out_stock_threshold : String?
+//    let inheritable : Bool?
+//    let inbound_stock : Int?
+//    let stock_on_hold : Int?
+//    let sold_today : Int?
+//    let sales_last_days : Int?
+//    let reserved_stock : Int?
+//    let customer_returns : Int?
+//    let warehouse_damage : Int?
+//    let lost_in_post : Int?
+//    let other_logs : Int?
+//    let out_stock_days : Int?
+//    let lost_sales : Int?
+//    let has_location : Bool?
+//    let update_date : String?
+//    let atum_locations : [String]?
+//    let atum_stock_status : String?
+//    let restock_status : Bool?
+//    let sales_update_date : String?
+//    let calc_backorders : String?
+//    let yoast_head : String?
+//    let yoast_head_json : YoastHeadJson?
+//    let _links : Links?
+//    
+//    enum CodingKeys: String, CodingKey {
+//
+//        case id = "id"
+//        case name = "name"
+//        case slug = "slug"
+//        case permalink = "permalink"
+//        case date_created = "date_created"
+//        case date_created_gmt = "date_created_gmt"
+//        case date_modified = "date_modified"
+//        case date_modified_gmt = "date_modified_gmt"
+//        case type = "type"
+//        case status = "status"
+//        case featured = "featured"
+//        case catalog_visibility = "catalog_visibility"
+//        case description = "description"
+//        case short_description = "short_description"
+//        case sku = "sku"
+//        case price = "price"
+//        case regular_price = "regular_price"
+//        case sale_price = "sale_price"
+//        case date_on_sale_from = "date_on_sale_from"
+//        case date_on_sale_from_gmt = "date_on_sale_from_gmt"
+//        case date_on_sale_to = "date_on_sale_to"
+//        case date_on_sale_to_gmt = "date_on_sale_to_gmt"
+//        case on_sale = "on_sale"
+//        case purchasable = "purchasable"
+//        case total_sales = "total_sales"
+//        case virtual = "virtual"
+//        case downloadable = "downloadable"
+//        case downloads = "downloads"
+//        case download_limit = "download_limit"
+//        case download_expiry = "download_expiry"
+//        case external_url = "external_url"
+//        case button_text = "button_text"
+//        case tax_status = "tax_status"
+//        case tax_class = "tax_class"
+//        case manage_stock = "manage_stock"
+//        case stock_quantity = "stock_quantity"
+//        case in_stock = "in_stock"
+//        case backorders = "backorders"
+//        case backorders_allowed = "backorders_allowed"
+//        case backordered = "backordered"
+//        case sold_individually = "sold_individually"
+//        case weight = "weight"
+//        case dimensions = "dimensions"
+//        case shipping_required = "shipping_required"
+//        case shipping_taxable = "shipping_taxable"
+//        case shipping_class = "shipping_class"
+//        case shipping_class_id = "shipping_class_id"
+//        case reviews_allowed = "reviews_allowed"
+//        case average_rating = "average_rating"
+//        case rating_count = "rating_count"
+//        case upsell_ids = "upsell_ids"
+//        case cross_sell_ids = "cross_sell_ids"
+//        case parent_id = "parent_id"
+//        case purchase_note = "purchase_note"
+//        case categories = "categories"
+//        case tags = "tags"
+//        case images = "images"
+//        case attributes = "attributes"
+//        case default_attributes = "default_attributes"
+//        case variations = "variations"
+//        case grouped_products = "grouped_products"
+//        case menu_order = "menu_order"
+//        case low_stock_amount = "low_stock_amount"
+//        case price_html = "price_html"
+//        case related_ids = "related_ids"
+//        case meta_data = "meta_data"
+//        case purchase_price = "purchase_price"
+//        case supplier_id = "supplier_id"
+//        case supplier_sku = "supplier_sku"
+//        case barcode = "barcode"
+//        case atum_controlled = "atum_controlled"
+//        case out_stock_date = "out_stock_date"
+//        case out_stock_threshold = "out_stock_threshold"
+//        case inheritable = "inheritable"
+//        case inbound_stock = "inbound_stock"
+//        case stock_on_hold = "stock_on_hold"
+//        case sold_today = "sold_today"
+//        case sales_last_days = "sales_last_days"
+//        case reserved_stock = "reserved_stock"
+//        case customer_returns = "customer_returns"
+//        case warehouse_damage = "warehouse_damage"
+//        case lost_in_post = "lost_in_post"
+//        case other_logs = "other_logs"
+//        case out_stock_days = "out_stock_days"
+//        case lost_sales = "lost_sales"
+//        case has_location = "has_location"
+//        case update_date = "update_date"
+//        case atum_locations = "atum_locations"
+//        case atum_stock_status = "atum_stock_status"
+//        case restock_status = "restock_status"
+//        case sales_update_date = "sales_update_date"
+//        case calc_backorders = "calc_backorders"
+//        case yoast_head = "yoast_head"
+//        case yoast_head_json = "yoast_head_json"
+//        case _links = "_links"
+//    }
+//
+//    init(from decoder: Decoder) throws {
+//        let values = try decoder.container(keyedBy: CodingKeys.self)
+//        id = try values.decodeIfPresent(Int.self, forKey: .id)
+//        name = try values.decodeIfPresent(String.self, forKey: .name)
+//        slug = try values.decodeIfPresent(String.self, forKey: .slug)
+//        permalink = try values.decodeIfPresent(String.self, forKey: .permalink)
+//        date_created = try values.decodeIfPresent(String.self, forKey: .date_created)
+//        date_created_gmt = try values.decodeIfPresent(String.self, forKey: .date_created_gmt)
+//        date_modified = try values.decodeIfPresent(String.self, forKey: .date_modified)
+//        date_modified_gmt = try values.decodeIfPresent(String.self, forKey: .date_modified_gmt)
+//        type = try values.decodeIfPresent(String.self, forKey: .type)
+//        status = try values.decodeIfPresent(String.self, forKey: .status)
+//        featured = try values.decodeIfPresent(Bool.self, forKey: .featured)
+//        catalog_visibility = try values.decodeIfPresent(String.self, forKey: .catalog_visibility)
+//        description = try values.decodeIfPresent(String.self, forKey: .description)
+//        short_description = try values.decodeIfPresent(String.self, forKey: .short_description)
+//        sku = try values.decodeIfPresent(String.self, forKey: .sku)
+//        price = try values.decodeIfPresent(String.self, forKey: .price)
+//        regular_price = try values.decodeIfPresent(String.self, forKey: .regular_price)
+//        sale_price = try values.decodeIfPresent(String.self, forKey: .sale_price)
+//        date_on_sale_from = try values.decodeIfPresent(String.self, forKey: .date_on_sale_from)
+//        date_on_sale_from_gmt = try values.decodeIfPresent(String.self, forKey: .date_on_sale_from_gmt)
+//        date_on_sale_to = try values.decodeIfPresent(String.self, forKey: .date_on_sale_to)
+//        date_on_sale_to_gmt = try values.decodeIfPresent(String.self, forKey: .date_on_sale_to_gmt)
+//        on_sale = try values.decodeIfPresent(Bool.self, forKey: .on_sale)
+//        purchasable = try values.decodeIfPresent(Bool.self, forKey: .purchasable)
+//        if let totalSales = try? values.decodeIfPresent(String.self, forKey: .total_sales){
+//            total_sales = Int(totalSales)
+//        }else{
+//            total_sales = try values.decodeIfPresent(Int.self, forKey: .total_sales)
+//        }
+//        virtual = try values.decodeIfPresent(Bool.self, forKey: .virtual)
+//        downloadable = try values.decodeIfPresent(Bool.self, forKey: .downloadable)
+//        downloads = try values.decodeIfPresent([String].self, forKey: .downloads)
+//        download_limit = try values.decodeIfPresent(Int.self, forKey: .download_limit)
+//        download_expiry = try values.decodeIfPresent(Int.self, forKey: .download_expiry)
+//        external_url = try values.decodeIfPresent(String.self, forKey: .external_url)
+//        button_text = try values.decodeIfPresent(String.self, forKey: .button_text)
+//        tax_status = try values.decodeIfPresent(String.self, forKey: .tax_status)
+//        tax_class = try values.decodeIfPresent(String.self, forKey: .tax_class)
+//        manage_stock = try values.decodeIfPresent(Bool.self, forKey: .manage_stock)
+//        stock_quantity = try values.decodeIfPresent(Int.self, forKey: .stock_quantity)
+//        in_stock = try values.decodeIfPresent(Bool.self, forKey: .in_stock)
+//        backorders = try values.decodeIfPresent(String.self, forKey: .backorders)
+//        backorders_allowed = try values.decodeIfPresent(Bool.self, forKey: .backorders_allowed)
+//        backordered = try values.decodeIfPresent(Bool.self, forKey: .backordered)
+//        sold_individually = try values.decodeIfPresent(Bool.self, forKey: .sold_individually)
+//        weight = try values.decodeIfPresent(String.self, forKey: .weight)
+//        dimensions = try values.decodeIfPresent(Dimensions.self, forKey: .dimensions)
+//        shipping_required = try values.decodeIfPresent(Bool.self, forKey: .shipping_required)
+//        shipping_taxable = try values.decodeIfPresent(Bool.self, forKey: .shipping_taxable)
+//        shipping_class = try values.decodeIfPresent(String.self, forKey: .shipping_class)
+//        shipping_class_id = try values.decodeIfPresent(Int.self, forKey: .shipping_class_id)
+//        reviews_allowed = try values.decodeIfPresent(Bool.self, forKey: .reviews_allowed)
+//        average_rating = try values.decodeIfPresent(String.self, forKey: .average_rating)
+//        rating_count = try values.decodeIfPresent(Int.self, forKey: .rating_count)
+//        upsell_ids = try values.decodeIfPresent([Int].self, forKey: .upsell_ids)
+//        cross_sell_ids = try values.decodeIfPresent([Int].self, forKey: .cross_sell_ids)
+//        parent_id = try values.decodeIfPresent(Int.self, forKey: .parent_id)
+//        purchase_note = try values.decodeIfPresent(String.self, forKey: .purchase_note)
+//        categories = try values.decodeIfPresent([Categories].self, forKey: .categories)
+//        tags = try values.decodeIfPresent([Categories].self, forKey: .tags)
+//        images = try values.decodeIfPresent([ProductImages].self, forKey: .images)
+//        attributes = try values.decodeIfPresent([Attributes].self, forKey: .attributes)
+//        default_attributes = try values.decodeIfPresent([DefaultAttributes].self, forKey: .default_attributes)
+//        variations = try values.decodeIfPresent([Int].self, forKey: .variations)
+//        grouped_products = try values.decodeIfPresent([String].self, forKey: .grouped_products)
+//        menu_order = try values.decodeIfPresent(Int.self, forKey: .menu_order)
+//        low_stock_amount = try values.decodeIfPresent(IDQuantumValue.self, forKey: .low_stock_amount)
+//        price_html = try values.decodeIfPresent(String.self, forKey: .price_html)
+//        related_ids = try values.decodeIfPresent([Int].self, forKey: .related_ids)
+//        meta_data = try values.decodeIfPresent([Meta_data].self, forKey: .meta_data)
+//        purchase_price = try values.decodeIfPresent(String.self, forKey: .purchase_price)
+//        supplier_id = try values.decodeIfPresent(String.self, forKey: .supplier_id)
+//        supplier_sku = try values.decodeIfPresent(String.self, forKey: .supplier_sku)
+//        barcode = try values.decodeIfPresent(String.self, forKey: .barcode)
+//        atum_controlled = try values.decodeIfPresent(Bool.self, forKey: .atum_controlled)
+//        out_stock_date = try values.decodeIfPresent(String.self, forKey: .out_stock_date)
+//        out_stock_threshold = try values.decodeIfPresent(String.self, forKey: .out_stock_threshold)
+//        inheritable = try values.decodeIfPresent(Bool.self, forKey: .inheritable)
+//        inbound_stock = try values.decodeIfPresent(Int.self, forKey: .inbound_stock)
+//        stock_on_hold = try values.decodeIfPresent(Int.self, forKey: .stock_on_hold)
+//        sold_today = try values.decodeIfPresent(Int.self, forKey: .sold_today)
+//        sales_last_days = try values.decodeIfPresent(Int.self, forKey: .sales_last_days)
+//        reserved_stock = try values.decodeIfPresent(Int.self, forKey: .reserved_stock)
+//        customer_returns = try values.decodeIfPresent(Int.self, forKey: .customer_returns)
+//        warehouse_damage = try values.decodeIfPresent(Int.self, forKey: .warehouse_damage)
+//        lost_in_post = try values.decodeIfPresent(Int.self, forKey: .lost_in_post)
+//        other_logs = try values.decodeIfPresent(Int.self, forKey: .other_logs)
+//        out_stock_days = try values.decodeIfPresent(Int.self, forKey: .out_stock_days)
+//        lost_sales = try values.decodeIfPresent(Int.self, forKey: .lost_sales)
+//        has_location = try values.decodeIfPresent(Bool.self, forKey: .has_location)
+//        update_date = try values.decodeIfPresent(String.self, forKey: .update_date)
+//        atum_locations = try values.decodeIfPresent([String].self, forKey: .atum_locations)
+//        atum_stock_status = try values.decodeIfPresent(String.self, forKey: .atum_stock_status)
+//        restock_status = try values.decodeIfPresent(Bool.self, forKey: .restock_status)
+//        sales_update_date = try values.decodeIfPresent(String.self, forKey: .sales_update_date)
+//        calc_backorders = try values.decodeIfPresent(String.self, forKey: .calc_backorders)
+//        yoast_head = try values.decodeIfPresent(String.self, forKey: .yoast_head)
+//        yoast_head_json = try values.decodeIfPresent(YoastHeadJson.self, forKey: .yoast_head_json)
+//        _links = try values.decodeIfPresent(Links.self, forKey: ._links)
+//    }
+//}
 
 struct Links : Codable {
 //    let productSelf : [ProductSelf]?
@@ -537,7 +597,7 @@ struct ProductImage : Codable {
 
 }
 
-struct Images : Codable {
+struct ProductImages : Codable {
     let id : Int?
     let date_created : String?
     let date_created_gmt : String?
@@ -594,23 +654,23 @@ struct IsPartOf : Codable {
 
 
 struct Meta_data : Codable {
-    let id : Int?
-    let key : String?
-    let value : MetaDataQuantumValue?
-
-    enum CodingKeys: String, CodingKey {
-
-        case id = "id"
-        case key = "key"
-        case value = "value"
-    }
-
-    init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        id = try values.decodeIfPresent(Int.self, forKey: .id)
-        key = try values.decodeIfPresent(String.self, forKey: .key)
-        value = try values.decodeIfPresent(MetaDataQuantumValue.self, forKey: .value)
-    }
+//    let id : Int?
+//    let key : String?
+//    let value : MetaDataQuantumValue?
+//
+//    enum CodingKeys: String, CodingKey {
+//
+//        case id = "id"
+//        case key = "key"
+//        case value = "value"
+//    }
+//
+//    init(from decoder: Decoder) throws {
+//        let values = try decoder.container(keyedBy: CodingKeys.self)
+//        id = try values.decodeIfPresent(Int.self, forKey: .id)
+//        key = try values.decodeIfPresent(String.self, forKey: .key)
+//        value = try values.decodeIfPresent(MetaDataQuantumValue.self, forKey: .value)
+//    }
 
 }
 

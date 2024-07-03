@@ -178,7 +178,7 @@ struct CartItemView: View {
                 
                 VStack(alignment: .leading, spacing: 5) {
                     
-                    Text(item.yoast_head_json?.title ?? "")
+                    Text(item.name ?? "")
                         .font(.system(size: 15,weight: .semibold))
                     Text("$\(item.price ?? "$9.99")")
                         .font(.headline)

@@ -76,10 +76,14 @@ struct ProductView: View {
                         .fontWeight(.bold)
                         .lineLimit(2)
                         .minimumScaleFactor(0.5)
-                    Text("$\(productDetail?.price ?? "$9.99")")
-                        .font(.title3)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.5)
+                    
+                    if !(productDetail?.price ?? "").isEmpty{
+                        Text("$\(productDetail?.price ?? "$9.99")")
+                            .font(.title3)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.5)
+                    }
+                    
                     if !(productDetail?.in_stock ?? true){
                         Text("Out Of Stock")
                             .foregroundStyle(.red)
@@ -101,3 +105,24 @@ struct ProductView_Previews: PreviewProvider {
     }
 }
 
+struct SubCatTagView: View {
+        
+    var body: some View {
+        
+        HStack {
+            
+            Image(systemName: "")
+                .foregroundColor(.blue)
+            
+            Text("")
+                .fontWeight(.semibold)
+                .foregroundColor(.blue)
+            
+            Text("1")
+                .foregroundColor(.blue)
+        }
+        .padding(6)
+        .background(Color.blue.opacity(0.1))
+        .cornerRadius(6)
+    }
+}

@@ -6,235 +6,162 @@
 //
 
 import SwiftUI
-import ActivityIndicatorView
 
 struct HomeScreen: View {
     
-    let categories: [String] = ["Our Brand","Dog", "Cat"]
-    @State private var selectedCategory: String = "Our Brand"
-    let subCategories: [String] = ["All","Charmy","KaliWags", "Earth Rated", "Smack","Dog Delights", "NutriBites", "Sensitivia"]
-    @State private var selectedSubCategory: String = "All"
-    @Namespace var category
-    @Namespace var subCategory
+    // MARK: - Properties
     
-    @Binding var showMenu: Bool
+    // State variables
     @State private var searchText: String = ""
-    @State private var presented = false
-    @State var showFab = true
-    @State var scrollOffset: CGFloat = 0.00
-    @StateObject var viewModel = HomeViewModel()
-    @State var showLoadingIndicator = false
-    @State var tags: [String] = []
-    @State var keyword: String = ""
-    @EnvironmentObject var cart: CartViewModel
-
-    // 1. Number of items will be display in row
-    var columns: [GridItem] = [
-        GridItem(.flexible(), spacing: 20),
-        GridItem(.flexible()),
-    ]
-    // 2. Fixed height of card
-    let height: CGFloat = 200
-    // 3. Get mock cards data
+    @StateObject private var viewModel = HomeViewModel()
+    
+    // Environment objects
+    @EnvironmentObject private var cart: CartViewModel
+    
+    // Grid configuration
+    private var columns: [GridItem] {
+        [GridItem(.flexible(), spacing: 20), GridItem(.flexible())]
+    }
+    private let cardHeight: CGFloat = 200
+    
+    // MARK: - Body
     
     var body: some View {
         NavigationStack {
             ScrollView {
-                TagTextField(tags: $tags, keyword: $keyword, tagRemoved:  { isDeleted in
-                    if isDeleted{
-                        viewModel.localProductList()
-                    }
-                })
-                if viewModel.isLoading {
+                
+                categoryView
+                subCategoryView
+                
+                switch viewModel.state {
+                case .idle:
+                    Color.clear
+                        .onAppear {
+                            //viewModel.loadMore()
+                        }
+                case .isLoading:
                     ProgressView()
-                } else if !viewModel.productListArray.isEmpty{
-                    HStack() {
-                        ForEach(categories, id: \.self) { segment in
-                            Button {
-                                selectedCategory = segment
-                                selectedSubCategory = "All"
-                            } label: {
-                                VStack {
-                                    HStack{
-                                        Text(segment)
-                                            .font(.headline)
-                                            .fontWeight(.medium)
-                                            .foregroundColor(selectedCategory == segment ? .red : Color(uiColor: .systemGray))
-                                    }
-                                    ZStack {
-                                        Capsule()
-                                            .fill(Color.clear)
-                                            .frame(height: 4)
-                                        if selectedCategory == segment {
-                                            Capsule()
-                                                .fill(Color.red)
-                                                .frame(height: 3)
-                                                .matchedGeometryEffect(id: "Tab", in: category)
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    .padding(5)
-                    
-                    ScrollView(.horizontal,showsIndicators: false) {
-                        HStack() {
-                            ForEach(subCategories, id: \.self) { segment in
-                                Button {
-                                    selectedSubCategory = segment
-                                } label: {
-                                    VStack {
-                                        HStack{
-                                            Text(segment)
-                                                .font(.headline)
-                                                .fontWeight(.medium)
-                                                .foregroundColor(selectedSubCategory == segment ? .red : Color(uiColor: .systemGray))
-                                                .padding()
-                                        }
-                                        ZStack {
-                                            Capsule()
-                                                .fill(Color.clear)
-                                                .frame(height: 4)
-                                            if selectedSubCategory == segment {
-                                                Capsule()
-                                                    .fill(Color.red)
-                                                    .frame(height: 3)
-                                                    .matchedGeometryEffect(id: "Tab", in: subCategory)
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        .padding(5)
-                    }
-                    
-                    
-                    listView
-                    
-                    .background(GeometryReader {
-                        return Color.clear.preference(key: ViewOffsetKey.self, value: -$0.frame(in: .named("scroll")).origin.y)
-                    })
-                    .onPreferenceChange(ViewOffsetKey.self) { offset in
-                        withAnimation {
-                            if offset > 50 {
-                                showFab = offset < scrollOffset
-                            } else  {
-                                showFab = true
-                            }
-                        }
-                        scrollOffset = offset
-                    }
-                } else {
-                    Text("No products found")
+                        .progressViewStyle(.circular)
+                        .frame(maxWidth: .infinity)
+                case .loadedAllProducts:
+                    productListView
+                case .error(let message):
+                    Text(message)
+                        .foregroundColor(.pink)
                 }
-               
             }
-            .coordinateSpace(name: "scroll")
-            .overlay(
-                showFab ? createFab(): nil,
-                alignment: Alignment.bottomTrailing
-            )
             .navigationTitle("Products")
             .searchable(text: $searchText)
-//            .navigationBarItems(trailing: trailingBarItems)
-//            .navigationBarItems(leading: leadingBarItems)
-//            .navigationBarTitleDisplayMode(.inline)
-//            .toolbarBackground(.visible, for: .navigationBar)
+            .onSubmit(of: .search) {
+                self.searchProducts(searchText: searchText)
+            }
         }
-        .overlay(
-            ActivityIndicatorView(isVisible: $showLoadingIndicator, type: .default())
-                .frame(width: 50.0, height: 50.0)
-                .foregroundColor(.themeColor)
-        )
         .tint(.themeColor)
     }
     
-    func searchProducts(for searchText: String) {
+    // MARK: - Methods
+    
+    private func searchProducts(searchText: String) {
         if !searchText.isEmpty {
-            self.viewModel.productList(searchText: searchText)
-        }else{
+            viewModel.productList(searchText: searchText)
+        } else {
             viewModel.productListArray.removeAll()
         }
     }
     
-    var listView: some View {
-        // 4. Populate into grid
+    // MARK: - Views
+    
+    private var productListView: some View {
         LazyVGrid(columns: columns, spacing: 20) {
-            ForEach(viewModel.productListArray, id: \.id) { element in
-                ProductView(productDetail: element)
+            ForEach(viewModel.productListArray, id: \.id) { product in
+                ProductView(productDetail: product)
                     .environmentObject(cart)
-                    .frame(height: height)
+                    .frame(height: cardHeight)
             }
         }
         .padding()
-        .onSubmit(of: .search) {
-            if tags.contains(searchText) == false {
-                tags.append(searchText)
+    }
+    
+    private var categoryView: some View {
+        VStack(spacing: 0) {
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 20) {
+                    ForEach(Array(viewModel.menuListArray.enumerated()), id: \.offset) { section, element in
+                        Button {
+                            viewModel.subMenus = element.subMenus
+                            viewModel.selectedCategory = element.menuName
+                        } label: {
+                            VStack {
+                                Text(element.menuName)
+                                    .font(.headline)
+                                    .fontWeight(.semibold)
+                                    .foregroundColor(viewModel.selectedCategory == element.menuName ? .red : .secondary)
+                                ZStack {
+                                    Capsule()
+                                        .fill(Color.clear)
+                                        .frame(height: 4)
+                                    if viewModel.selectedCategory == element.menuName {
+                                        Capsule()
+                                            .fill(Color.red)
+                                            .frame(height: 3)
+                                    }
+                                }
+                            }
+                            .padding([.leading, .trailing], 10)
+                        }
+                    }
+                }
+                .padding([.leading, .trailing], 16)
             }
-            searchProducts(for: searchText)
+            Divider()
+                .frame(height: 2)
+                .padding(.top, 0)
         }
     }
     
-    fileprivate func createFab() -> some View {
-        return Button(action: {
-            self.presented = true
-        }, label: {
-            Image(systemName: "slider.horizontal.2.square")
-                .font(.title)
-                .foregroundColor(.white)
-                .frame(width: 35, height: 35, alignment: .center)
-        })
-        .sheet(isPresented: $presented) {
-            FilterView(showScreen: .constant(false), viewModel: CatagoryViewModel()) { text in
-                tags.removeAll()
-                tags.append(text)
-                searchProducts(for: text)
+    private var subCategoryView: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 16) {
+                ForEach(Array(viewModel.subMenus.enumerated()), id: \.offset) { index, subCategory in
+                    Button {
+                        viewModel.selectedSubCategory = subCategory.title ?? ""
+                    } label: {
+                        Text(subCategory.title ?? "")
+                            .foregroundColor(viewModel.selectedSubCategory == subCategory.title ?? "" ? .white : .theme)
+                            .padding()
+                            .frame(height: 36)
+                            .background(
+                                Capsule()
+                                    .strokeBorder(.red, lineWidth: 2)
+                                    .background(Capsule().fill(viewModel.selectedSubCategory == subCategory.title ?? "" ? .red : .white))
+                            )
+                    }
+                }
             }
+            .padding([.leading, .trailing], 16)
         }
-        .padding(10)
-        .background(Color.themeColor)
-        .cornerRadius(15)
-        .padding(15)
-        .shadow(radius: 3,
-                x: 3,
-                y: 3)
-        .transition(.scale)
     }
+    
+    // MARK: - Navigation Bar Items
     
     var trailingBarItems: some View {
-        NavigationLink(destination:
-            CartView(cartProducts: cart)
-        )
-        {
+        NavigationLink(destination: CartView(cartProducts: cart)) {
             Image(systemName: "cart")
                 .font(.system(size: 20))
         }
         .overlay(Badge(count: cart.cartProduct.count))
     }
-    
-    var leadingBarItems: some View {
-        Button(action: {
-            withAnimation {
-                showMenu.toggle()
-            }
-        }) {
-            Image(systemName: "list.bullet")
-                .font(.system(size: 20))
-        }
-        .padding(5)
-    }
 }
 
+// MARK: - Preference Key
+
 struct ViewOffsetKey: PreferenceKey {
-    typealias Value = CGFloat
-    static var defaultValue = CGFloat.zero
-    static func reduce(value: inout Value, nextValue: () -> Value) {
+    static var defaultValue: CGFloat = 0
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
         value += nextValue()
     }
 }
 
 #Preview {
-    HomeScreen(showMenu: .constant(true))
+    HomeScreen()
 }

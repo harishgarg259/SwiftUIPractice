@@ -33,7 +33,7 @@ struct BaseView: View {
         VStack(spacing: 0) {
             TabView(selection: $currentTab) {
                 NavigationStack {
-                    HomeScreen(showMenu: $showMenu)
+                    HomeScreen()
                         .environmentObject(cartItems)
                 }
                 .tabItem {

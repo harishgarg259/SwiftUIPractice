@@ -96,6 +96,7 @@
 		38BDCEC62B8E858300B6CA18 /* ProductDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BDCEC52B8E858300B6CA18 /* ProductDetail.swift */; };
 		38BDCEC82B93EF6500B6CA18 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BDCEC72B93EF6500B6CA18 /* AppDelegate.swift */; };
 		38BDCECA2B93F11700B6CA18 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BDCEC92B93F11700B6CA18 /* SceneDelegate.swift */; };
+		38CBEC542C34A9FB00B693BF /* FetchState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CBEC532C34A9FB00B693BF /* FetchState.swift */; };
 		38D6619D2C17CFD400639EEC /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D6619C2C17CFD400639EEC /* RegisterViewModel.swift */; };
 		38D6619F2C17CFF300639EEC /* RegisterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D6619E2C17CFF300639EEC /* RegisterModel.swift */; };
 		38EEF2B02C0674A500A7AA63 /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EEF2AF2C0674A500A7AA63 /* LoginModel.swift */; };
@@ -215,6 +216,7 @@
 		38BDCEC52B8E858300B6CA18 /* ProductDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetail.swift; sourceTree = "<group>"; };
 		38BDCEC72B93EF6500B6CA18 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		38BDCEC92B93F11700B6CA18 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		38CBEC532C34A9FB00B693BF /* FetchState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchState.swift; sourceTree = "<group>"; };
 		38D6619C2C17CFD400639EEC /* RegisterViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
 		38D6619E2C17CFF300639EEC /* RegisterModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterModel.swift; sourceTree = "<group>"; };
 		38EEF2AF2C0674A500A7AA63 /* LoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
@@ -805,6 +807,7 @@
 		389F2B782C190178002DD247 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				38CBEC532C34A9FB00B693BF /* FetchState.swift */,
 				389F2B7B2C1901CE002DD247 /* ProductListModel.swift */,
 			);
 			path = Model;
@@ -1238,6 +1241,7 @@
 				38889C7F2C2BEFB70069F185 /* ProfileDetailViewViewModel.swift in Sources */,
 				38F3BBE12B6EF88900BB8A52 /* ImageViewExtension.swift in Sources */,
 				389EEAB92B7605D80050591E /* CustomTextField.swift in Sources */,
+				38CBEC542C34A9FB00B693BF /* FetchState.swift in Sources */,
 				389EEAA02B7087050050591E /* ProductCell.swift in Sources */,
 				389EEAA62B721D960050591E /* Enum.swift in Sources */,
 				389EEA9A2B70697E0050591E /* FilterRow.swift in Sources */,

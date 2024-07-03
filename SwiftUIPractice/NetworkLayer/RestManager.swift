@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 enum Result<T: Codable> {
     case success(T)
@@ -17,7 +18,8 @@ class RestManager<T: Codable> {
     // MARK: - Properties
     var requestHttpHeaders: [String:String] = [:]
     var response: [String:Any] = [:]
-    
+    private var cancellables = Set<AnyCancellable>()
+
     // MARK: - Public Methods
     func makeRequest(request : URLRequest, completion: @escaping (_ result: Result<T>) -> Void) {
       
