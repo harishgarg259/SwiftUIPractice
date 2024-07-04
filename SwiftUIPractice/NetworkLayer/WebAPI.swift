@@ -145,6 +145,7 @@ extension WebAPI{
     enum ProductRequest
     {
         case productList
+        case variationDetail
         case catagory
         case orderList
         case blogList
@@ -157,6 +158,9 @@ extension WebAPI{
         
         switch type {
         case .productList:
+            httpMethod = .get
+            requestURL = RequestUrl.products.products
+        case .variationDetail:
             httpMethod = .get
             requestURL = RequestUrl.products.products
         case .catagory:

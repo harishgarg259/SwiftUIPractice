@@ -24,6 +24,7 @@ struct AppConstants {
     
     
     static let ProductListFields = "id,name,regular_price,stock_quantity,date_created, featured,description,price,sale_price,price_html,on_sale,in_stock,weight,images,price,attributes,categories"
+    static let VariationsFields = "id,price,regular_price,stock_quantity,date_created,featured,price,sale_price,on_sale,in_stock,weight,image,price,attributes"
 
     
 }

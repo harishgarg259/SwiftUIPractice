@@ -9,10 +9,9 @@ import SwiftUI
 
 struct ProductDetailView: View {
     
-    let product: ProductListModel?
-    @State private var selectedSizeIndex = 0
     @State private var quantity = 1
     @EnvironmentObject var cart: CartViewModel
+    @State var viewModel: ProductDetailViewModel = ProductDetailViewModel()
 
 //    @Binding var badgeCount : Int
 
@@ -26,60 +25,71 @@ struct ProductDetailView: View {
     // 3. Get mock cards data
     let cards: [String] = ["Kangroo","Venison","Kangroo","Venison"]
     
+    
+    init(product: ProductListModel?) {
+        self.viewModel.product = product
+    }
+    
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
                 // Multiple images in grid view with pagination view
-                ImageGridView(images: product?.images ?? [])
+                ImageGridView(images: viewModel.product?.images ?? [])
                     .frame(height: 200) // Set your preferred height
                 
                 // Product name and price detail after discount
                 VStack(alignment: .leading, spacing: 8) {
-                    Text(product?.name ?? "Title")
+                    Text(viewModel.product?.name ?? "Title")
                         .font(.title)
                     HStack {
                         Text("Price:")
                             .font(.headline)
-                        if ((product?.regular_price ?? "") != ""){
-                            Text("$\(product?.regular_price ?? "")")
+                        if ((viewModel.product?.regular_price ?? "") != ""){
+                            Text("$\(viewModel.product?.regular_price ?? "")")
                                 .font(.headline)
                                 .strikethrough()
                         }
-                        Text("$\(product?.price ?? "")")
+                        Text("$\(viewModel.product?.price ?? "")")
                             .font(.headline)
                     }
                 }
                 
-                if !(product?.in_stock ?? true){
+                if !(viewModel.product?.in_stock ?? true){
                     Text("Out Of Stock")
                         .font(.headline)
                         .foregroundStyle(.red)
                 }else{
-                    if let sizes = product?.attributes?.filter({ ($0.name?.contains("SIZE") ?? false) }), let options = sizes.first?.options, options.count > 0{
-                        // Choose Size Dropdown
+                    
+                    if !(viewModel.product?.attributes?.isEmpty ?? true){
                         HStack {
                             Text("Select Size:")
                                 .font(.headline)
                             Spacer()
-                            Picker("Select Size", selection: $selectedSizeIndex) {
-                                ForEach(0..<options.count, id: \.self) { index in
-                                    Text(options[index])
-                                }
+                            Picker("Select Size", selection: $viewModel.selectedSizeIndex) {
+                                Text("Select Size")
                             }
                             .pickerStyle(.menu)
                             .tint(.themeColor)
                         }
+                    }else{
+                        let sizes = Array(viewModel.variations.map({$0.attributes?.first?.name ?? ""}))
+                        HStack {
+                            Text("Select Size:")
+                                .font(.headline)
+//                                Spacer()
+                            MyCustomPicker(pickerData: sizes, binding: $viewModel.selectedSizeIndex)
+                        }
                     }
                     
                     // Quantity Stepper
-                    Stepper(value: $quantity, in: 1...(product?.stock_quantity ?? 20)) {
+                    Stepper(value: $quantity, in: 1...(viewModel.product?.stock_quantity ?? 20)) {
                         Text("Quantity: \(quantity)")
                             .font(.headline)
                     }
                     
                     // Add to cart button
                     Button {
-                        cart.addToCart(addedProduct: product, quantity: 1)
+                        cart.addToCart(addedProduct: viewModel.product, quantity: 1)
                     } label: {
                         Text("Add to Cart")
                             .frame(maxWidth: .infinity)
@@ -88,7 +98,6 @@ struct ProductDetailView: View {
                     .buttonStyle(.borderedProminent)
                     .controlSize(.large)
                     .shadow(color: .themeColor,radius: 2)
-//                    .disabled(product?.atum_stock_status == "outofstock")
                 }
                 
                
@@ -97,7 +106,7 @@ struct ProductDetailView: View {
                 VStack(alignment: .leading, spacing: 12) {
                     Text("SKU: N/A Categories:")
                         .font(.headline)
-                    let categories = product?.categories?.map({$0.name ?? ""}).joined(separator: ", ")
+                    let categories = viewModel.product?.categories?.map({$0.name ?? ""}).joined(separator: ", ")
                     Text(categories ?? "No Categories")
                         .font(.body)
                 }
@@ -118,6 +127,10 @@ struct ProductDetailView: View {
             }
             .padding()
         }
+        .onAppear(perform: {
+            print(self.viewModel.product ?? [])
+            self.viewModel.productVariations()
+        })
         .navigationTitle("Product Detail")
     }
     
@@ -126,7 +139,7 @@ struct ProductDetailView: View {
         VStack(alignment: .leading, spacing: 12) {
             Text("Description")
                 .font(.headline)
-            if let attributedText = product?.description?.attributedHtmlString {
+            if let attributedText = viewModel.product?.description?.attributedHtmlString {
                 Text(attributedText.string)
                     .font(.body)
             }
@@ -163,18 +176,19 @@ struct ImageGridView: View {
     }
 }
 
-struct Product {
-    let name: String
-    let price: Double
-    let discountedPrice: Double
-    let images: [String]
-    let sizes: [String]
-    let description: ProductDescription
-}
-
-struct ProductDescription {
-    let headings: [String]
-    let details: [String: String]
+struct MyCustomPicker: View {
+    var pickerData: [String]
+    @Binding var binding: Int
+    var body: some View {
+        Picker("Select Size", selection: $binding) {
+            ForEach(0 ..< pickerData.count, id: \.self)
+            { i in
+                Text(self.pickerData[i])
+            }
+        }
+        .pickerStyle(.menu)
+        .tint(.themeColor)
+    }
 }
 
 struct ProductDetailView_Previews: PreviewProvider {
