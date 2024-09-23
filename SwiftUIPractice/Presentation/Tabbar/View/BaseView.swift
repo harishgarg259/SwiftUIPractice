@@ -45,7 +45,7 @@ struct BaseView: View {
                 }
                 .tabItem {
                     Label("Cart", systemImage: "cart")
-                }.badge(cartItems.cartProduct.count)
+                }.badge(cartItems.cartArray.count)
                 .tag("Cart")
                 NavigationStack {
                     ProfileView(userModel: UserProfileViewModel())

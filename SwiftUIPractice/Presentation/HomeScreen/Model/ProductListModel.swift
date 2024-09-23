@@ -15,7 +15,7 @@ struct ProductListModel : Codable {
     let date_created : String?
     let featured : Bool?
     let description : String?
-    let price : String?
+    var price : String?
     let sale_price : String?
     let on_sale : Bool?
     let in_stock : Bool?

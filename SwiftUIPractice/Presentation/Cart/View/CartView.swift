@@ -18,14 +18,28 @@ struct CartView: View {
     var body: some View {
         ScrollView{
             VStack {
-                if cartProducts.cartProduct.isEmpty {
+                if cartProducts.cartArray.isEmpty {
                     CartLoadingView()
                 } else {
                     HeaderView()
-                    ForEach(Array(cartProducts.cartProduct.enumerated()), id: \.offset) { section, element in
-                        CartItemView(item: element)
-                            .environmentObject(cartProducts)
+                    ForEach(Array(cartProducts.cartArray.enumerated()), id: \.offset) { section, element in
+                        //                        CartItemView(item: element)
+                        //                            .environmentObject(cartProducts)
                     }
+//                    List {
+//                        ForEach(Array(cartProducts.cartDictionary.keys.enumerated()), id: \.self) { key in
+//                            if let cartItem = cartProducts.cartDictionary[key] {
+//                                if let product = cartItem["product"] as? ProductDetailModel,
+//                                   let quantity = cartItem["quantity"] as? Int {
+//                                    HStack {
+//                                        Text("\(product.name)")
+//                                        Spacer()
+//                                        Text("Qty: \(quantity)")
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
                     TotalPriceView(total: 1073)
                         .padding(.bottom, 10)
                 }
@@ -203,9 +217,9 @@ struct CartItemView: View {
                         .alert(isPresented: $showAlert) {
                             Alert(
                                 title: Text("Are you sure you want to delete this item?"),
-//                                message: Text("There is no undo"),
+                                //                                message: Text("There is no undo"),
                                 primaryButton: .destructive(Text("Delete")) {
-                                    viewModel.removeFromCart(toRemove: item)
+                                    //                                    viewModel.removeFromCart(toRemove: item)
                                 },
                                 secondaryButton: .cancel()
                             )

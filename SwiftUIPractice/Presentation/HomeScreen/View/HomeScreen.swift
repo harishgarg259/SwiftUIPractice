@@ -90,6 +90,7 @@ struct HomeScreen: View {
                         Button {
                             viewModel.subMenus = element.subMenus
                             viewModel.selectedCategory = element.menuName
+                            viewModel.selectedSubCategory = element.subMenus.first?.title ?? ""
                         } label: {
                             VStack {
                                 Text(element.menuName)
@@ -149,7 +150,7 @@ struct HomeScreen: View {
             Image(systemName: "cart")
                 .font(.system(size: 20))
         }
-        .overlay(Badge(count: cart.cartProduct.count))
+        .overlay(Badge(count: cart.cartArray.count))
     }
 }
 

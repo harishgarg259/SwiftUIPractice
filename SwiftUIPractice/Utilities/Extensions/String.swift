@@ -25,6 +25,14 @@ extension String{
             return randomString
     }
     
+    static func decodeHTMLString(_ html: String) async -> String? {
+        return await Task {
+            await MainActor.run {
+                return html.attributedHtmlString?.string
+            }
+        }.value
+    }
+    
     var attributedHtmlString: NSAttributedString? {
         try? NSAttributedString(
             data: Data(utf8),

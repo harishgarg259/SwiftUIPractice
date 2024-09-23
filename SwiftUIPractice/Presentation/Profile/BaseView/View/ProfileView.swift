@@ -13,7 +13,7 @@ struct ProfileView: View {
     @StateObject var userModel: UserProfileViewModel
 
     
-    let myProfileOptions: [String] = ["Orders","Addresses","Payment methods","Account details","Update Password"]
+    let myProfileOptions: [String] = ["Orders","Addresses","Payment methods","Account details","Update Password","Blog","Contact Us"]
     var body: some View {
         VStack {
             List(Array(myProfileOptions.enumerated()), id: \.offset) { index, contact in
@@ -57,6 +57,10 @@ class ViewFactory {
             return AnyView(ProfileDetailView())
         case 4:
             return AnyView(ChangePasswordView())
+        case 5:
+            return AnyView(BlogListing())
+        case 6:
+            return AnyView(ContactUsView())
         default:
             return AnyView(EmptyView())
         }

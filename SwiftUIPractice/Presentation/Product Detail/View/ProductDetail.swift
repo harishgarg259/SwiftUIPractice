@@ -5,13 +5,14 @@
 //  Created by Harish Garg on 27/02/24.
 //
 
+import WebKit
 import SwiftUI
 
 struct ProductDetailView: View {
     
-    @State private var quantity = 1
     @EnvironmentObject var cart: CartViewModel
-    @State var viewModel: ProductDetailViewModel = ProductDetailViewModel()
+    @ObservedObject var viewModel: ProductDetailViewModel
+    let product: ProductListModel?
 
 //    @Binding var badgeCount : Int
 
@@ -24,111 +25,116 @@ struct ProductDetailView: View {
     let height: CGFloat = 200
     // 3. Get mock cards data
     let cards: [String] = ["Kangroo","Venison","Kangroo","Venison"]
-    
-    
-    init(product: ProductListModel?) {
-        self.viewModel.product = product
-    }
+
     
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 20) {
-                // Multiple images in grid view with pagination view
-                ImageGridView(images: viewModel.product?.images ?? [])
-                    .frame(height: 200) // Set your preferred height
-                
-                // Product name and price detail after discount
-                VStack(alignment: .leading, spacing: 8) {
-                    Text(viewModel.product?.name ?? "Title")
-                        .font(.title)
-                    HStack {
-                        Text("Price:")
-                            .font(.headline)
-                        if ((viewModel.product?.regular_price ?? "") != ""){
-                            Text("$\(viewModel.product?.regular_price ?? "")")
-                                .font(.headline)
-                                .strikethrough()
-                        }
-                        Text("$\(viewModel.product?.price ?? "")")
-                            .font(.headline)
-                    }
-                }
-                
-                if !(viewModel.product?.in_stock ?? true){
-                    Text("Out Of Stock")
-                        .font(.headline)
-                        .foregroundStyle(.red)
-                }else{
-                    
-                    if !(viewModel.product?.attributes?.isEmpty ?? true){
-                        HStack {
-                            Text("Select Size:")
-                                .font(.headline)
-                            Spacer()
-                            Picker("Select Size", selection: $viewModel.selectedSizeIndex) {
-                                Text("Select Size")
+        VStack {
+            if viewModel.isLoading {
+                ProgressView("Loading...")
+            } else if let errorMessage = viewModel.errorMessage {
+                Text(errorMessage)
+                    .foregroundColor(.red)
+            } else {
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 20) {
+                        
+                        if !(viewModel.name?.isEmpty ?? true){
+                            
+                            // Multiple images in grid view with pagination view
+                            ImageGridView(images: viewModel.images ?? [])
+                                .frame(height: 200) // Set your preferred height
+                            
+                            // Product name and price detail after discount
+                            VStack(alignment: .leading, spacing: 8) {
+                                Text(viewModel.name ?? "Title")
+                                    .font(.title)
+                                HStack {
+                                    Text("Price:")
+                                        .font(.headline)
+                                    if !(viewModel.regular_price?.isEmpty ?? true){
+                                        Text("$\(viewModel.regular_price ?? "")")
+                                            .font(.headline)
+                                            .strikethrough()
+                                    }
+                                    Text("$\(viewModel.productPrice ?? "")")
+                                        .font(.headline)
+                                }
                             }
-                            .pickerStyle(.menu)
-                            .tint(.themeColor)
+                            
+                            let sizes = viewModel.variations.map({$0.attributes?.first?.option ?? ""})
+                            if sizes.isEmpty{
+                                if let sizes = viewModel.attributes?.filter({
+                                    ($0.name?.uppercased() ?? "").contains("SIZE")
+                                }),
+                                   let options = sizes.first?.options,
+                                   options.count > 0
+                                {
+                                    // Choose Size Dropdown
+                                    HStack {
+                                        Text("Select Size:")
+                                            .font(.headline)
+                                        Spacer()
+                                        MyCustomPicker(pickerData: options, binding: $viewModel.selectedSizeIndex)
+                                    }
+                                }
+                            }else{
+                                HStack {
+                                    Text("Select Size:")
+                                        .font(.headline)
+                                    Spacer()
+                                    MyCustomPicker(pickerData: sizes, binding: $viewModel.selectedSizeIndex)
+                                }
+                            }
+                            
+                            if !(viewModel.in_stock ?? true){
+                                Text("Out Of Stock")
+                                    .font(.headline)
+                                    .foregroundStyle(.red)
+                            }else{
+                                
+                                // Quantity Stepper
+                                Stepper(value: $viewModel.quantity, in: 1...(viewModel.stock_quantity ?? 20)) {
+                                    VStack(alignment: .leading, spacing: 0){
+                                        Text("Quantity: \(self.viewModel.quantity)")
+                                            .font(.headline)
+                                        Text("Available: \(viewModel.stock_quantity ?? 20)")
+                                            .font(.system(size: 14))
+                                            .foregroundStyle(.red)
+                                    }
+                                }
+                                
+                                // Add to cart button
+                                Button {
+                                    cart.addProduct(product: viewModel.cartProduct, quantity: self.viewModel.quantity)
+                                } label: {
+                                    Text("Add to Cart")
+                                        .frame(maxWidth: .infinity)
+                                        .fontWeight(.bold)
+                                }
+                                .buttonStyle(.borderedProminent)
+                                .controlSize(.large)
+                                .shadow(color: .themeColor,radius: 2)
+                            }
+                            
+                            // Product Categories
+                            VStack(alignment: .leading, spacing: 12) {
+                                Text("SKU: N/A Categories:")
+                                    .font(.headline)
+                                let categories = viewModel.categories?.map({$0.name ?? ""}).joined(separator: ", ")
+                                Text(categories ?? "No Categories")
+                                    .font(.body)
+                            }
+                            descriptionView
+                        }else{
+                            ProgressView("Loading...")
                         }
-                    }else{
-                        let sizes = Array(viewModel.variations.map({$0.attributes?.first?.name ?? ""}))
-                        HStack {
-                            Text("Select Size:")
-                                .font(.headline)
-//                                Spacer()
-                            MyCustomPicker(pickerData: sizes, binding: $viewModel.selectedSizeIndex)
-                        }
                     }
-                    
-                    // Quantity Stepper
-                    Stepper(value: $quantity, in: 1...(viewModel.product?.stock_quantity ?? 20)) {
-                        Text("Quantity: \(quantity)")
-                            .font(.headline)
-                    }
-                    
-                    // Add to cart button
-                    Button {
-                        cart.addToCart(addedProduct: viewModel.product, quantity: 1)
-                    } label: {
-                        Text("Add to Cart")
-                            .frame(maxWidth: .infinity)
-                            .fontWeight(.bold)
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .controlSize(.large)
-                    .shadow(color: .themeColor,radius: 2)
+                    .padding()
                 }
-                
-               
-                
-                // Product Categories
-                VStack(alignment: .leading, spacing: 12) {
-                    Text("SKU: N/A Categories:")
-                        .font(.headline)
-                    let categories = viewModel.product?.categories?.map({$0.name ?? ""}).joined(separator: ", ")
-                    Text(categories ?? "No Categories")
-                        .font(.body)
-                }
-                
-//                descriptionView
-                
-                // Similar product listing at the end
-//                Text("Related Products")
-//                    .font(.title)
-                
-                // 4. Populate into grid
-//                LazyVGrid(columns: columns, spacing: 20) {
-//                    ForEach(Array(cards.enumerated()), id: \.offset) { section, element in
-//                        ProductView(imageDetail: sampleProduct, productName: element)
-//                            .frame(height: height)
-//                    }
-//                }
             }
-            .padding()
         }
         .onAppear(perform: {
-            print(self.viewModel.product ?? [])
+            self.viewModel.product = self.product
             self.viewModel.productVariations()
         })
         .navigationTitle("Product Detail")
@@ -139,10 +145,11 @@ struct ProductDetailView: View {
         VStack(alignment: .leading, spacing: 12) {
             Text("Description")
                 .font(.headline)
-            if let attributedText = viewModel.product?.description?.attributedHtmlString {
-                Text(attributedText.string)
-                    .font(.body)
-            }
+            Text(self.viewModel.description ?? "")
+                .font(.body)
+                .task {
+                    self.viewModel.description = await .decodeHTMLString(self.viewModel.encodedDescription ?? "") ?? ""
+                }
         }
     }
 }
@@ -159,7 +166,6 @@ struct ImageGridView: View {
                         ImageView(url: imageURL)
                             .scaledToFit()
                             .tag(element.name)
-                            
                     }
                 }
             }
@@ -194,12 +200,12 @@ struct MyCustomPicker: View {
 struct ProductDetailView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            ProductDetailView(product: nil)
+            ProductDetailView(viewModel: ProductDetailViewModel(), product: nil)
         }
     }
 }
 
 
 #Preview {
-    ProductDetailView(product: nil)
+    ProductDetailView(viewModel: ProductDetailViewModel(), product: nil)
 }

@@ -2,17 +2,21 @@ import Foundation
 
 
 struct VariationModel : Codable {
-	let id : Int?
-	let date_created : String?
-	let price : String?
-	let regular_price : String?
-	let sale_price : String?
-	let on_sale : Bool?
-	let stock_quantity : Int?
-	let in_stock : Bool?
-	let weight : String?
-	let image : VariationImage?
-	let attributes : [VariationAttributes]?
+    
+    init() {
+    }
+    
+	var id : Int?
+    var date_created : String?
+    var price : String?
+    var regular_price : String?
+    var sale_price : String?
+    var on_sale : Bool?
+    var stock_quantity : Int?
+    var in_stock : Bool?
+    var weight : String?
+    var image : ProductImages?
+    var attributes : [VariationAttributes]?
 
 	enum CodingKeys: String, CodingKey {
 
@@ -40,7 +44,7 @@ struct VariationModel : Codable {
 		stock_quantity = try values.decodeIfPresent(Int.self, forKey: .stock_quantity)
 		in_stock = try values.decodeIfPresent(Bool.self, forKey: .in_stock)
 		weight = try values.decodeIfPresent(String.self, forKey: .weight)
-		image = try values.decodeIfPresent(VariationImage.self, forKey: .image)
+		image = try values.decodeIfPresent(ProductImages.self, forKey: .image)
 		attributes = try values.decodeIfPresent([VariationAttributes].self, forKey: .attributes)
 	}
 
@@ -59,8 +63,12 @@ struct VariationImage : Codable {
 }
 
 struct VariationAttributes : Codable {
-    let id : Int?
-    let name : String?
-    let slug : String?
-    let option : String?
+    
+    init() {
+    }
+    
+    var id : Int?
+    var name : String?
+    var slug : String?
+    var option : String?
 }

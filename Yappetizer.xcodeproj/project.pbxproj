@@ -95,6 +95,8 @@
 		38CBEC542C34A9FB00B693BF /* FetchState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CBEC532C34A9FB00B693BF /* FetchState.swift */; };
 		38CBEC5A2C35F2ED00B693BF /* CatagoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CBEC592C35F2ED00B693BF /* CatagoryModel.swift */; };
 		38CBEC5D2C35FE1100B693BF /* VariationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CBEC5C2C35FE1100B693BF /* VariationModel.swift */; };
+		38CBEC5F2C39D84300B693BF /* ProductDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CBEC5E2C39D84200B693BF /* ProductDetailModel.swift */; };
+		38CBEC622C3A0CB200B693BF /* Cart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CBEC612C3A0CB200B693BF /* Cart.swift */; };
 		38D6619D2C17CFD400639EEC /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D6619C2C17CFD400639EEC /* RegisterViewModel.swift */; };
 		38D6619F2C17CFF300639EEC /* RegisterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D6619E2C17CFF300639EEC /* RegisterModel.swift */; };
 		38EEF2B02C0674A500A7AA63 /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EEF2AF2C0674A500A7AA63 /* LoginModel.swift */; };
@@ -212,6 +214,8 @@
 		38CBEC532C34A9FB00B693BF /* FetchState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchState.swift; sourceTree = "<group>"; };
 		38CBEC592C35F2ED00B693BF /* CatagoryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatagoryModel.swift; sourceTree = "<group>"; };
 		38CBEC5C2C35FE1100B693BF /* VariationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VariationModel.swift; sourceTree = "<group>"; };
+		38CBEC5E2C39D84200B693BF /* ProductDetailModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductDetailModel.swift; sourceTree = "<group>"; };
+		38CBEC612C3A0CB200B693BF /* Cart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cart.swift; sourceTree = "<group>"; };
 		38D6619C2C17CFD400639EEC /* RegisterViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
 		38D6619E2C17CFF300639EEC /* RegisterModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterModel.swift; sourceTree = "<group>"; };
 		38EEF2AF2C0674A500A7AA63 /* LoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
@@ -867,7 +871,16 @@
 		38CBEC5B2C35FE0200B693BF /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				38CBEC5E2C39D84200B693BF /* ProductDetailModel.swift */,
 				38CBEC5C2C35FE1100B693BF /* VariationModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		38CBEC602C3A0C9D00B693BF /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				38CBEC612C3A0CB200B693BF /* Cart.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -925,6 +938,7 @@
 		38F3BBEF2B6F294500BB8A52 /* Cart */ = {
 			isa = PBXGroup;
 			children = (
+				38CBEC602C3A0C9D00B693BF /* Model */,
 				38CBEC562C35F1AA00B693BF /* ViewModel */,
 				38CBEC552C35F19900B693BF /* View */,
 			);
@@ -1202,6 +1216,7 @@
 				38FE80622B80477200B09927 /* OrderDetail.swift in Sources */,
 				38889C6B2C2BA6140069F185 /* BlogListViewModel.swift in Sources */,
 				38BD15EC2B5CD71000D66184 /* AppConstant.swift in Sources */,
+				38CBEC622C3A0CB200B693BF /* Cart.swift in Sources */,
 				38CBEC5A2C35F2ED00B693BF /* CatagoryModel.swift in Sources */,
 				3869228A2C22375200779A2A /* UserProfileViewModel.swift in Sources */,
 				38FE80692B807D0D00B09927 /* TextField.swift in Sources */,
@@ -1234,6 +1249,7 @@
 				38889C6E2C2BA6140069F185 /* BlogListing.swift in Sources */,
 				38889C5A2C26BF780069F185 /* OrderList.swift in Sources */,
 				38661A962BF69EE6002BC0B2 /* SubscriptionViewModel.swift in Sources */,
+				38CBEC5F2C39D84300B693BF /* ProductDetailModel.swift in Sources */,
 				387FFEF62B5C7D79003B1280 /* RequestUrl.swift in Sources */,
 				38BDCEC82B93EF6500B6CA18 /* AppDelegate.swift in Sources */,
 				38EEF2B02C0674A500A7AA63 /* LoginModel.swift in Sources */,
