@@ -56,20 +56,20 @@ struct ProductView: View {
                             }
                         }
                         
-                        Button(action: {
-                            // Add to cart action
-                            print("Item added to cart")
-                            //cartModel.addToCart(addedProduct: productDetail, quantity: 1)
-                        }) {
-                            Text("+ Add")
-                                .font(.system(size: 13).bold())
-                                .foregroundColor(.white)
-                                .padding(2)
-                                .frame(width: 60.0, height: 30.0)
-                                .background(Color.blue)
-                                .cornerRadius(15)
-                        }
-                        .opacity((!(productDetail?.in_stock ?? true)) ? 0 : 1)
+//                        Button(action: {
+//                            // Add to cart action
+//                            print("Item added to cart")
+//                            //cartModel.addToCart(addedProduct: productDetail, quantity: 1)
+//                        }) {
+//                            Text("+ Add")
+//                                .font(.system(size: 13).bold())
+//                                .foregroundColor(.white)
+//                                .padding(2)
+//                                .frame(width: 60.0, height: 30.0)
+//                                .background(Color.blue)
+//                                .cornerRadius(15)
+//                        }
+//                        .opacity((!(productDetail?.in_stock ?? true)) ? 0 : 1)
                     }
                     
                     Text(productDetail?.name ?? "Title")

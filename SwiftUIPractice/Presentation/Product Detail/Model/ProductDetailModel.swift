@@ -1,7 +1,7 @@
 import Foundation
 
 
-struct CartProduct : Codable,Identifiable {
+class CartProduct : Codable,Identifiable,ObservableObject {
     
     init() {
         
@@ -24,5 +24,5 @@ struct CartProduct : Codable,Identifiable {
     var attributes : [Attributes]?
     var categories : [Categories]?
     var price_html : String?
-    var variations : [VariationModel]?
+    var variations : VariationModel?
 }

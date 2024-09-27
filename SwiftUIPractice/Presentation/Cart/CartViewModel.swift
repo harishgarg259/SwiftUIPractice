@@ -9,10 +9,15 @@ import SwiftUI
 
 class  CartViewModel: ObservableObject {
     
-    @Published var cartArray: [ProductCartItems] = []
-    
+    // Shipping cost
+    @Published var shipping: Double = 5.99
     @Published var totalPrice: Double = 0
     @Published var showShowcaseSheet: Bool = false
+    @Published var cartArray: [ProductCartItems] = []{
+        didSet{
+            self.saveLocalCache(response: cartArray)
+        }
+    }
     
     init() {
         
@@ -41,11 +46,57 @@ class  CartViewModel: ObservableObject {
         }
     }
     
-    func deleteProduct(product: CartProduct) {
+    func deleteProduct(product: ProductCartItems) {
         
     }
     
-    func editProductQuantity(product: CartProduct, newQuantity: Int) {
+    func editProductQuantity(product: ProductCartItems, newQuantity: Int) {
         
+    }
+    
+    // Calculate subtotal
+    var subtotal: Double {
+        cartArray.reduce(0) { $0 + ((Double($1.price) ?? 0.0) * Double($1.quantity)) }
+    }
+    
+    // Calculate grand total (for example purposes, shipping is free)
+    
+    var total: Double {
+        return subtotal + shipping
+    }
+    
+    // Increment quantity
+    func incrementQuantity(for item: ProductCartItems) {
+        if let index = cartArray.firstIndex(where: { $0.id == item.id }) {
+            cartArray[index].quantity += 1
+        }
+    }
+    
+    // Decrement quantity
+    func decrementQuantity(for item: ProductCartItems) {
+        if let index = cartArray.firstIndex(where: { $0.id == item.id }), cartArray[index].quantity > 1 {
+            cartArray[index].quantity -= 1
+        }
+    }
+    
+    // Remove item
+    func removeItem(_ item: ProductCartItems) {
+        cartArray.removeAll { $0.id == item.id }
+    }
+    
+    func saveLocalCache(response: [ProductCartItems]) {
+        let userID = "\(UserDefaultsManager.userID ?? 0)"
+        let storage = PawStorageManager.PawStorageFile.cartList(userID)
+        PawStorageManager.shared.store(response, to: .caches, as: storage)
+    }
+    
+    func getCartDetail(){
+        let userID = "\(UserDefaultsManager.userID ?? 0)"
+        let storage = PawStorageManager.PawStorageFile.cartList(userID)
+        let response = PawStorageManager.shared.retrieve(storage, from: .caches, as: [ProductCartItems].self)
+        if ((response?.isEmpty) != nil){
+            cartArray.removeAll()
+            cartArray = response ?? []
+        }
     }
 }

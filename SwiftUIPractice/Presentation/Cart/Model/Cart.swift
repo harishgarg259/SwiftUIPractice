@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ProductCartItems {
+struct ProductCartItems: Codable {
     var id: Int
     var price: String
     var variationID: Int // Assuming size is a string for simplicity

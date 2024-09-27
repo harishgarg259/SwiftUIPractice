@@ -63,11 +63,8 @@ struct ProductDetailView: View {
                             
                             let sizes = viewModel.variations.map({$0.attributes?.first?.option ?? ""})
                             if sizes.isEmpty{
-                                if let sizes = viewModel.attributes?.filter({
-                                    ($0.name?.uppercased() ?? "").contains("SIZE")
-                                }),
-                                   let options = sizes.first?.options,
-                                   options.count > 0
+                                if let sizes = viewModel.attributes?.filter({($0.name?.uppercased() ?? "").contains("SIZE")}),
+                                   let options = sizes.first?.options, options.count > 0
                                 {
                                     // Choose Size Dropdown
                                     HStack {
@@ -105,7 +102,8 @@ struct ProductDetailView: View {
                                 
                                 // Add to cart button
                                 Button {
-                                    cart.addProduct(product: viewModel.cartProduct, quantity: self.viewModel.quantity)
+                                    cart.addProduct(product: viewModel.cartModel(), quantity: self.viewModel.quantity)
+                                    ToastPresenter().show(toast: "Added in the cart.")
                                 } label: {
                                     Text("Add to Cart")
                                         .frame(maxWidth: .infinity)

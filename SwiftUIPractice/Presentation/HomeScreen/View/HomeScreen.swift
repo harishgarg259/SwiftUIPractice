@@ -146,7 +146,7 @@ struct HomeScreen: View {
     // MARK: - Navigation Bar Items
     
     var trailingBarItems: some View {
-        NavigationLink(destination: CartView(cartProducts: cart)) {
+        NavigationLink(destination: CartView(viewModel: cart)) {
             Image(systemName: "cart")
                 .font(.system(size: 20))
         }

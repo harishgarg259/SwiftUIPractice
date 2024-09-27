@@ -28,20 +28,8 @@ class ProductDetailViewModel: ObservableObject {
     @Published var description: String?
 
     var variationID: Int?
-
-    var cartProduct: CartProduct = CartProduct(){
-        didSet {
-            cartProduct.id = product?.id
-            cartProduct.price = productPrice
-            cartProduct.images = images
-            cartProduct.regular_price = regular_price
-            cartProduct.sale_price = sale_price
-            cartProduct.stock_quantity = quantity
-            cartProduct.in_stock = in_stock
-            cartProduct.on_sale = on_sale
-            cartProduct.variationID = variationID
-        }
-    }
+    var selectedVariation : VariationModel?
+    var cartProduct: CartProduct = CartProduct()
     
     var selectedSizeIndex = 0
     {
@@ -88,6 +76,18 @@ class ProductDetailViewModel: ObservableObject {
             in_stock = product?.in_stock
             on_sale = product?.on_sale
             variationID = product?.id
+            
+            var variation = VariationModel()
+            var variationAttributes = VariationAttributes()
+            variationAttributes.option = ""
+            if let sizes = attributes?.filter({($0.name?.uppercased() ?? "").contains("SIZE")}),
+               let options = sizes.first?.options, options.count > 0
+            {
+                variation.weight = options.first?.description
+            }
+            variation.attributes = [variationAttributes]
+            selectedVariation = variation
+
         }else{
             productPrice = self.variations[index].price
             if let image = self.variations[index].image{
@@ -99,44 +99,22 @@ class ProductDetailViewModel: ObservableObject {
             in_stock = self.variations[index].in_stock
             on_sale = self.variations[index].on_sale
             variationID = self.variations[index].id
+            selectedVariation = self.variations[index]
         }
-//        productDetail.name = product?.name
-//        productDetail.date_created = product?.date_created
-//        productDetail.featured = product?.featured
-//        productDetail.description = product?.description
-//        productDetail.attributes = product?.attributes
-//        productDetail.categories = product?.categories
-//        productDetail.price_html = product?.price
-//        
-//        productDetail.images = product?.images
-//        productDetail.regular_price = product?.regular_price
-//        productDetail.price = product?.price
-//        productDetail.sale_price = product?.sale_price
-//        productDetail.stock_quantity = product?.stock_quantity
-//        productDetail.in_stock = product?.in_stock
-//        productDetail.on_sale = product?.on_sale
-//        
-//        
-//        if !isVariationExist{
-//            var variation = VariationModel()
-//            var variationAttributes = VariationAttributes()
-//            variationAttributes.option = ""
-//            variation.attributes = [variationAttributes]
-//            productDetail.variations = [variation]
-//            productDetail.variationID = 0
-//        }else{
-//            if let images = self.variations[index].image{
-//                productDetail.images = [images]
-//            }
-//            productDetail.regular_price = self.variations[index].regular_price
-//            productDetail.price = self.variations[index].price
-//            productDetail.sale_price = self.variations[index].sale_price
-//            productDetail.stock_quantity = self.variations[index].stock_quantity
-//            productDetail.in_stock = self.variations[index].in_stock
-//            productDetail.on_sale = self.variations[index].on_sale
-//            productDetail.variations = self.variations
-//            productDetail.variationID = self.variations[index].id
-//        }
-//        objectWillChange.send()
+    }
+    
+    func cartModel() -> CartProduct{
+        cartProduct.id = product?.id
+        cartProduct.name = product?.name
+        cartProduct.price = productPrice
+        cartProduct.images = images
+        cartProduct.regular_price = regular_price
+        cartProduct.sale_price = sale_price
+        cartProduct.stock_quantity = quantity
+        cartProduct.in_stock = in_stock
+        cartProduct.on_sale = on_sale
+        cartProduct.variationID = variationID
+        cartProduct.variations = selectedVariation
+        return cartProduct
     }
 }

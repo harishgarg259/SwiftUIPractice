@@ -41,7 +41,7 @@ struct BaseView: View {
                 }
                 .tag("Home")
                 NavigationStack {
-                    CartView(cartProducts: cartItems)
+                    CartView(viewModel: cartItems)
                 }
                 .tabItem {
                     Label("Cart", systemImage: "cart")
@@ -54,7 +54,7 @@ struct BaseView: View {
                     Label("Profile", systemImage: "person.crop.circle")
                 }
                 .tag("Profile")
-            }
+            }.accentColor(.themeColor)
         }
         .frame(width: getRect().width)
         .overlay(

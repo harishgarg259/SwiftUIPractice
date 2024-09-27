@@ -260,7 +260,8 @@ extension PawStorageManager {
         case productList
         case orderList(String)
         case filterList
-        
+        case cartList(String)
+
         var fileExtension : fileExtensions {
             return .json
         }
@@ -279,6 +280,8 @@ extension PawStorageManager {
                 return "productList"
             case .orderList(let value):
                 return "orderList_\(value)"
+            case .cartList(let value):
+                return "cartList_\(value)"
             case .filterList:
                 return "filterList"
             }
