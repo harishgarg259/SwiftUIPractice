@@ -43,4 +43,8 @@ extension String{
             documentAttributes: nil
         )
     }
+    
+    func toDouble() -> Double? {
+            return NumberFormatter().number(from: self)?.doubleValue
+    }
 }

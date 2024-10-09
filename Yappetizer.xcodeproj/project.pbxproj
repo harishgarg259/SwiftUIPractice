@@ -84,6 +84,9 @@
 		389F2B7A2C19019E002DD247 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389F2B792C19019E002DD247 /* HomeViewModel.swift */; };
 		389F2B7C2C1901CE002DD247 /* ProductListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389F2B7B2C1901CE002DD247 /* ProductListModel.swift */; };
 		38B682DA2CA4C260008D57EF /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B682D92CA4C260008D57EF /* ToastView.swift */; };
+		38B682E12CACE00D008D57EF /* CouponView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B682E02CACE00D008D57EF /* CouponView.swift */; };
+		38B682E32CACE01E008D57EF /* CouponViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B682E22CACE01E008D57EF /* CouponViewModel.swift */; };
+		38B682E52CACE02C008D57EF /* CouponModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B682E42CACE02C008D57EF /* CouponModel.swift */; };
 		38BD15E12B5C996200D66184 /* NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BD15E02B5C996200D66184 /* NavigationBar.swift */; };
 		38BD15EC2B5CD71000D66184 /* AppConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BD15EB2B5CD71000D66184 /* AppConstant.swift */; };
 		38BD15EF2B5CDF8300D66184 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BD15EE2B5CDF8300D66184 /* SearchBar.swift */; };
@@ -204,6 +207,9 @@
 		389F2B792C19019E002DD247 /* HomeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		389F2B7B2C1901CE002DD247 /* ProductListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductListModel.swift; sourceTree = "<group>"; };
 		38B682D92CA4C260008D57EF /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
+		38B682E02CACE00D008D57EF /* CouponView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponView.swift; sourceTree = "<group>"; };
+		38B682E22CACE01E008D57EF /* CouponViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponViewModel.swift; sourceTree = "<group>"; };
+		38B682E42CACE02C008D57EF /* CouponModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponModel.swift; sourceTree = "<group>"; };
 		38BD15E02B5C996200D66184 /* NavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBar.swift; sourceTree = "<group>"; };
 		38BD15EB2B5CD71000D66184 /* AppConstant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConstant.swift; sourceTree = "<group>"; };
 		38BD15EE2B5CDF8300D66184 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
@@ -450,7 +456,6 @@
 				38F3BBE22B6F097E00BB8A52 /* Tabbar */,
 				389EEA9B2B7086D10050591E /* HomeScreen */,
 				38BDCEC32B8E856400B6CA18 /* Product Detail */,
-				38F3BBEF2B6F294500BB8A52 /* Cart */,
 				38CBEC572C35F1C600B693BF /* Checkout */,
 				38F3BBE82B6F28B600BB8A52 /* Profile */,
 			);
@@ -786,6 +791,40 @@
 			path = Toast;
 			sourceTree = "<group>";
 		};
+		38B682DC2CACD9BF008D57EF /* Coupon */ = {
+			isa = PBXGroup;
+			children = (
+				38B682DD2CACDFD8008D57EF /* Model */,
+				38B682DE2CACDFE1008D57EF /* ViewModel */,
+				38B682DF2CACDFEA008D57EF /* View */,
+			);
+			path = Coupon;
+			sourceTree = "<group>";
+		};
+		38B682DD2CACDFD8008D57EF /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				38B682E42CACE02C008D57EF /* CouponModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		38B682DE2CACDFE1008D57EF /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				38B682E22CACE01E008D57EF /* CouponViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		38B682DF2CACDFEA008D57EF /* View */ = {
+			isa = PBXGroup;
+			children = (
+				38B682E02CACE00D008D57EF /* CouponView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		38BD15DF2B5C994A00D66184 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -862,6 +901,8 @@
 		38CBEC572C35F1C600B693BF /* Checkout */ = {
 			isa = PBXGroup;
 			children = (
+				38F3BBEF2B6F294500BB8A52 /* Cart */,
+				38B682DC2CACD9BF008D57EF /* Coupon */,
 				38661A952BF69EE6002BC0B2 /* CheckoutView.swift */,
 				38661A942BF69EE6002BC0B2 /* SubscriptionViewModel.swift */,
 				38661A982BF69F0E002BC0B2 /* SubscriptionResponse.swift */,
@@ -1247,12 +1288,14 @@
 				387FFEF92B5C7D79003B1280 /* Reachability.swift in Sources */,
 				389F2B7C2C1901CE002DD247 /* ProductListModel.swift in Sources */,
 				38661A9B2BF69F0E002BC0B2 /* SubscriptionResponseCallback.swift in Sources */,
+				38B682E32CACE01E008D57EF /* CouponViewModel.swift in Sources */,
 				387FFEFF2B5C7D79003B1280 /* WebAPI.swift in Sources */,
 				38889C5E2C2A19CA0069F185 /* Date.swift in Sources */,
 				386922842C2173ED00779A2A /* UserDefaultConstants.swift in Sources */,
 				38D6619F2C17CFF300639EEC /* RegisterModel.swift in Sources */,
 				389EEA9D2B7086E60050591E /* HomeScreen.swift in Sources */,
 				389EEA942B7047D20050591E /* SideMenuModel.swift in Sources */,
+				38B682E52CACE02C008D57EF /* CouponModel.swift in Sources */,
 				38661A9A2BF69F0E002BC0B2 /* SubscriptionResponse.swift in Sources */,
 				38318C0C2B82CEC700211937 /* CountryListView.swift in Sources */,
 				380A6B962B85477700279659 /* NewLoginScreen.swift in Sources */,
@@ -1296,6 +1339,7 @@
 				38661A972BF69EE6002BC0B2 /* CheckoutView.swift in Sources */,
 				389EEAA42B7210B60050591E /* WebView.swift in Sources */,
 				386922822C2173E700779A2A /* UserDefaultsManager.swift in Sources */,
+				38B682E12CACE00D008D57EF /* CouponView.swift in Sources */,
 				386922862C22359B00779A2A /* Array.swift in Sources */,
 				38FE805E2B803D3700B09927 /* OrderRow.swift in Sources */,
 				38889C872C2CEF510069F185 /* GifImageView.swift in Sources */,

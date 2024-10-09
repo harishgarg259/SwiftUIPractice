@@ -66,6 +66,7 @@ class ProductDetailViewModel: ObservableObject {
         attributes = product?.attributes
         categories = product?.categories
         encodedDescription = product?.description
+        quantity = 1
         
         if !isVariationExist{
             productPrice = product?.price

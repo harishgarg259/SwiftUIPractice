@@ -9,9 +9,10 @@ import SwiftUI
 
 class  CartViewModel: ObservableObject {
     
-    // Shipping cost
+    @Published var couponItem: CouponItem?
+    @Published var customerInfo: String = ""
+    @Published var address: String = ""
     @Published var shipping: Double = 5.99
-    @Published var totalPrice: Double = 0
     @Published var showShowcaseSheet: Bool = false
     @Published var cartArray: [ProductCartItems] = []{
         didSet{
@@ -20,7 +21,7 @@ class  CartViewModel: ObservableObject {
     }
     
     init() {
-        
+        getCartDetail()
     }
     
     /// adding a product with the quantity on our cart
@@ -46,23 +47,20 @@ class  CartViewModel: ObservableObject {
         }
     }
     
-    func deleteProduct(product: ProductCartItems) {
-        
-    }
-    
-    func editProductQuantity(product: ProductCartItems, newQuantity: Int) {
-        
-    }
-    
     // Calculate subtotal
     var subtotal: Double {
         cartArray.reduce(0) { $0 + ((Double($1.price) ?? 0.0) * Double($1.quantity)) }
     }
     
+    // Calculate discount
+    var couponDiscount: Double {
+        ((couponItem?.amount?.toDouble() ?? 0.0) / 100) * subtotal
+    }
+    
     // Calculate grand total (for example purposes, shipping is free)
     
     var total: Double {
-        return subtotal + shipping
+        return (subtotal + shipping) - couponDiscount
     }
     
     // Increment quantity
@@ -99,4 +97,30 @@ class  CartViewModel: ObservableObject {
             cartArray = response ?? []
         }
     }
+    
+    func customerProfile() -> CustomerProfile? {
+        let userID = "\(UserDefaultsManager.userID ?? 0)"
+        let storage = PawStorageManager.PawStorageFile.customerDetail(userID)
+        let response = PawStorageManager.shared.retrieve(storage, from: .caches, as: CustomerProfile.self)
+        return response
+    }
+    
+    func loadShippingAddress(){
+        let customerProfile = customerProfile()
+        address = customerProfile?.shipping?.formattedAddress() ?? ""
+        customerInfo = customerProfile?.shipping?.customerDetail() ?? ""
+    }
+    
+    func shippingAddressArray() -> AddressGroup? {
+           let customerProfile = customerProfile()
+           if let shippingAddress = customerProfile?.shipping {
+               return AddressGroup(addressType: "Shipping Address", address: [
+                   CustomerAddresses(addressDetail: shippingAddress)
+               ], expandMe: true)
+           }else{
+               return AddressGroup(addressType: "Shipping Address", address: [
+                   CustomerAddresses(addressDetail: nil)
+               ], expandMe: true)
+           }
+       }
 }

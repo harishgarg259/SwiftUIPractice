@@ -17,7 +17,6 @@ class RestManager<T: Codable> {
     
     // MARK: - Properties
     var requestHttpHeaders: [String:String] = [:]
-    var response: [String:Any] = [:]
     private var cancellables = Set<AnyCancellable>()
 
     // MARK: - Public Methods
@@ -44,20 +43,6 @@ class RestManager<T: Codable> {
                     
                     /*RESPONSE*/
                     /***********************************************/
-                    if let data = data, let json = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers)  {
-                        print("response: \(json)")
-                        print("URL: \(request.url?.absoluteString ?? "")")
-                        if let result = json as? [String:Any] {
-                            self.response = result
-                        }
-                    } else {
-                        if let responseData = data
-                        {
-                            let str = String(decoding: responseData, as: UTF8.self)
-                            print(str)
-                        }
-                    }
-                    
                     if let responseData = data
                     {
                         let str = String(decoding: responseData, as: UTF8.self)

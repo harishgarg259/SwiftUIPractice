@@ -149,6 +149,7 @@ extension WebAPI{
         case catagory
         case orderList
         case blogList
+        case couponList
     }
     
     public func productRequest(params: [String:Any] = [:], type : ProductRequest, specialPUTParams: String? = nil, specialGETParams: String? = nil) -> URLRequest? {
@@ -172,6 +173,9 @@ extension WebAPI{
         case .blogList:
             httpMethod = .get
             requestURL = RequestUrl.blog.profile
+        case .couponList:
+            httpMethod = .get
+            requestURL = RequestUrl.coupons.products
         }
         
         guard let request = self.prepareRequest(withURL: requestURL!, params: params, httpMethod: httpMethod, specialPUTParams: specialPUTParams, specialGETParams: specialGETParams) else {
