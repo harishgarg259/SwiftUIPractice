@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import UIKit
 
 public struct TagTheme {
     var font: Font = Font.system(size: 14)

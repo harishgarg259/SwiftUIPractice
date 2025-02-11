@@ -7,11 +7,17 @@
 
 import SwiftUI
 
+enum Tab {
+       case home
+       case cart
+       case settings
+   }
+
 struct BaseView: View {
     
     @State var showMenu: Bool = false
-    @State var currentTab = "Home"
-    
+    @State private var currentTab: Tab = .home
+
     // Offset for Both Drag Gestures and showing Menu.
     @State var offset: CGFloat = 0
     @State var lastStoredOffset: CGFloat = 0
@@ -39,21 +45,24 @@ struct BaseView: View {
                 .tabItem {
                     Label("Home", systemImage: "house")
                 }
-                .tag("Home")
+                .tag(Tab.home)
+                .environment(\.currentTab, $currentTab)
                 NavigationStack {
                     CartView(viewModel: cartItems)
                 }
                 .tabItem {
                     Label("Cart", systemImage: "cart")
                 }.badge(cartItems.cartArray.count)
-                .tag("Cart")
+                .tag(Tab.cart)
+                .environment(\.currentTab, $currentTab)
                 NavigationStack {
                     ProfileView(userModel: UserProfileViewModel())
                 }
                 .tabItem {
                     Label("Profile", systemImage: "person.crop.circle")
                 }
-                .tag("Profile")
+                .tag(Tab.settings)
+                .environment(\.currentTab, $currentTab)
             }.accentColor(.themeColor)
         }
         .frame(width: getRect().width)
@@ -77,4 +86,16 @@ struct BaseView_Previews: PreviewProvider {
     static var previews: some View {
         BaseView()
     }
+}
+
+
+struct CurrentTabKey: EnvironmentKey {
+    static var defaultValue: Binding<Tab> = .constant(.home)
+}
+
+extension EnvironmentValues {
+    var currentTab: Binding<Tab> {
+            get { self[CurrentTabKey.self] }
+            set { self[CurrentTabKey.self] = newValue }
+        }
 }

@@ -13,6 +13,7 @@ struct ProductDetailView: View {
     @EnvironmentObject var cart: CartViewModel
     @ObservedObject var viewModel: ProductDetailViewModel
     let product: ProductListModel?
+    @Environment(\.currentTab) var tab
 
 //    @Binding var badgeCount : Int
 
@@ -100,18 +101,34 @@ struct ProductDetailView: View {
                                     }
                                 }
                                 
-                                // Add to cart button
-                                Button {
-                                    cart.addProduct(product: viewModel.cartModel(), quantity: self.viewModel.quantity)
-                                    ToastPresenter().show(toast: "Added in the cart.")
-                                } label: {
-                                    Text("Add to Cart")
-                                        .frame(maxWidth: .infinity)
-                                        .fontWeight(.bold)
+                                
+                                if cart.isProductExist(item: product, selectedVariation: viewModel.selectedVariation) {
+                                    // Add to cart button
+                                    Button {
+                                        tab.wrappedValue = .cart
+                                    } label: {
+                                        Text("Already in the cart")
+                                            .frame(maxWidth: .infinity)
+                                            .fontWeight(.bold)
+                                    }
+                                    .buttonStyle(.borderedProminent)
+                                    .controlSize(.large)
+                                    .shadow(color: .themeColor,radius: 2)
+                                } else {
+                                    // Add to cart button
+                                    Button {
+                                        cart.addProduct(product: viewModel.cartModel(), quantity: self.viewModel.quantity)
+                                        ToastPresenter().show(toast: "Added!")
+                                    } label: {
+                                        Text("Add to Cart")
+                                            .frame(maxWidth: .infinity)
+                                            .fontWeight(.bold)
+                                    }
+                                    .buttonStyle(.borderedProminent)
+                                    .controlSize(.large)
+                                    .shadow(color: .themeColor,radius: 2)
                                 }
-                                .buttonStyle(.borderedProminent)
-                                .controlSize(.large)
-                                .shadow(color: .themeColor,radius: 2)
+                                
                             }
                             
                             // Product Categories

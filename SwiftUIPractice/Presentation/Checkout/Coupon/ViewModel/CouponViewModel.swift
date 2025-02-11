@@ -11,6 +11,7 @@ class CouponViewModel: ObservableObject {
     
     @Published var couponList: [CouponItem] = []
     @Published var couponCode: String = ""
+    var selectedCoupon: CouponItem?
 
     init() {
         //Offline loading of orders

@@ -12,7 +12,7 @@ import Stripe
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        Stripe.setDefaultPublishableKey(AppConstants.STRIPE_PUBLISHING_KEY)
+        STPAPIClient.shared.publishableKey = AppConstants.STRIPE_PUBLISHING_KEY
         return true
     }
     

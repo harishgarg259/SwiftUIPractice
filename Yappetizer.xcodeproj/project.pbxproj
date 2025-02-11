@@ -882,6 +882,42 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		38BDDE0D2D016C1E000D4582 /* CardView */ = {
+			isa = PBXGroup;
+			children = (
+				38BDDE102D016C5B000D4582 /* Model */,
+				38BDDE0F2D016C4A000D4582 /* ViewModel */,
+				38BDDE0E2D016C42000D4582 /* View */,
+			);
+			path = CardView;
+			sourceTree = "<group>";
+		};
+		38BDDE0E2D016C42000D4582 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				38661A952BF69EE6002BC0B2 /* CheckoutView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		38BDDE0F2D016C4A000D4582 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				38661A942BF69EE6002BC0B2 /* SubscriptionViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		38BDDE102D016C5B000D4582 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				38661A982BF69F0E002BC0B2 /* SubscriptionResponse.swift */,
+				38661A992BF69F0E002BC0B2 /* SubscriptionResponseCallback.swift */,
+				38661A9C2BF69F4E002BC0B2 /* SubscriptionService.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		38CBEC552C35F19900B693BF /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -903,11 +939,7 @@
 			children = (
 				38F3BBEF2B6F294500BB8A52 /* Cart */,
 				38B682DC2CACD9BF008D57EF /* Coupon */,
-				38661A952BF69EE6002BC0B2 /* CheckoutView.swift */,
-				38661A942BF69EE6002BC0B2 /* SubscriptionViewModel.swift */,
-				38661A982BF69F0E002BC0B2 /* SubscriptionResponse.swift */,
-				38661A992BF69F0E002BC0B2 /* SubscriptionResponseCallback.swift */,
-				38661A9C2BF69F4E002BC0B2 /* SubscriptionService.swift */,
+				38BDDE0D2D016C1E000D4582 /* CardView */,
 			);
 			path = Checkout;
 			sourceTree = "<group>";
@@ -1531,12 +1563,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftUIPractice/Preview Content\"";
-				DEVELOPMENT_TEAM = 4T95FHSKN7;
+				DEVELOPMENT_TEAM = 996L2KFZ63;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SwiftUIPractice/Info.plist;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -1547,8 +1578,12 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.allball.allball;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yappetizer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = NO;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1564,12 +1599,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftUIPractice/Preview Content\"";
-				DEVELOPMENT_TEAM = 4T95FHSKN7;
+				DEVELOPMENT_TEAM = 996L2KFZ63;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SwiftUIPractice/Info.plist;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -1580,8 +1614,12 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.allball.allball;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yappetizer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = NO;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1595,6 +1633,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 996L2KFZ63;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				MARKETING_VERSION = 1.0;
@@ -1614,6 +1653,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 996L2KFZ63;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				MARKETING_VERSION = 1.0;
@@ -1632,6 +1672,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 996L2KFZ63;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.allball.allball.SwiftUIPracticeUITests;
@@ -1649,6 +1690,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 996L2KFZ63;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.allball.allball.SwiftUIPracticeUITests;

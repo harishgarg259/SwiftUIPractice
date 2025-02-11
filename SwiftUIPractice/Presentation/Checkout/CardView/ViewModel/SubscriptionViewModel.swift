@@ -18,13 +18,23 @@ class SubscriptionViewModel: ObservableObject, SubscriptionResponseProtocol {
     @Published var isApiFailed: Bool = false
     @Published var isSuccessPayment: Bool = false
     
-    init() {
-        STPAPIClient.shared.publishableKey = AppConstants.STRIPE_PUBLISHING_KEY
-    }
-    
-    func tokenization() {
+    func tokenization(cardDetail: STPPaymentMethodCardParams?) {
         
-        SubscriptionService.getSubscriptionToken(callback: self)
+        let cardParams = STPCardParams()
+        cardParams.number = cardDetail?.number
+        cardParams.expMonth = cardDetail?.expMonth?.uintValue ?? 0
+        cardParams.expYear = cardDetail?.expYear?.uintValue ?? 0
+        cardParams.cvc = cardDetail?.cvc
+        cardParams.currency = "CAD"
+        STPAPIClient.shared.createToken(withCard: cardParams) { (token: STPToken?, error: Error?) in
+                    guard let token = token, error == nil else {
+                        // Present error to user...
+                        return
+                    }
+                    print(token)
+                }
+        
+//        SubscriptionService.getSubscriptionToken(callback: self)
         
     }
     

@@ -6,12 +6,14 @@
 //
 
 import SwiftUI
+import ActivityIndicatorView
 
 struct CouponView: View {
     
-    
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @StateObject var viewModel: CouponViewModel = CouponViewModel()
     @Binding var selectedCoupon: CouponItem?
+    @State var showLoadingIndicator = false
     let totalPrice: Double?
 
     var body: some View {
@@ -31,7 +33,13 @@ struct CouponView: View {
                                 )
                             Spacer()
                             Button(action: {
-                                //viewModel.checkCoupon()
+                                self.showLoadingIndicator = true
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                                    self.selectedCoupon = viewModel.selectedCoupon
+                                    self.showLoadingIndicator = false
+                                    ToastPresenter().show(toast: "Coupon Applied.")
+                                    self.presentationMode.wrappedValue.dismiss()
+                                }
                             }) {
                                 Text("CHECK")
                                     .font(.system(size: 16,weight: .bold))
@@ -44,7 +52,7 @@ struct CouponView: View {
                         ForEach(Array(viewModel.couponList.enumerated()), id: \.offset) { index, element in
                             CouponRow(couponDetail: element, totalPrice: self.totalPrice)
                                 .onTapGesture {
-                                    self.selectedCoupon = element
+                                    self.viewModel.selectedCoupon = element
                                     self.viewModel.couponCode = element.code ?? ""
                                     ToastPresenter().show(toast: "Coupon copied.")
                                 }.listRowSeparator(.hidden)
@@ -53,6 +61,11 @@ struct CouponView: View {
                 }
             }.frame(height: geometry.size.height)
         }
+        .overlay(
+            ActivityIndicatorView(isVisible: $showLoadingIndicator, type: .default())
+                .frame(width: 50.0, height: 50.0)
+                .foregroundColor(.themeColor)
+        )
         .background(Color(UIColor.systemGray6)) // Light background color for the entire section
         .navigationBarTitle("COUPONS",displayMode: .inline)
         .toolbarBackground(.visible, for: .navigationBar)

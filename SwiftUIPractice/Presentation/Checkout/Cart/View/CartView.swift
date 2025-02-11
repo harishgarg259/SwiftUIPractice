@@ -8,175 +8,209 @@ struct CartView: View {
     
     var body: some View {
         NavigationStack {
-            GeometryReader { geometry in
-                VStack(spacing: 0) {
-                    List {
-                        Section(header: Text("SHIPPING ADDRESS")) {
-                            VStack(alignment: .leading, spacing: 8) {
-                                // First line with the name and postal code
+            if viewModel.cartArray.isEmpty{
+                VStack{
+                    GifImage(type: .local("shopping-cart")) { imageView, image in
+                        imageView.contentMode = .scaleAspectFit
+                    }
+                    .frame(height: 100)
+                    
+                    Text("Your cart is Empty!")
+                        .font(.system(size: 16,weight: .semibold))
+                        .foregroundColor(.theme)
+                    
+                }
+            }
+            else
+            {
+                GeometryReader { geometry in
+                    VStack(spacing: 0) {
+                        List {
+                            Section(header: Text("SHIPPING ADDRESS")) {
+                                VStack(alignment: .leading, spacing: 8) {
+                                    // First line with the name and postal code
+                                    HStack {
+                                        Text("Deliver to:")
+                                            .font(.subheadline)
+                                            .foregroundColor(.black)
+                                        
+                                        Text(viewModel.customerInfo)
+                                            .font(.subheadline)
+                                            .foregroundColor(.black)
+                                            .lineLimit(1)
+                                        
+                                        Spacer()
+                                        
+                                        Button(action: {
+                                            self.presented.toggle()
+                                        }) {
+                                            Text("Change")
+                                                .foregroundColor(.theme)
+                                                .fontWeight(.bold)
+                                        }
+                                        .navigationDestination(isPresented: $presented, destination:{
+                                            AddressDetailView(headerTitle: "Shipping Address", addressDetail: viewModel.shippingAddressArray())
+                                        })
+                                    }
+                                    
+                                    // Second line with the detailed address
+                                    Text(viewModel.address)
+                                        .font(.caption)
+                                        .lineLimit(2)
+                                        .foregroundColor(.gray)
+                                }
+                            }
+                            
+                            Section(header: Text("ITEMS")) {
+                                
+                                if viewModel.cartArray.isEmpty{
+                                    Text("Your Cart Is Empty!")
+                                        .font(.system(size: 14,weight: .regular))
+                                        .foregroundColor(.gray)
+                                }else{
+                                    ForEach(Array(viewModel.cartArray.enumerated()), id: \.offset) { section, element in
+                                        CartItemRowView(item: element, viewModel: viewModel)
+                                    }
+                                    .onDelete { indexSet in
+                                        indexSet.forEach { index in
+                                            viewModel.removeItem(viewModel.cartArray[index])
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            Section(header: Text("COUPONS")) {
                                 HStack {
-                                    Text("Deliver to:")
-                                        .font(.subheadline)
-                                        .foregroundColor(.black)
+                                    if let selectedCoupon = viewModel.couponItem, viewModel.subtotal > (selectedCoupon.minimum_amount?.toDouble() ?? 0.0){
+                                        VStack{
+                                            HStack{
+                                                Image(systemName: "checkmark")
+                                                    .resizable()
+                                                    .frame(width: 16, height: 16)
+                                                    .foregroundColor(.green)
+                                                Text("CODE: \(selectedCoupon.code ?? "")")
+                                                    .font(.system(size: 14, weight: .semibold))
+                                                    .foregroundColor(.green)
+                                                
+                                            }
+                                            // Description
+                                            if ((selectedCoupon.minimum_amount?.toDouble() ?? 0.0) > 0.0){
+                                                Text("\(selectedCoupon.amount ?? "") % off on purchase of CAD \(selectedCoupon.minimum_amount ?? "") or more")
+                                                    .font(.system(size: 12,weight: .regular))
+                                                    .foregroundColor(.gray)
+                                            }
+                                        }
+                                        
+                                        Spacer()
+                                        
+                                        Button(action: {
+                                            self.viewModel.couponItem = nil
+                                        }) {
+                                            Text("Remove")
+                                                .padding(.vertical, 8)
+                                                .padding(.horizontal, 16)
+                                                .background(Color.pink.opacity(0.2))
+                                                .cornerRadius(5)
+                                                .foregroundColor(.pink)
+                                        }
+                                    }else{
+                                        Image(systemName: "tag")
+                                            .resizable()
+                                            .frame(width: 20, height: 20)
+                                            .foregroundColor(.black)
+                                        
+                                        Text("Apply Coupon")
+                                            .font(.system(size: 16, weight: .semibold))
+                                            .foregroundColor(.black)
+                                        
+                                        Spacer()
+                                        Button(action: {
+                                            self.couponViewPresent.toggle()
+                                        }) {
+                                            Image(systemName: "chevron.right")
+                                                .foregroundColor(.black)
+                                        }
+                                        
+                                    }
+                                }
+                                .navigationDestination(isPresented: $couponViewPresent, destination:{
+                                    CouponView(selectedCoupon: $viewModel.couponItem, totalPrice: self.viewModel.subtotal)
+                                })
+                                .padding(0)
+                                .background(Color.white)
+                            }
+                            
+                            Section(header: Text("PRICE DETAILS")) {
+                                VStack(alignment: .leading, spacing: 10) {
                                     
-                                    Text(viewModel.customerInfo)
-                                        .font(.subheadline)
-                                        .foregroundColor(.black)
-                                        .lineLimit(1)
+                                    HStack {
+                                        Text("Subtotal:")
+                                        Spacer()
+                                        Text(String(format: "CAD %.2f", viewModel.subtotal))
+                                    }
                                     
-                                    Spacer()
+                                    if let selectedCoupon = viewModel.couponItem, viewModel.subtotal > (selectedCoupon.minimum_amount?.toDouble() ?? 0.0){
+                                        HStack {
+                                            Text("Coupon Discount:")
+                                            Spacer()
+                                            Text(String(format: "CAD %.2f", viewModel.couponDiscount))
+                                        }
+                                    }
                                     
-                                    Button(action: {
-                                        self.presented.toggle()
-                                    }) {
-                                        Text("Change")
-                                            .foregroundColor(.theme)
+                                    HStack {
+                                        Text("Shipping:")
+                                        Spacer()
+                                        Text(String(format: "CAD %.2f", viewModel.shipping))
+                                    }
+                                    
+                                    HStack {
+                                        Text("Total (\(viewModel.cartArray.count) items):")
+                                            .fontWeight(.bold)
+                                        Spacer()
+                                        Text(String(format: "CAD %.2f", viewModel.total))
                                             .fontWeight(.bold)
                                     }
-                                    .navigationDestination(isPresented: $presented, destination:{
-                                        AddressDetailView(headerTitle: "Shipping Address", addressDetail: viewModel.shippingAddressArray())
-                                    })
                                 }
+                                .padding(.horizontal, 8)
                                 
-                                // Second line with the detailed address
-                                Text(viewModel.address)
-                                    .font(.caption)
-                                    .lineLimit(2)
-                                    .foregroundColor(.gray)
+                                CheckoutButton()
                             }
                         }
-                        
-                        Section(header: Text("ITEMS")) {
-                            ForEach(viewModel.cartArray, id: \.id) { element in
-                                CartItemRowView(item: element, viewModel: viewModel)
-                            }
-                            .onDelete { indexSet in
-                                indexSet.forEach { index in
-                                    viewModel.removeItem(viewModel.cartArray[index])
-                                }
-                            }
-                        }
-                        
-                        Section(header: Text("COUPONS")) {
-                            HStack {
-                                if let selectedCoupon = viewModel.couponItem, viewModel.subtotal < (selectedCoupon.minimum_amount?.toDouble() ?? 0.0){
-                                    VStack{
-                                        HStack{
-                                            Image(systemName: "checkmark")
-                                                .resizable()
-                                                .frame(width: 16, height: 16)
-                                                .foregroundColor(.green)
-                                            Text("CODE: \(selectedCoupon.code ?? "")")
-                                                .font(.system(size: 14, weight: .semibold))
-                                                .foregroundColor(.green)
-                                            
-                                        }
-                                        // Description
-                                        if ((selectedCoupon.minimum_amount?.toDouble() ?? 0.0) > 0.0){
-                                            Text("\(selectedCoupon.amount ?? "") % off on purchase of CAD \(selectedCoupon.minimum_amount ?? "") or more")
-                                                .font(.system(size: 12,weight: .regular))
-                                                .foregroundColor(.gray)
-                                        }
-                                    }
-                                    
-                                    Spacer()
-                                    
-                                    Button(action: {
-                                        self.viewModel.couponItem = nil
-                                    }) {
-                                        Text("Remove")
-                                            .padding(.vertical, 8)
-                                            .padding(.horizontal, 16)
-                                            .background(Color.pink.opacity(0.2))
-                                            .cornerRadius(5)
-                                            .foregroundColor(.pink)
-                                    }
-                                }else{
-                                    Image(systemName: "tag")
-                                        .resizable()
-                                        .frame(width: 20, height: 20)
-                                        .foregroundColor(.black)
-                                    
-                                    Text("Apply Coupon")
-                                        .font(.system(size: 16, weight: .semibold))
-                                        .foregroundColor(.black)
-                                    
-                                    Spacer()
-                                    Button(action: {
-                                        self.couponViewPresent.toggle()
-                                    }) {
-                                        Image(systemName: "chevron.right")
-                                            .foregroundColor(.black)
-                                    }
-                                    
-                                }
-                            }
-                            .navigationDestination(isPresented: $couponViewPresent, destination:{
-                                CouponView(selectedCoupon: $viewModel.couponItem, totalPrice: self.viewModel.subtotal)
-                            })
-                            .padding(0)
-                            .background(Color.white)
-                        }
-                        
-                        Section(header: Text("PRICE DETAILS")) {
-                            VStack(alignment: .leading, spacing: 10) {
-                                
-                                HStack {
-                                    Text("Subtotal:")
-                                    Spacer()
-                                    Text(String(format: "CAD %.2f", viewModel.subtotal))
-                                }
-                                
-                                if let selectedCoupon = viewModel.couponItem, viewModel.subtotal < (selectedCoupon.minimum_amount?.toDouble() ?? 0.0){
-                                    HStack {
-                                        Text("Coupon Discount:")
-                                        Spacer()
-                                        Text(String(format: "CAD %.2f", viewModel.couponDiscount))
-                                    }
-                                }
-                                
-                                HStack {
-                                    Text("Shipping:")
-                                    Spacer()
-                                    Text(String(format: "CAD %.2f", viewModel.shipping))
-                                }
-                                
-                                HStack {
-                                    Text("Total (\(viewModel.cartArray.count) items):")
-                                        .fontWeight(.bold)
-                                    Spacer()
-                                    Text(String(format: "CAD %.2f", viewModel.total))
-                                        .fontWeight(.bold)
-                                }
-                            }
-                            .padding(.horizontal, 8)
-                            
-                            Button(action: {
-                                // Action for continuing to checkout
-                            }) {
-                                Text("Continue")
-                                    .foregroundColor(.white)
-                                    .frame(maxWidth: .infinity)
-                                    .padding()
-                                    .background(Color.black)
-                                    .cornerRadius(8)
-                            }
-                            .padding(.horizontal, 8)
-                            .padding(.bottom, 20)
-                        }
-                    }
-                }.frame(height: geometry.size.height)
+                    }.frame(height: geometry.size.height)
+                }
+                .onAppear(perform: {
+                    self.viewModel.getCartDetail()
+                    self.viewModel.loadShippingAddress()
+                })
             }
         }
-        .onAppear(perform: {
-            self.viewModel.getCartDetail()
-            self.viewModel.loadShippingAddress()
-        })
-        .navigationBarTitle("Order Detail",displayMode: .inline)
+        .navigationBarTitle("Cart",displayMode: .inline)
         .toolbarBackground(.visible, for: .navigationBar)
     }
 }
 
+struct CheckoutButton: View {
+    
+    @State var presented: Bool = false
+
+    var body: some View {
+        Button(action: {
+            self.presented.toggle()
+        }) {
+            Text("Continue")
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(Color.black)
+                .cornerRadius(8)
+        }
+        .padding(.horizontal, 8)
+        .padding(.bottom, 20)
+        .navigationDestination(isPresented: $presented) {
+            CheckoutView()
+        }
+    }
+}
 struct CartItemRowView: View {
     var item: ProductCartItems
     var viewModel: CartViewModel
@@ -247,6 +281,10 @@ struct CartItemRowView: View {
                         
                         RemoveButton(item: item, viewModel: viewModel)
                     }
+                    
+                    Text("Available: \(item.product.stock_quantity ?? 20)")
+                        .font(.system(size: 12))
+                        .foregroundStyle(.red)
                 }
             }
         }

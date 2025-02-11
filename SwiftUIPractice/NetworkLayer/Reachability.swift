@@ -1,7 +1,6 @@
 import Foundation
 import SystemConfiguration
 
-import UIKit
 import SystemConfiguration.CaptiveNetwork
 
 public enum ReachabilityError: Error {

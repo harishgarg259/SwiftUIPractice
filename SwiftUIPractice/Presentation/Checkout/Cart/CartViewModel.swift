@@ -47,6 +47,14 @@ class  CartViewModel: ObservableObject {
         }
     }
     
+    func isProductExist(item: ProductListModel? ,selectedVariation : VariationModel?) -> Bool {
+        if let product = item {
+            let sameProducts = cartArray.filter({$0.id == product.id && $0.variationID == selectedVariation?.id})
+            return !sameProducts.isEmpty
+        }
+       return false
+    }
+    
     // Calculate subtotal
     var subtotal: Double {
         cartArray.reduce(0) { $0 + ((Double($1.price) ?? 0.0) * Double($1.quantity)) }
@@ -66,7 +74,9 @@ class  CartViewModel: ObservableObject {
     // Increment quantity
     func incrementQuantity(for item: ProductCartItems) {
         if let index = cartArray.firstIndex(where: { $0.id == item.id }) {
-            cartArray[index].quantity += 1
+            if let quantity = cartArray[index].product.stock_quantity, quantity > cartArray[index].quantity{
+                cartArray[index].quantity += 1
+            }
         }
     }
     
